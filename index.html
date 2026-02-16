@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UniRadio - Twoja Studencka Stacja</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Ikony -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Fonty: DM Sans (Szeroki zakres wag dla lepszej estetyki) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['DM Sans', 'sans-serif'], // Zmiana na DM Sans
+                    },
+                    colors: {
+                        'radio-dark': '#0f172a',
+                        'radio-accent': '#8b5cf6', // Fioletowy akcent
+                        'radio-neon': '#38bdf8',   // Błękitny neon
+                        'radio-pink': '#f472b6',
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'equalizer': 'equalizer 1s infinite',
+                    },
+                    keyframes: {
+                        equalizer: {
+                            '0%, 100%': { height: '20%' },
+                            '50%': { height: '100%' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #1e293b;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #475569;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #64748b;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        .glass-panel {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+    </style>
+</head>
+<body class="bg-radio-dark text-white font-sans antialiased overflow-x-hidden pb-24">
+
+    <!-- Navbar -->
+    <nav class="fixed w-full z-50 transition-all duration-300" id="navbar">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center glass-panel rounded-b-2xl mt-0">
+            <!-- Logo z mechanizmem Fallback -->
+            <a href="#home" class="flex items-center gap-3 hover:opacity-90 transition group">
+                <!-- 1. Próba załadowania Twojego obrazka. Jeśli błąd (onerror), ukrywamy go i pokazujemy SVG poniżej -->
+                <img src="logogradientztekstem.png" 
+                     alt="UniRadio Logo" 
+                     class="h-12 w-auto object-contain"
+                     onerror="this.style.display='none'; document.getElementById('fallback-logo').classList.remove('hidden'); document.getElementById('fallback-logo').classList.add('flex');">
+                
+                <!-- 2. Zapasowe logo SVG (domyślnie ukryte, pokazuje się gdy obrazek nie działa) -->
+                <div id="fallback-logo" class="hidden items-center gap-3">
+                    <div class="relative w-10 h-10 flex items-center justify-center">
+                        <svg viewBox="0 0 100 100" class="absolute inset-0 w-full h-full text-radio-accent group-hover:scale-110 transition duration-300">
+                            <circle cx="50" cy="50" r="7" fill="#38bdf8" />
+                            <path d="M38 38 A 18 18 0 0 0 38 62" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" />
+                            <path d="M28 28 A 32 32 0 0 0 28 72" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" />
+                            <path d="M62 38 A 18 18 0 0 1 62 62" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" />
+                            <path d="M72 28 A 32 32 0 0 1 72 72" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" />
+                        </svg>
+                    </div>
+                    <div class="flex flex-col leading-none">
+                        <span class="text-2xl font-black tracking-tighter uppercase">Uni<span class="text-radio-accent">Radio</span></span>
+                        <span class="text-[8px] uppercase tracking-[0.2em] font-bold text-gray-400">Uniwersytet Wrocławski</span>
+                    </div>
+                </div>
+            </a>
+            
+            <!-- Linki -->
+            <div class="hidden md:flex items-center space-x-8 font-medium">
+                <!-- Skróty one-page -->
+                <a href="#home" class="hover:text-radio-accent transition">Start</a>
+                <a href="#schedule" class="hover:text-radio-accent transition">Ramówka</a>
+                <a href="#team" class="hover:text-radio-accent transition">Zespół</a>
+                <a href="#contact" class="hover:text-radio-accent transition">Kontakt</a>
+
+                <!-- Separator -->
+                <div class="h-6 w-px bg-white/20"></div>
+
+                <!-- Nowe strony -->
+                <a href="podcasty.html" class="hover:text-radio-accent transition">Podcasty</a>
+                <a href="artykuly.html" class="hover:text-radio-accent transition">Artykuły</a>
+            </div>
+
+            <div class="flex items-center gap-4">
+                <!-- Bardziej widoczny Instagram -->
+                <a href="https://www.instagram.com/projekt.uniradio/" target="_blank" 
+                   class="flex items-center gap-2 bg-gradient-to-tr from-radio-accent/20 to-radio-pink/20 hover:from-radio-accent hover:to-radio-pink text-white px-4 py-2 rounded-full transition-all duration-300 border border-white/10 group shadow-lg shadow-radio-accent/10">
+                    <i data-lucide="instagram" class="w-5 h-5 group-hover:scale-110 transition"></i>
+                    <span class="text-xs font-bold hidden lg:inline">Instagram</span>
+                </a>
+
+                <!-- Przycisk Dołącz -->
+                <a href="#contact" class="hidden md:flex items-center gap-2 bg-white text-radio-dark hover:bg-radio-neon hover:text-white text-xs font-black px-5 py-2 rounded-full transition-all transform active:scale-95 shadow-md">
+                    DOŁĄCZ
+                </a>
+
+                <!-- Mobile Menu Button -->
+                <button class="md:hidden text-gray-300">
+                    <i data-lucide="menu"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="relative min-h-screen flex items-center pt-20 pb-32 overflow-hidden scroll-mt-24">
+        <div class="absolute top-0 left-0 w-96 h-96 bg-radio-accent/20 rounded-full blur-[100px] -translate-x-1/2 -translate-y-1/2"></div>
+        <div class="absolute bottom-0 right-0 w-[500px] h-[500px] bg-radio-neon/10 rounded-full blur-[120px] translate-x-1/3 translate-y-1/3"></div>
+
+        <div class="container mx-auto px-6 grid md:grid-cols-2 gap-12 items-center relative z-10">
+            <div class="space-y-5">
+                <h1 class="text-5xl md:text-7xl font-extrabold leading-tight">
+                    UNIRADIO <br>
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-radio-accent to-radio-neon">GRAMY SŁOWEM</span>
+                </h1>
+                <p class="text-gray-400 text-lg max-w-lg">
+                    Niezależne radio internetowe Wydziału Dziennikarstwa UWr. Tu studenci poznają tajniki pracy radiowej od kuchni, tworząc autorskie audycje i realizując dźwięk z pasją od 2002 roku.
+                </p>
+                <div class="flex gap-4 pt-2">
+                    <button onclick="openPlayer()" class="bg-radio-accent hover:bg-violet-700 text-white w-full sm:w-auto px-12 py-4 rounded-full font-bold flex items-center justify-center gap-2 transition shadow-lg shadow-violet-900/50 text-lg hover:scale-105 active:scale-95">
+                        <i data-lucide="play" class="fill-current w-6 h-6"></i> Słuchaj Teraz
+                    </button>
+                </div>
+            </div>
+            
+            <div class="relative hidden md:block group">
+                <div class="absolute inset-0 bg-radio-accent/20 rounded-2xl blur-xl group-hover:bg-radio-accent/30 transition duration-500"></div>
+                <img src="https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?q=80&w=1000&auto=format&fit=crop" alt="Studio radiowe" class="relative z-10 rounded-2xl shadow-2xl border border-slate-700 transform rotate-3 group-hover:rotate-0 transition duration-500 w-full h-[450px] object-cover grayscale group-hover:grayscale-0">
+            </div>
+        </div>
+    </section>
+
+    <!-- Schedule Section -->
+    <section id="schedule" class="py-12 bg-slate-900/50 scroll-mt-24">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl font-bold mb-10 flex items-center gap-3">
+                <i data-lucide="calendar" class="text-radio-accent"></i> Ramówka
+            </h2>
+
+            <div class="grid md:grid-cols-2 gap-12">
+                <!-- ŚRODA -->
+                <div>
+                    <h3 class="text-2xl font-bold mb-6 flex items-center gap-2 text-radio-neon">
+                        <span class="w-2 h-8 bg-radio-neon rounded-full"></span> Środa
+                    </h3>
+                    <div class="space-y-4">
+                        <div class="glass-panel p-4 rounded-xl border-l-4 border-radio-neon/50 hover:border-radio-neon transition group">
+                            <div class="flex justify-between items-center mb-1">
+                                <span class="text-radio-neon font-bold">17:00 - 18:00</span>
+                                <i data-lucide="mic-2" class="w-4 h-4 text-gray-500 group-hover:text-white transition"></i>
+                            </div>
+                            <h4 class="text-lg font-bold text-white group-hover:text-radio-neon transition">Start Tygodnia (w środku)</h4>
+                            <p class="text-sm text-gray-400">Prowadzi: Ekipa Środowa</p>
+                        </div>
+                        <div class="glass-panel p-4 rounded-xl border-l-4 border-radio-neon/50 hover:border-radio-neon transition group">
+                            <span class="block text-radio-neon font-bold text-sm mb-1 font-mono">18:00 - 19:00</span>
+                            <h4 class="text-lg font-bold text-white group-hover:text-radio-neon transition">Magazyn Studencki</h4>
+                            <p class="text-sm text-gray-400">Newsy z kampusu</p>
+                        </div>
+                        <div class="glass-panel p-4 rounded-xl border-l-4 border-radio-neon/50 hover:border-radio-neon transition group">
+                            <span class="block text-radio-neon font-bold text-sm mb-1 font-mono">19:00 - 20:00</span>
+                            <h4 class="text-lg font-bold text-white group-hover:text-radio-neon transition">Alternatywne Brzmienia</h4>
+                            <p class="text-sm text-gray-400">Muzyka spoza głównego nurtu</p>
+                        </div>
+                        <div class="glass-panel p-4 rounded-xl border-l-4 border-radio-neon/50 hover:border-radio-neon transition group">
+                            <span class="block text-radio-neon font-bold text-sm mb-1 font-mono">20:00 - 21:00</span>
+                            <h4 class="text-lg font-bold text-white group-hover:text-radio-neon transition">Wieczorny Chillout</h4>
+                            <p class="text-sm text-gray-400">Spokojne zakończenie dnia</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CZWARTEK -->
+                <div>
+                    <h3 class="text-2xl font-bold mb-6 flex items-center gap-2 text-radio-pink">
+                        <span class="w-2 h-8 bg-radio-pink rounded-full"></span> Czwartek
+                    </h3>
+                    <div class="space-y-4">
+                        <div class="glass-panel p-4 rounded-xl border-l-4 border-radio-pink/50 hover:border-radio-pink transition group">
+                            <div class="flex justify-between items-center mb-1">
+                                <span class="text-radio-pink font-bold">17:00 - 18:00</span>
+                                <i data-lucide="music" class="w-4 h-4 text-gray-500 group-hover:text-white transition"></i>
+                            </div>
+                            <h4 class="text-lg font-bold text-white group-hover:text-radio-pink transition">Czwartkowy Vibe</h4>
+                            <p class="text-sm text-gray-400">Prowadzi: Ekipa Czwartkowa</p>
+                        </div>
+                        <div class="glass-panel p-4 rounded-xl border-l-4 border-radio-pink/50 hover:border-radio-pink transition group">
+                            <span class="block text-radio-pink font-bold text-sm mb-1 font-mono">18:00 - 19:00</span>
+                            <h4 class="text-lg font-bold text-white group-hover:text-radio-pink transition">Kulturalnie o Kulturze</h4>
+                            <p class="text-sm text-gray-400">Kino, Teatr, Netflix</p>
+                        </div>
+                        <div class="glass-panel p-4 rounded-xl border-l-4 border-radio-pink/50 hover:border-radio-pink transition group">
+                            <span class="block text-radio-pink font-bold text-sm mb-1 font-mono">19:00 - 20:00</span>
+                            <h4 class="text-lg font-bold text-white group-hover:text-radio-pink transition">Rockowa Audycja</h4>
+                            <p class="text-sm text-gray-400">Gitary i mocne uderzenie</p>
+                        </div>
+                        <div class="glass-panel p-4 rounded-xl border-l-4 border-radio-pink/50 hover:border-radio-pink transition group">
+                            <span class="block text-radio-pink font-bold text-sm mb-1 font-mono">20:00 - 21:00</span>
+                            <h4 class="text-lg font-bold text-white group-hover:text-radio-pink transition">Elektronika Nocą</h4>
+                            <p class="text-sm text-gray-400">Techno, House, DnB</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-12 text-center">
+                <p class="text-gray-500 text-sm">Chcesz poprowadzić własną audycję? <a href="#contact" class="text-radio-accent hover:underline font-bold text-lg">Zgłoś się do nas!</a></p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ZESPÓŁ -->
+    <section id="team" class="py-12 relative border-t border-slate-800/50 scroll-mt-24">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-10">
+                <h2 class="text-3xl md:text-5xl font-bold mb-4">Poznaj nasz <span class="text-radio-neon">Zespół</span></h2>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-12">
+                <!-- Realizacja -->
+                <div>
+                    <h3 class="text-xl font-bold mb-6 flex items-center gap-2">
+                        <i data-lucide="sliders" class="text-radio-pink"></i> Realizacja
+                    </h3>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="glass-panel p-4 rounded-xl text-center hover:bg-white/5 transition">
+                            <img src="https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?q=80&w=150&auto=format&fit=crop" class="w-16 h-16 mx-auto rounded-full mb-2 object-cover">
+                            <h4 class="font-bold text-sm">Marek</h4>
+                        </div>
+                        <div class="glass-panel p-4 rounded-xl text-center hover:bg-white/5 transition">
+                            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=150&auto=format&fit=crop" class="w-16 h-16 mx-auto rounded-full mb-2 object-cover">
+                            <h4 class="font-bold text-sm">Kasia</h4>
+                        </div>
+                        <div class="glass-panel p-4 rounded-xl text-center hover:bg-white/5 transition">
+                            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=150&auto=format&fit=crop" class="w-16 h-16 mx-auto rounded-full mb-2 object-cover">
+                            <h4 class="font-bold text-sm">Bartek</h4>
+                        </div>
+                        <div class="glass-panel p-4 rounded-xl text-center hover:bg-white/5 transition">
+                            <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?q=80&w=150&auto=format&fit=crop" class="w-16 h-16 mx-auto rounded-full mb-2 object-cover">
+                            <h4 class="font-bold text-sm">Julia</h4>
+                        </div>
+                        <div class="col-span-2 border-2 border-dashed border-gray-700 rounded-xl flex flex-col items-center justify-center text-gray-500 hover:text-white hover:border-white transition cursor-pointer py-6" onclick="document.getElementById('contact').scrollIntoView();">
+                            <i data-lucide="plus" class="w-6 h-6 mb-2"></i>
+                            <span class="text-xs font-bold uppercase">Dołącz do ekipy</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Twórcy Audycji -->
+                <div>
+                    <h3 class="text-xl font-bold mb-6 flex items-center gap-2">
+                        <i data-lucide="mic" class="text-radio-neon"></i> Twórcy Audycji
+                    </h3>
+                    <div class="relative bg-slate-800/30 rounded-xl p-2 border border-slate-700/50">
+                        <button onclick="scrollCreators('up')" class="w-full py-2 flex items-center justify-center hover:bg-white/5 text-gray-400 hover:text-white transition rounded-t-lg mb-2">
+                            <i data-lucide="chevron-up" class="w-5 h-5"></i>
+                        </button>
+
+                        <div id="creators-list" class="space-y-4 h-[400px] overflow-y-auto scroll-smooth pr-2" style="scrollbar-width: none; -ms-overflow-style: none;">
+                            <div class="glass-panel p-3 flex gap-4 rounded-xl items-center hover:bg-slate-800/50 transition">
+                                <img src="https://images.unsplash.com/photo-1529068755536-a5ade6532911?q=80&w=100&auto=format&fit=crop" class="w-12 h-12 rounded-lg object-cover">
+                                <div><h4 class="font-bold">Magda & Tomek</h4><p class="text-xs text-radio-neon">"Poranne Espresso"</p></div>
+                            </div>
+                            <div class="glass-panel p-3 flex gap-4 rounded-xl items-center hover:bg-slate-800/50 transition">
+                                <img src="https://images.unsplash.com/photo-1501196354995-cbb51c65aaea?q=80&w=100&auto=format&fit=crop" class="w-12 h-12 rounded-lg object-cover">
+                                <div><h4 class="font-bold">DJ Chris</h4><p class="text-xs text-radio-neon">"Elektronika Nocą"</p></div>
+                            </div>
+                            <div class="glass-panel p-3 flex gap-4 rounded-xl items-center hover:bg-slate-800/50 transition">
+                                <img src="https://images.unsplash.com/photo-1488426862026-3ee34a7d66df?q=80&w=100&auto=format&fit=crop" class="w-12 h-12 rounded-lg object-cover">
+                                <div><h4 class="font-bold">Zuza</h4><p class="text-xs text-radio-neon">"Magazyn Kulturalny"</p></div>
+                            </div>
+                            <div class="glass-panel p-3 flex gap-4 rounded-xl items-center hover:bg-slate-800/50 transition">
+                                <div class="w-12 h-12 rounded-lg bg-indigo-500/20 flex items-center justify-center text-indigo-300 font-bold border border-indigo-500/30">KG</div>
+                                <div><h4 class="font-bold">Kuba "Gaduła"</h4><p class="text-xs text-radio-neon">"Gadane Rano"</p></div>
+                            </div>
+                        </div>
+
+                        <button onclick="scrollCreators('down')" class="w-full py-2 flex items-center justify-center hover:bg-white/5 text-gray-400 hover:text-white transition rounded-b-lg mt-2">
+                            <i data-lucide="chevron-down" class="w-5 h-5"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACT & ABOUT -->
+    <section id="contact" class="py-12 relative overflow-hidden bg-gradient-to-b from-radio-dark to-slate-950 border-t border-slate-800 scroll-mt-24">
+        <div class="container mx-auto px-6 relative z-10">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-5xl font-bold mb-6">O nas i <span class="text-radio-neon">Rekrutacja</span></h2>
+            </div>
+
+            <div class="max-w-4xl mx-auto glass-panel p-8 md:p-12 rounded-3xl mb-12 border border-slate-700/50">
+                <div class="space-y-6 text-gray-300 leading-relaxed text-lg text-left">
+                    <p>
+                        <span class="text-radio-accent font-bold text-xl">Uniradio</span> to niezależne, nieustannie rozwijające się radio internetowe wydziału dziennikarstwa i komunikacji społecznej UWr. Projekt studencki zainicjowano w ówczesnej Katedrze Dziennikarstwa w 2002 roku, a obecnie działa pod okiem <span class="text-white font-semibold">dr. Łukasza Śmigla</span>.
+                    </p>
+                    <p>
+                        W obrębie projektu studenci mogą poznawać tajniki pracy radiowców „od kuchni” — uczyć się przygotowywania autorskich audycji, realizowania dźwięku oraz odpowiadania za promocję projektu. Zdobyte doświadczenie niejednokrotnie pozwoliło absolwentom kontynuować pasję w profesjonalnych instytucjach medialnych, takich jak <span class="text-radio-neon">Radio Wrocław</span> czy <span class="text-radio-neon">Radio RAM</span>.
+                    </p>
+                    <p>
+                        Audycje nadawane są z <span class="text-white font-semibold">sali radiowej 102</span> w budynku Instytutu Dziennikarstwa przy ulicy Joliot-Curie, a materiały rozpowszechniane online.
+                    </p>
+                    <p>
+                        Ramówka ustalana jest na początku każdego semestru, koncentrując się na kreatywności oraz wkładzie własnym uczestników projektu, umożliwiając jednocześnie naukę poprzez eksperymenty z formą. <span class="text-radio-pink font-semibold">Realizacja dźwięku</span> skupia się na kontroli aspektów technicznych emitowanego materiału, czego studenci mogą nauczyć się między innymi na specjalnych szkoleniach organizowanych przez <span class="text-white font-semibold">dr. Jakuba Wilka</span>. Tworzenie materiałów promocyjnych obejmuje robienie zdjęć, grafik, postów na media społecznościowe oraz nadzór strony internetowej projektu.
+                    </p>
+                    
+                    <div class="border-t border-slate-700 pt-6 mt-8">
+                        <p class="font-bold text-white text-xl mb-4 italic">Zapraszamy wszystkich chętnych do współpracy — niezależnie od wiedzy i umiejętności.</p>
+                        <div class="flex flex-col md:flex-row items-center gap-3 bg-slate-800/50 p-4 rounded-xl border border-slate-700 inline-flex">
+                            <i data-lucide="mail" class="text-radio-accent w-6 h-6"></i>
+                            <a href="mailto:projektuniradio@gmail.com" class="text-xl font-bold text-white hover:text-radio-accent transition decoration-radio-accent hover:underline underline-offset-4">projektuniradio@gmail.com</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- MAPA -->
+            <div class="max-w-5xl mx-auto text-center">
+                <h3 class="text-2xl font-bold mb-4">Tutaj znajdziesz nasze studio</h3>
+                <p class="text-gray-400 mb-8">Fryderyka Joliot-Curie 15, Wrocław, sala 102.</p>
+                <div class="glass-panel p-2 rounded-2xl overflow-hidden h-[400px] border border-slate-700/50">
+                    <iframe src="https://maps.google.com/maps?q=51.11103944446098,17.053642186250958&hl=pl&z=18&output=embed" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" class="grayscale opacity-80 hover:grayscale-0 hover:opacity-100 transition duration-700"></iframe>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-slate-950 pt-4 pb-24 border-t border-slate-800">
+        <div class="container mx-auto px-6 flex flex-col items-center text-center">
+            <div class="flex items-center gap-2 mb-1">
+                <i data-lucide="radio" class="text-radio-accent w-4 h-4"></i>
+                <span class="text-base font-bold">UniRadio</span>
+            </div>
+            <p class="text-gray-600 text-[10px] max-w-sm uppercase tracking-widest">Gramy słowem</p>
+        </div>
+    </footer>
+
+    <!-- STICKY PLAYER BAR -->
+    <div class="fixed bottom-0 left-0 w-full bg-slate-900/95 backdrop-blur-lg border-t border-slate-700 z-50 py-3" id="player-bar">
+        <div class="container mx-auto px-4 flex items-center justify-between gap-4">
+            <div class="flex items-center gap-4 w-1/3">
+                <div class="w-12 h-12 bg-slate-800 rounded-lg overflow-hidden relative"><img src="https://images.unsplash.com/photo-1470225620780-dba8ba36b745?q=80&w=100&auto=format&fit=crop" class="w-full h-full object-cover opacity-80"></div>
+                <div class="hidden sm:block overflow-hidden"><h4 class="font-bold text-sm truncate text-white">Transmisja na żywo</h4><p class="text-xs text-gray-400">UniRadio Projekt</p></div>
+            </div>
+            <div class="flex items-center justify-center gap-6 w-1/3">
+                <button class="text-gray-400 hover:text-white transition"><i data-lucide="skip-back" class="w-5 h-5"></i></button>
+                <button onclick="openPlayer()" class="w-12 h-12 rounded-full bg-white text-radio-dark flex items-center justify-center hover:scale-105 transition"><i data-lucide="play" class="w-6 h-6 fill-current ml-1"></i></button>
+                <button class="text-gray-400 hover:text-white transition"><i data-lucide="skip-forward" class="w-5 h-5"></i></button>
+            </div>
+            <div class="w-1/3"></div>
+        </div>
+    </div>
+
+    <script>
+        lucide.createIcons();
+        function scrollCreators(direction) {
+            const list = document.getElementById('creators-list');
+            const scrollAmount = 150;
+            if (direction === 'up') { list.scrollBy({ top: -scrollAmount, behavior: 'smooth' }); }
+            else { list.scrollBy({ top: scrollAmount, behavior: 'smooth' }); }
+        }
+        function openPlayer() { window.open('https://uniradioprojekt.radio12345.com/', 'UniRadioPlayer', 'width=400,height=600,menubar=no,toolbar=no,location=no,status=no'); }
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) { navbar.classList.add('bg-slate-900/90', 'shadow-lg'); }
+            else { navbar.classList.remove('bg-slate-900/90', 'shadow-lg'); }
+        });
+    </script>
+</body>
+</html>
