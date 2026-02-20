@@ -3,7 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UniRadio - Podcasty</title>
+    <title>Uniradio - Podcasty</title>
+    <!-- Wymuszenie ikony - rozszerzone wsparcie dla różnych przeglądarek (PNG + większe rozmiary) -->
+    <link rel="icon" type="image/png" sizes="32x32" href="logogradientbeztekstu.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="logogradientbeztekstu.png">
+    <link rel="shortcut icon" type="image/png" href="logogradientbeztekstu.png">
+    <link rel="apple-touch-icon" href="logogradientbeztekstu.png">
+    
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Ikony -->
@@ -54,8 +60,8 @@
 
     <!-- Navbar -->
     <nav class="fixed w-full z-50 transition-all duration-300" id="navbar">
-        <div class="container mx-auto px-6 py-4 flex justify-between items-center glass-panel rounded-b-2xl mt-0">
-            <!-- Logo z mechanizmem Fallback -->
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center glass-panel rounded-b-2xl mt-0 relative z-50">
+            <!-- Logo z mechanizmem Fallback (PRZYWRÓCONE) -->
             <a href="index.html" class="flex items-center gap-3 hover:opacity-90 transition group">
                 <img src="logogradientztekstem.png" 
                      alt="UniRadio Logo" 
@@ -79,7 +85,7 @@
                 </div>
             </a>
             
-            <!-- Linki -->
+            <!-- Linki Desktop -->
             <div class="hidden md:flex items-center space-x-8 font-medium">
                 <a href="index.html" class="hover:text-radio-accent transition">Start</a>
                 <div class="h-6 w-px bg-white/20"></div>
@@ -93,9 +99,25 @@
                     <i data-lucide="instagram" class="w-5 h-5 group-hover:scale-110 transition"></i>
                     <span class="text-xs font-bold hidden lg:inline">Instagram</span>
                 </a>
-                <button class="md:hidden text-gray-300">
-                    <i data-lucide="menu"></i>
+
+                <!-- Mobile Menu Button -->
+                <button class="md:hidden text-gray-300 hover:text-white transition" onclick="toggleMobileMenu()">
+                    <i data-lucide="menu" class="w-8 h-8"></i>
                 </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu Container -->
+        <div id="mobile-menu" class="hidden md:hidden absolute top-full left-0 w-full px-4 -mt-2 pb-4">
+            <div class="glass-panel rounded-2xl p-6 flex flex-col space-y-4 shadow-2xl animate-in slide-in-from-top-4 duration-200">
+                <a href="index.html" class="text-lg font-medium hover:text-radio-accent transition border-b border-white/5 pb-2" onclick="toggleMobileMenu()">Start</a>
+                
+                <a href="#" class="text-lg font-bold text-radio-neon hover:text-white transition flex items-center gap-2" onclick="toggleMobileMenu()">
+                    <i data-lucide="headphones" class="w-4 h-4"></i> Podcasty
+                </a>
+                <a href="artykuly.html" class="text-lg font-bold text-radio-pink hover:text-white transition flex items-center gap-2" onclick="toggleMobileMenu()">
+                    <i data-lucide="file-text" class="w-4 h-4"></i> Artykuły
+                </a>
             </div>
         </div>
     </nav>
@@ -314,6 +336,12 @@
                 renderPodcasts();
             });
         });
+
+        // --- OBSŁUGA MENU MOBILNEGO ---
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
         
         // --- Navbar Scroll Effect ---
         window.addEventListener('scroll', () => {
