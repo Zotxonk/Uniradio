@@ -286,19 +286,19 @@
                     </h3>
                     <div class="grid grid-cols-2 gap-4">
                         <div class="glass-panel p-4 rounded-xl text-center hover:bg-white/5 transition">
-                            <img src="https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?q=80&w=150&auto=format&fit=crop" class="w-16 h-16 mx-auto rounded-full mb-2 object-cover">
+                            <div class="w-16 h-16 mx-auto rounded-full bg-blue-500/20 flex items-center justify-center text-blue-300 font-bold text-2xl border border-blue-500/30 mb-2">M</div>
                             <h4 class="font-bold text-sm">Marek</h4>
                         </div>
                         <div class="glass-panel p-4 rounded-xl text-center hover:bg-white/5 transition">
-                            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=150&auto=format&fit=crop" class="w-16 h-16 mx-auto rounded-full mb-2 object-cover">
+                            <div class="w-16 h-16 mx-auto rounded-full bg-pink-500/20 flex items-center justify-center text-pink-300 font-bold text-2xl border border-pink-500/30 mb-2">K</div>
                             <h4 class="font-bold text-sm">Kasia</h4>
                         </div>
                         <div class="glass-panel p-4 rounded-xl text-center hover:bg-white/5 transition">
-                            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=150&auto=format&fit=crop" class="w-16 h-16 mx-auto rounded-full mb-2 object-cover">
+                            <div class="w-16 h-16 mx-auto rounded-full bg-emerald-500/20 flex items-center justify-center text-emerald-300 font-bold text-2xl border border-emerald-500/30 mb-2">B</div>
                             <h4 class="font-bold text-sm">Bartek</h4>
                         </div>
                         <div class="glass-panel p-4 rounded-xl text-center hover:bg-white/5 transition">
-                            <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?q=80&w=150&auto=format&fit=crop" class="w-16 h-16 mx-auto rounded-full mb-2 object-cover">
+                            <div class="w-16 h-16 mx-auto rounded-full bg-purple-500/20 flex items-center justify-center text-purple-300 font-bold text-2xl border border-purple-500/30 mb-2">J</div>
                             <h4 class="font-bold text-sm">Julia</h4>
                         </div>
                         <div class="col-span-2 border-2 border-dashed border-gray-700 rounded-xl flex flex-col items-center justify-center text-gray-500 hover:text-white hover:border-white transition cursor-pointer py-6" onclick="document.getElementById('contact').scrollIntoView();">
@@ -308,10 +308,10 @@
                     </div>
                 </div>
 
-                <!-- Twórcy Audycji -->
+                <!-- Twórcy -->
                 <div>
                     <h3 class="text-xl font-bold mb-6 flex items-center gap-2">
-                        <i data-lucide="mic" class="text-radio-neon"></i> Twórcy Audycji
+                        <i data-lucide="mic" class="text-radio-neon"></i> Twórcy
                     </h3>
                     <div class="relative bg-slate-800/30 rounded-xl p-2 border border-slate-700/50">
                         <button onclick="scrollCreators('up')" class="w-full py-2 flex items-center justify-center hover:bg-white/5 text-gray-400 hover:text-white transition rounded-t-lg mb-2">
@@ -319,21 +319,55 @@
                         </button>
 
                         <div id="creators-list" class="space-y-4 h-[400px] overflow-y-auto scroll-smooth pr-2" style="scrollbar-width: none; -ms-overflow-style: none;">
+                            <!-- Osoba 1 -->
                             <div class="glass-panel p-3 flex gap-4 rounded-xl items-center hover:bg-slate-800/50 transition">
-                                <img src="https://images.unsplash.com/photo-1529068755536-a5ade6532911?q=80&w=100&auto=format&fit=crop" class="w-12 h-12 rounded-lg object-cover">
-                                <div><h4 class="font-bold">Magda & Tomek</h4><p class="text-xs text-radio-neon">"Poranne Espresso"</p></div>
+                                <div class="w-12 h-12 shrink-0 rounded-lg bg-rose-500/20 flex items-center justify-center text-rose-300 font-bold text-xl border border-rose-500/30">A</div>
+                                <div><h4 class="font-bold">Anna</h4><p class="text-xs text-radio-neon">"Poranki z Anią"</p></div>
                             </div>
+                            <!-- Osoba 2 -->
                             <div class="glass-panel p-3 flex gap-4 rounded-xl items-center hover:bg-slate-800/50 transition">
-                                <img src="https://images.unsplash.com/photo-1501196354995-cbb51c65aaea?q=80&w=100&auto=format&fit=crop" class="w-12 h-12 rounded-lg object-cover">
-                                <div><h4 class="font-bold">DJ Chris</h4><p class="text-xs text-radio-neon">"Elektronika Nocą"</p></div>
+                                <div class="w-12 h-12 shrink-0 rounded-lg bg-blue-500/20 flex items-center justify-center text-blue-300 font-bold text-xl border border-blue-500/30">P</div>
+                                <div><h4 class="font-bold">Piotr</h4><p class="text-xs text-radio-neon">"Rockoteka"</p></div>
                             </div>
+                            <!-- Osoba 3 -->
                             <div class="glass-panel p-3 flex gap-4 rounded-xl items-center hover:bg-slate-800/50 transition">
-                                <img src="https://images.unsplash.com/photo-1488426862026-3ee34a7d66df?q=80&w=100&auto=format&fit=crop" class="w-12 h-12 rounded-lg object-cover">
-                                <div><h4 class="font-bold">Zuza</h4><p class="text-xs text-radio-neon">"Magazyn Kulturalny"</p></div>
+                                <div class="w-12 h-12 shrink-0 rounded-lg bg-purple-500/20 flex items-center justify-center text-purple-300 font-bold text-xl border border-purple-500/30">K</div>
+                                <div><h4 class="font-bold">Katarzyna</h4><p class="text-xs text-radio-neon">"Kino i my"</p></div>
                             </div>
+                            <!-- Osoba 4 -->
                             <div class="glass-panel p-3 flex gap-4 rounded-xl items-center hover:bg-slate-800/50 transition">
-                                <div class="w-12 h-12 rounded-lg bg-indigo-500/20 flex items-center justify-center text-indigo-300 font-bold border border-indigo-500/30">KG</div>
-                                <div><h4 class="font-bold">Kuba "Gaduła"</h4><p class="text-xs text-radio-neon">"Gadane Rano"</p></div>
+                                <div class="w-12 h-12 shrink-0 rounded-lg bg-emerald-500/20 flex items-center justify-center text-emerald-300 font-bold text-xl border border-emerald-500/30">M</div>
+                                <div><h4 class="font-bold">Michał</h4><p class="text-xs text-radio-neon">"Sportowy Tydzień"</p></div>
+                            </div>
+                            <!-- Osoba 5 -->
+                            <div class="glass-panel p-3 flex gap-4 rounded-xl items-center hover:bg-slate-800/50 transition">
+                                <div class="w-12 h-12 shrink-0 rounded-lg bg-amber-500/20 flex items-center justify-center text-amber-300 font-bold text-xl border border-amber-500/30">A</div>
+                                <div><h4 class="font-bold">Agnieszka</h4><p class="text-xs text-radio-neon">"Studenckie plotki"</p></div>
+                            </div>
+                            <!-- Osoba 6 -->
+                            <div class="glass-panel p-3 flex gap-4 rounded-xl items-center hover:bg-slate-800/50 transition">
+                                <div class="w-12 h-12 shrink-0 rounded-lg bg-cyan-500/20 flex items-center justify-center text-cyan-300 font-bold text-xl border border-cyan-500/30">T</div>
+                                <div><h4 class="font-bold">Tomasz</h4><p class="text-xs text-radio-neon">"Techno Strefa"</p></div>
+                            </div>
+                            <!-- Osoba 7 -->
+                            <div class="glass-panel p-3 flex gap-4 rounded-xl items-center hover:bg-slate-800/50 transition">
+                                <div class="w-12 h-12 shrink-0 rounded-lg bg-indigo-500/20 flex items-center justify-center text-indigo-300 font-bold text-xl border border-indigo-500/30">M</div>
+                                <div><h4 class="font-bold">Magdalena</h4><p class="text-xs text-radio-neon">"Kulturalny Wieczór"</p></div>
+                            </div>
+                            <!-- Osoba 8 -->
+                            <div class="glass-panel p-3 flex gap-4 rounded-xl items-center hover:bg-slate-800/50 transition">
+                                <div class="w-12 h-12 shrink-0 rounded-lg bg-orange-500/20 flex items-center justify-center text-orange-300 font-bold text-xl border border-orange-500/30">J</div>
+                                <div><h4 class="font-bold">Jan</h4><p class="text-xs text-radio-neon">"Historia Muzyki"</p></div>
+                            </div>
+                            <!-- Osoba 9 -->
+                            <div class="glass-panel p-3 flex gap-4 rounded-xl items-center hover:bg-slate-800/50 transition">
+                                <div class="w-12 h-12 shrink-0 rounded-lg bg-teal-500/20 flex items-center justify-center text-teal-300 font-bold text-xl border border-teal-500/30">Z</div>
+                                <div><h4 class="font-bold">Zofia</h4><p class="text-xs text-radio-neon">"Nocne Rozmowy"</p></div>
+                            </div>
+                            <!-- Osoba 10 -->
+                            <div class="glass-panel p-3 flex gap-4 rounded-xl items-center hover:bg-slate-800/50 transition">
+                                <div class="w-12 h-12 shrink-0 rounded-lg bg-red-500/20 flex items-center justify-center text-red-300 font-bold text-xl border border-red-500/30">K</div>
+                                <div><h4 class="font-bold">Krzysztof</h4><p class="text-xs text-radio-neon">"Retro Brzmienia"</p></div>
                             </div>
                         </div>
 
