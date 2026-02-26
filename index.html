@@ -309,7 +309,7 @@
                             </div>
                             <div class="glass-panel p-3 flex gap-4 rounded-xl items-center hover:bg-slate-800/50 transition">
                                 <div class="w-12 h-12 shrink-0 rounded-lg bg-teal-500/20 flex items-center justify-center text-teal-300 font-bold text-xl border border-teal-500/30">D</div>
-                                <div><h4 class="font-bold">Dawid Gruszka</h4><p class="text-xs text-radio-neon">"(Nie)dobre, bo polskie"</p></div>
+                                <div><h4 class="font-bold">Dawid Gruszka</h4><p class="text-xs text-radio-neon">"(Nie)dobre, bo polskie", "Kram"</p></div>
                             </div>
                             <div class="glass-panel p-3 flex gap-4 rounded-xl items-center hover:bg-slate-800/50 transition">
                                 <div class="w-12 h-12 shrink-0 rounded-lg bg-amber-500/20 flex items-center justify-center text-amber-300 font-bold text-xl border border-amber-500/30">W</div>
@@ -437,7 +437,7 @@
                     name: "Wariant 1",
                     sroda: [
                         { time: "18:00", title: "Wejście na Antenę", presenter: "" },
-                        { time: "18:05", title: "Queer Corner", presenter: "Ola Kuchnowska" },
+                        { time: "18:05", title: "Głos Azji", presenter: "Weronika Kosobudzka" },
                         { time: "19:05", title: "Blaszak", presenter: "Lauri Potocki" },
                         { time: "20:05", title: "Zejście z Anteny", presenter: "" }
                     ],
@@ -459,7 +459,7 @@
                     name: "Wariant 2",
                     sroda: [
                         { time: "18:00", title: "Wejście na Antenę", presenter: "" },
-                        { time: "18:05", title: "Głos Azji", presenter: "Weronika Kosobudzka" },
+                        { time: "18:05", title: "Queer Corner", presenter: "Ola Kuchnowska" },
                         { time: "19:05", title: "Blaszak", presenter: "Lauri Potocki" },
                         { time: "20:05", title: "Zejście z Anteny", presenter: "" }
                     ],
@@ -744,6 +744,19 @@
                     const dayData = data[dayInfo.id];
                     if (!dayData) return;
                     
+                    let renderedData = dayData;
+
+                    // --- WYJĄTEK: KRAM 26 LUTEGO 2026 ---
+                    if (formatDateStr(specificDate) === '2026-02-26' && dayInfo.id === 'czwartek') {
+                        renderedData = renderedData.map(item => {
+                            // Nadpisz audycję o 19:00 na "Kram" dla tej jednej daty
+                            if (item.time === '19:00') {
+                                return { time: "19:00", title: "Kram", presenter: "Dawid Gruszka" };
+                            }
+                            return item;
+                        });
+                    }
+                    
                     const styling = styleDictionary[dayInfo.color];
                     const col = document.createElement('div');
                     
@@ -754,7 +767,7 @@
                         <div class="space-y-4">
                     `;
 
-                    dayData.forEach(item => {
+                    renderedData.forEach(item => {
                         const presenterHtml = item.presenter ? `<p class="text-sm text-gray-400 mt-1">${item.presenter}</p>` : '';
                         html += `
                             <div class="glass-panel p-4 rounded-xl border-l-4 ${styling.borderL} ${styling.borderHover} transition-colors duration-300 group">
