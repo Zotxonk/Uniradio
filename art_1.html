@@ -78,8 +78,16 @@
             transition: width 0.1s;
         }
 
-        /* Typography overrides for Tailwind prose mimic manually */
-        .article-content p { margin-bottom: 1.5rem; line-height: 1.8; font-size: 1.125rem; }
+        /* Typography overrides for Tailwind prose mimic manually - DODANO WYJUSTOWANIE I DZIELENIE WYRAZÓW */
+        .article-content p { 
+            margin-bottom: 1.5rem; 
+            line-height: 1.8; 
+            font-size: 1.125rem; 
+            text-align: justify; 
+            -webkit-hyphens: auto; 
+            -ms-hyphens: auto; 
+            hyphens: auto; 
+        }
         .article-content h2 { font-size: 1.875rem; font-weight: 700; margin-top: 3rem; margin-bottom: 1rem; color: white; }
         .article-content blockquote { 
             border-left: 4px solid #8b5cf6; 
@@ -91,6 +99,7 @@
             background: rgba(139, 92, 246, 0.1);
             padding: 1.5rem;
             border-radius: 0 1rem 1rem 0;
+            text-align: left; /* Zabezpieczenie przed justowaniem w cytatach */
         }
         .article-content ul { list-style-type: disc; padding-left: 1.5rem; margin-bottom: 1.5rem; }
         .article-content li { margin-bottom: 0.5rem; }
@@ -156,7 +165,7 @@
     <header class="relative pt-32 pb-20 overflow-hidden">
         <!-- Tło z gradientem i obrazkiem - użyto ujęcia na mikser -->
         <div class="absolute inset-0 z-0">
-            <img src="mikser_close.jpg" class="w-full h-full object-cover opacity-20">
+            <img src="mikser_close.jpg" class="w-full h-full object-cover opacity-20" alt="Tło artykułu">
             <div class="absolute inset-0 bg-gradient-to-t from-radio-dark via-radio-dark/80 to-radio-dark/40"></div>
         </div>
 
