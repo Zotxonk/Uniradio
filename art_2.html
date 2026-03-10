@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Uniradio otwarte na nowe twarze! - Uniradio</title>
+    <!-- Wymuszenie ikony - rozszerzone wsparcie dla różnych przeglądarek (PNG + większe rozmiary) -->
+    <link rel="icon" type="image/png" sizes="32x32" href="logogradientbeztekstu.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="logogradientbeztekstu.png">
+    <link rel="shortcut icon" type="image/png" href="logogradientbeztekstu.png">
+    <link rel="apple-touch-icon" href="logogradientbeztekstu.png">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Ikony -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Fonty: DM Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['DM Sans', 'sans-serif'],
+                    },
+                    colors: {
+                        'radio-dark': '#0f172a',
+                        'radio-accent': '#8b5cf6', // Fioletowy akcent
+                        'radio-neon': '#38bdf8',   // Błękitny neon
+                        'radio-pink': '#f472b6',
+                    },
+                    typography: {
+                        DEFAULT: {
+                            css: {
+                                color: '#94a3b8',
+                                h1: { color: '#fff' },
+                                h2: { color: '#fff' },
+                                h3: { color: '#fff' },
+                                strong: { color: '#f8fafc' },
+                                blockquote: { 
+                                    borderLeftColor: '#8b5cf6',
+                                    color: '#e2e8f0',
+                                },
+                            },
+                        },
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #1e293b; }
+        ::-webkit-scrollbar-thumb { background: #475569; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #64748b; }
+        
+        html { scroll-behavior: smooth; }
+        
+        .glass-panel {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Progress Bar */
+        #reading-progress {
+            width: 0%;
+            height: 4px;
+            background: linear-gradient(90deg, #8b5cf6, #38bdf8);
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 100;
+            transition: width 0.1s;
+        }
+
+        /* Typography overrides for Tailwind prose mimic manually */
+        .article-content p { margin-bottom: 1.5rem; line-height: 1.8; font-size: 1.125rem; }
+        .article-content h2 { font-size: 1.875rem; font-weight: 700; margin-top: 3rem; margin-bottom: 1rem; color: white; }
+        .article-content blockquote { 
+            border-left: 4px solid #8b5cf6; 
+            padding-left: 1.5rem; 
+            margin: 2rem 0; 
+            font-style: italic; 
+            font-size: 1.25rem;
+            color: #cbd5e1;
+            background: rgba(139, 92, 246, 0.1);
+            padding: 1.5rem;
+            border-radius: 0 1rem 1rem 0;
+        }
+        .article-content ul { list-style-type: disc; padding-left: 1.5rem; margin-bottom: 1.5rem; }
+        .article-content li { margin-bottom: 0.5rem; }
+        .drop-cap::first-letter {
+            float: left;
+            font-size: 4rem;
+            line-height: 0.8;
+            font-weight: bold;
+            color: #38bdf8;
+            padding-right: 0.5rem;
+            padding-top: 0.2rem;
+        }
+    </style>
+</head>
+<body class="bg-radio-dark text-white font-sans antialiased overflow-x-hidden pb-24">
+
+    <!-- Pasek postępu czytania -->
+    <div id="reading-progress"></div>
+
+    <!-- Navbar - zaaktualizowany według stylów z pliku artykuly.html -->
+    <nav class="fixed w-full z-50 transition-all duration-300" id="navbar">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center glass-panel rounded-b-2xl mt-0 relative z-50">
+            <!-- Logo z mechanizmem Fallback -->
+            <a href="/" class="flex items-center gap-3 hover:opacity-90 transition group">
+                <img src="logogradientztekstem.png" 
+                     alt="UniRadio Logo" 
+                     class="h-12 w-auto object-contain"
+                     onerror="this.style.display='none'; document.getElementById('fallback-logo').classList.remove('hidden'); document.getElementById('fallback-logo').classList.add('flex');">
+                
+                <div id="fallback-logo" class="hidden items-center gap-3">
+                    <div class="relative w-10 h-10 flex items-center justify-center">
+                        <svg viewBox="0 0 100 100" class="absolute inset-0 w-full h-full text-radio-accent group-hover:scale-110 transition duration-300">
+                            <circle cx="50" cy="50" r="7" fill="#38bdf8" />
+                            <path d="M38 38 A 18 18 0 0 0 38 62" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" />
+                            <path d="M28 28 A 32 32 0 0 0 28 72" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" />
+                            <path d="M62 38 A 18 18 0 0 1 62 62" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" />
+                            <path d="M72 28 A 32 32 0 0 1 72 72" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" />
+                        </svg>
+                    </div>
+                    <div class="flex flex-col leading-none">
+                        <span class="text-2xl font-black tracking-tighter uppercase">Uni<span class="text-radio-accent">Radio</span></span>
+                        <span class="text-[8px] uppercase tracking-[0.2em] font-bold text-gray-400">Uniwersytet Wrocławski</span>
+                    </div>
+                </div>
+            </a>
+            
+            <!-- Linki z zaktualizowanymi Href-ami -->
+            <div class="hidden md:flex items-center space-x-8 font-medium">
+                <a href="/" class="hover:text-radio-accent transition">Start</a>
+                <div class="h-6 w-px bg-white/20"></div>
+                <a href="podcasty" class="hover:text-radio-accent transition">Podcasty</a>
+                <a href="artykuly" class="text-radio-accent hover:text-radio-accent transition font-bold">Artykuły</a>
+            </div>
+
+            <div class="flex items-center gap-4">
+                <!-- Przycisk Powrotu (specyficzny dla widoku Artykułu) -->
+                <a href="artykuly" class="hidden md:flex items-center gap-2 text-gray-400 hover:text-white transition text-sm font-bold uppercase tracking-wider mr-2">
+                    <i data-lucide="arrow-left" class="w-4 h-4"></i> Powrót
+                </a>
+
+                <!-- Przycisk Instagram z artykuly.html -->
+                <a href="https://www.instagram.com/uniradio.projekt/" target="_blank" 
+                   class="flex items-center gap-2 bg-gradient-to-tr from-radio-accent/20 to-radio-pink/20 hover:from-radio-accent hover:to-radio-pink text-white px-4 py-2 rounded-full transition-all duration-300 border border-white/10 group shadow-lg shadow-radio-accent/10">
+                    <i data-lucide="instagram" class="w-5 h-5 group-hover:scale-110 transition"></i>
+                    <span class="text-xs font-bold hidden lg:inline">Instagram</span>
+                </a>
+
+                <button class="md:hidden text-gray-300 hover:text-white transition" onclick="toggleMobileMenu()">
+                    <i data-lucide="menu" class="w-8 h-8"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu Container -->
+        <div id="mobile-menu" class="hidden md:hidden absolute top-full left-0 w-full px-4 -mt-2 pb-4">
+            <div class="glass-panel rounded-2xl p-6 flex flex-col space-y-4 shadow-2xl animate-in slide-in-from-top-4 duration-200">
+                <a href="/" class="text-lg font-medium hover:text-radio-accent transition border-b border-white/5 pb-2" onclick="toggleMobileMenu()">Start</a>
+                <a href="podcasty" class="text-lg font-bold text-radio-neon hover:text-white transition flex items-center gap-2" onclick="toggleMobileMenu()">
+                    <i data-lucide="headphones" class="w-4 h-4"></i> Podcasty
+                </a>
+                <a href="artykuly" class="text-lg font-bold text-radio-pink hover:text-white transition flex items-center gap-2" onclick="toggleMobileMenu()">
+                    <i data-lucide="file-text" class="w-4 h-4"></i> Artykuły
+                </a>
+                <a href="artykuly" class="text-lg font-bold text-gray-400 hover:text-white transition flex items-center gap-2 border-t border-white/5 pt-2" onclick="toggleMobileMenu()">
+                    <i data-lucide="arrow-left" class="w-4 h-4"></i> Powrót do artykułów
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ARTICLE HERO (Zachowany wygląd hedera, zmienione dane i tło) -->
+    <header class="relative pt-32 pb-20 overflow-hidden">
+        <!-- Tło z gradientem i obrazkiem -->
+        <div class="absolute inset-0 z-0">
+            <img src="ludzie_grupa.jpg" class="w-full h-full object-cover opacity-20">
+            <div class="absolute inset-0 bg-gradient-to-t from-radio-dark via-radio-dark/80 to-radio-dark/40"></div>
+        </div>
+
+        <div class="container mx-auto px-6 relative z-10 max-w-4xl text-center">
+            
+            <h1 class="text-4xl md:text-6xl font-black leading-tight mb-6 tracking-tight">
+                Uniradio otwarte na nowe twarze!
+            </h1>
+            
+            <p class="text-xl text-gray-300 leading-relaxed mb-8 max-w-2xl mx-auto">
+                Relacja z pierwszego oficjalnego dnia otwartego w Instytucie Dziennikarstwa i Komunikacji Społecznej. Sprawdź, jak bawiliśmy się 5 marca!
+            </p>
+
+            <div class="flex items-center justify-center gap-6 text-sm text-gray-400">
+                <div class="flex items-center gap-2">
+                    <div class="w-10 h-10 rounded-full border border-slate-600 bg-slate-800 flex items-center justify-center">
+                        <i data-lucide="user" class="w-5 h-5 text-gray-400"></i>
+                    </div>
+                    <div class="text-left">
+                        <span class="block text-white font-bold">Zuzanna Biernacka</span>
+                        <span class="text-xs">Autorka</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT -->
+    <article class="container mx-auto px-6 relative z-10">
+        <div class="flex flex-col lg:flex-row gap-12 justify-center">
+            
+            <!-- Tekst artykułu -->
+            <div class="w-full lg:max-w-3xl article-content text-gray-300">
+                
+                <p class="drop-cap mt-4">
+                    5 marca w budynku Instytutu Dziennikarstwa i Komunikacji Społecznej przy ul. Joliot-Curie odbył się pierwszy oficjalny dzień otwarty Uniradia. Z tej okazji przygotowaliśmy specjalną ramówkę, w której pojawiły się zarówno audycje sztandarowe takie jak <em>Wzgórza Opowieści</em> Wojtka Paszko czy <em>Głos Azji</em> Weroniki Kosobudzkiej, ale także przygotowane specjalnie na tę okazję – format <em>Shuffle</em>.
+                </p>
+
+                <p>
+                    Nie zabrakło także powrotów. Na antenie gościliśmy chociażby Jasia Wątrobę czy Weronikę Bondaruk. Premierowo można też było posłuchać <em>(Nie)dobre, bo polskie</em>. Odwiedzić nas można było w godzinach 17:00-22:00.
+                </p>
+
+                <!-- Zdjęcie: Weronika przy mikrofonie -->
+                <figure class="my-10">
+                    <img src="wer_mic.jpg" alt="Studentka przy mikrofonie w studiu radiowym" class="w-full rounded-2xl border border-slate-700 shadow-2xl">
+                </figure>
+
+                <p>
+                    Redaktorzy Uniradia obecni na miejscu przeprowadzali zainteresowanych przez proces działania naszego projektu, a także odpowiadali na wszystkie pytania związane zarówno z samą inicjatywą, jak i na te dotyczące już konkretnych pomysłów. Na przyszłych adeptów radia czekał także poczęstunek.
+                </p>
+
+                <!-- Zdjęcie: Dwóch szefów -->
+                <figure class="my-10">
+                    <img src="dwa_szefy.jpg" alt="Dwóch realizatorów pracujących przy konsolecie" class="w-full rounded-2xl border border-slate-700 shadow-2xl">
+                </figure>
+
+                <blockquote>
+                    – Frekwencja przerosła nasze najśmielsze oczekiwania. Nie spodziewaliśmy się takiego odzewu – mówił redaktor naczelny Dawid Gruszka. – Dostajemy coraz więcej zgłoszeń. Co niezmiernie nas cieszy.
+                </blockquote>
+
+                <blockquote>
+                    – Było super. Właśnie wypełniłem formularz – tak wizytę opisał jeden z zainteresowanych.
+                </blockquote>
+
+                <h2>Dołącz do nas!</h2>
+                <p>
+                    Rekrutacja dalej jest otwarta. Zainteresowanych zapraszamy do wypełnienia formularza znajdującego się pod poniższym linkiem. Oczekujących na odpowiedź prosimy o cierpliwość – odezwiemy się wkrótce.
+                </p>
+
+                <div class="my-8 text-center md:text-left">
+                    <a href="https://linktr.ee/uniradio" target="_blank" class="inline-flex items-center gap-2 bg-radio-accent hover:bg-radio-neon text-white font-bold py-3 px-8 rounded-full transition-colors duration-300 shadow-lg shadow-radio-accent/20">
+                        <i data-lucide="link" class="w-5 h-5"></i>
+                        Wypełnij Formularz (Linktree)
+                    </a>
+                </div>
+
+                <!-- Zdjęcie: Wojtek uśmiechnięty -->
+                <figure class="my-10">
+                    <img src="wojtek_smiszne.jpg" alt="Zadowolony redaktor przed mikrofonem" class="w-full rounded-2xl border border-slate-700 shadow-2xl">
+                </figure>
+
+                <!-- Stopka autorska z docx -->
+                <div class="mt-12 pt-6 border-t border-slate-800 text-sm text-slate-500">
+                    <p><strong class="text-slate-400">Tekst:</strong> Zuzanna Biernacka</p>
+                    <p><strong class="text-slate-400">Zdjęcia:</strong> Anastazja Marek</p>
+                </div>
+
+            </div>
+        </div>
+    </article>
+
+    <!-- Footer -->
+    <footer class="bg-slate-950 pt-12 pb-12 border-t border-slate-800">
+        <div class="container mx-auto px-6 flex flex-col items-center text-center">
+            <div class="flex items-center gap-2 mb-2">
+                <i data-lucide="radio" class="text-radio-accent w-5 h-5"></i>
+                <span class="text-lg font-bold">Uniradio</span>
+            </div>
+            <p class="text-gray-600 text-[10px] uppercase tracking-widest">Gramy słowem</p>
+        </div>
+    </footer>
+
+    <!-- Skrypty -->
+    <script>
+        lucide.createIcons();
+        
+        // Pasek postępu czytania
+        window.onscroll = function() {
+            let winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            let height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            let scrolled = (winScroll / height) * 100;
+            document.getElementById("reading-progress").style.width = scrolled + "%";
+            
+            // Navbar effect
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) { 
+                navbar.classList.add('bg-slate-900/90', 'shadow-lg'); 
+            } else { 
+                navbar.classList.remove('bg-slate-900/90', 'shadow-lg'); 
+            }
+        };
+
+        // Obsługa menu mobilnego
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+    </script>
+</body>
+</html>
