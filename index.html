@@ -400,14 +400,14 @@
                     
                     <div class="border-t border-slate-700 pt-6 mt-8">
                         <p class="font-bold text-white text-xl mb-4 italic">Zapraszamy wszystkich chętnych do współpracy — niezależnie od wiedzy i umiejętności.</p>
-                        <div class="flex flex-col md:flex-row items-start md:items-center gap-4">
-                            <div class="flex items-center gap-3 bg-slate-800/50 p-4 rounded-xl border border-slate-700 inline-flex">
-                                <i data-lucide="link" class="text-radio-pink w-6 h-6"></i>
-                                <a href="https://linktr.ee/uniradio" target="_blank" class="text-xl font-bold text-white hover:text-radio-pink transition decoration-radio-pink hover:underline underline-offset-4">Formularz rekrutacyjny</a>
+                        <div class="flex flex-col md:flex-row items-start md:items-center gap-4 w-full">
+                            <div class="flex items-center gap-3 bg-slate-800/50 p-4 rounded-xl border border-slate-700 w-full md:w-auto">
+                                <i data-lucide="link" class="text-radio-pink w-6 h-6 shrink-0"></i>
+                                <a href="https://linktr.ee/uniradio" target="_blank" class="text-base md:text-xl font-bold text-white hover:text-radio-pink transition decoration-radio-pink hover:underline underline-offset-4">Formularz rekrutacyjny</a>
                             </div>
-                            <div class="flex items-center gap-3 bg-slate-800/50 p-4 rounded-xl border border-slate-700 inline-flex">
-                                <i data-lucide="mail" class="text-radio-accent w-6 h-6"></i>
-                                <a href="mailto:projektuniradio@gmail.com" class="text-xl font-bold text-white hover:text-radio-accent transition decoration-radio-accent hover:underline underline-offset-4">projektuniradio@gmail.com</a>
+                            <div class="flex items-center gap-3 bg-slate-800/50 p-4 rounded-xl border border-slate-700 w-full md:w-auto">
+                                <i data-lucide="mail" class="text-radio-accent w-6 h-6 shrink-0"></i>
+                                <a href="mailto:projektuniradio@gmail.com" class="text-base md:text-xl font-bold text-white hover:text-radio-accent transition decoration-radio-accent hover:underline underline-offset-4 break-all">projektuniradio@gmail.com</a>
                             </div>
                         </div>
                     </div>
@@ -433,7 +433,10 @@
                 <span class="text-base font-bold">UniRadio</span>
             </div>
             <p class="text-gray-600 text-[10px] max-w-sm uppercase tracking-widest">Gramy słowem</p>
-            <a href="galeria" class="mt-3 text-xs text-gray-500 hover:text-white font-normal transition-colors duration-300">Galeria</a>
+            <div class="mt-4 flex flex-col items-center gap-1 text-xs text-gray-500 font-normal">
+                <a href="galeria" class="hover:text-white transition-colors duration-300">Galeria</a>
+                <a href="polityka-prywatnosci" class="hover:text-white transition-colors duration-300">Polityka Prywatności</a>
+            </div>
         </div>
     </footer>
 
@@ -453,7 +456,63 @@
 
     <!-- SKRYPTY INTERAKCJI -->
     <script>
+        // --- SYSTEM COOKIES & RODO ---
+        const GA_TRACKING_ID = 'G-XXXXXXXXXX'; // TUTAJ WPISZ SWÓJ PRAWDZIWY KOD GOOGLE ANALYTICS
+
+        function loadGoogleAnalytics() {
+            if (window.gaLoaded) return;
+            const script = document.createElement('script');
+            script.src = `https://www.googletagmanager.com/gtag/js?id=${GA_TRACKING_ID}`;
+            script.async = true;
+            document.head.appendChild(script);
+
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', GA_TRACKING_ID);
+            window.gaLoaded = true;
+            console.log("Włączono skrypty śledzące.");
+        }
+
+        function enableServices() {
+            loadGoogleAnalytics(); // Uruchamia Analytics
+
+            const mapIframe = document.getElementById('google-map-iframe');
+            const mapPlaceholder = document.getElementById('map-placeholder');
+            
+            // Wstrzyknięcie Mapy Google w miejsce atrapy
+            if (mapIframe && mapIframe.getAttribute('data-src')) {
+                mapIframe.src = mapIframe.getAttribute('data-src');
+                mapIframe.removeAttribute('data-src');
+            }
+            if (mapPlaceholder) {
+                mapPlaceholder.style.opacity = '0';
+                setTimeout(() => mapPlaceholder.style.display = 'none', 500); // Płynne zanikanie atrapy
+            }
+        }
+
+        window.acceptCookies = function() {
+            localStorage.setItem('cookieConsent', 'granted');
+            document.getElementById('cookie-banner').classList.add('translate-y-full');
+            enableServices();
+        };
+
+        window.declineCookies = function() {
+            localStorage.setItem('cookieConsent', 'denied');
+            document.getElementById('cookie-banner').classList.add('translate-y-full');
+        };
+
         document.addEventListener('DOMContentLoaded', () => {
+            // Obsługa pojawiania się banera cookies przy wejściu na stronę
+            const consent = localStorage.getItem('cookieConsent');
+            if (consent === 'granted') {
+                enableServices(); 
+            } else if (consent === null) {
+                setTimeout(() => {
+                    document.getElementById('cookie-banner').classList.remove('translate-y-full');
+                }, 800);
+            }
+
             // Inicjalizacja stałych komponentów
             lucide.createIcons();
 
