@@ -3,18 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cisza nie trwa wiecznie… - Uniradio</title>
-    <!-- Wymuszenie ikony - rozszerzone wsparcie dla różnych przeglądarek (PNG + większe rozmiary) -->
+    <title>Polityka Prywatności - Uniradio</title>
     <link rel="icon" type="image/png" sizes="32x32" href="logogradientbeztekstu.png">
     <link rel="icon" type="image/png" sizes="192x192" href="logogradientbeztekstu.png">
     <link rel="shortcut icon" type="image/png" href="logogradientbeztekstu.png">
     <link rel="apple-touch-icon" href="logogradientbeztekstu.png">
     
-    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Ikony -->
     <script src="https://unpkg.com/lucide@latest"></script>
-    <!-- Fonty: DM Sans -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap" rel="stylesheet">
@@ -66,18 +62,6 @@
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        /* Progress Bar */
-        #reading-progress {
-            width: 0%;
-            height: 4px;
-            background: linear-gradient(90deg, #8b5cf6, #38bdf8);
-            position: fixed;
-            top: 0;
-            left: 0;
-            z-index: 100;
-            transition: width 0.1s;
-        }
-
         /* Typography overrides for Tailwind prose mimic manually - DODANO WYJUSTOWANIE I DZIELENIE WYRAZÓW */
         .article-content p { 
             margin-bottom: 1.5rem; 
@@ -89,40 +73,17 @@
             hyphens: auto; 
         }
         .article-content h2 { font-size: 1.875rem; font-weight: 700; margin-top: 3rem; margin-bottom: 1rem; color: white; }
-        .article-content blockquote { 
-            border-left: 4px solid #8b5cf6; 
-            padding-left: 1.5rem; 
-            margin: 2rem 0; 
-            font-style: italic; 
-            font-size: 1.25rem;
-            color: #cbd5e1;
-            background: rgba(139, 92, 246, 0.1);
-            padding: 1.5rem;
-            border-radius: 0 1rem 1rem 0;
-            text-align: left; /* Zabezpieczenie przed justowaniem w cytatach */
-        }
-        .article-content ul { list-style-type: disc; padding-left: 1.5rem; margin-bottom: 1.5rem; }
+        .article-content ul { list-style-type: disc; padding-left: 1.5rem; margin-bottom: 1.5rem; font-size: 1.125rem; line-height: 1.8; text-align: justify;}
         .article-content li { margin-bottom: 0.5rem; }
-        .drop-cap::first-letter {
-            float: left;
-            font-size: 4rem;
-            line-height: 0.8;
-            font-weight: bold;
-            color: #38bdf8;
-            padding-right: 0.5rem;
-            padding-top: 0.2rem;
-        }
+        .article-content li strong { color: #38bdf8; } /* Błękitne wyróżnienia w listach */
+        .article-content a { color: #8b5cf6; font-weight: bold; text-decoration: none; transition: color 0.3s; }
+        .article-content a:hover { color: #38bdf8; }
     </style>
 </head>
 <body class="bg-radio-dark text-white font-sans antialiased overflow-x-hidden pb-24">
 
-    <!-- Pasek postępu czytania -->
-    <div id="reading-progress"></div>
-
-    <!-- Navbar -->
     <nav class="fixed w-full z-50 transition-all duration-300" id="navbar">
-        <div class="container mx-auto px-6 py-4 flex justify-between items-center glass-panel rounded-b-2xl mt-0">
-            <!-- Logo -->
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center glass-panel rounded-b-2xl mt-0 relative z-50">
             <a href="/" class="flex items-center gap-3 hover:opacity-90 transition group">
                 <img src="logogradientztekstem.png" 
                      alt="UniRadio Logo" 
@@ -140,148 +101,211 @@
                         </svg>
                     </div>
                     <div class="flex flex-col leading-none">
-                        <span class="text-2xl font-black tracking-tighter uppercase">Uni<span class="text-radio-accent">radio</span></span>
+                        <span class="text-2xl font-black tracking-tighter uppercase">Uni<span class="text-radio-accent">Radio</span></span>
+                        <span class="text-[8px] uppercase tracking-[0.2em] font-bold text-gray-400">Uniwersytet Wrocławski</span>
                     </div>
                 </div>
             </a>
             
-            <!-- Linki -->
             <div class="hidden md:flex items-center space-x-8 font-medium">
                 <a href="/" class="hover:text-radio-accent transition">Start</a>
                 <div class="h-6 w-px bg-white/20"></div>
                 <a href="podcasty" class="hover:text-radio-accent transition">Podcasty</a>
-                <a href="artykuly" class="text-radio-accent hover:text-radio-accent transition font-bold">Artykuły</a>
+                <a href="artykuly" class="hover:text-radio-accent transition">Artykuły</a>
             </div>
 
             <div class="flex items-center gap-4">
-                <a href="artykuly" class="flex items-center gap-2 text-gray-400 hover:text-white transition text-sm font-bold uppercase tracking-wider">
+                <a href="/" class="hidden md:flex items-center gap-2 text-gray-400 hover:text-white transition text-sm font-bold uppercase tracking-wider mr-2">
                     <i data-lucide="arrow-left" class="w-4 h-4"></i> Powrót
+                </a>
+                <button class="md:hidden text-gray-300 hover:text-white transition" onclick="toggleMobileMenu()">
+                    <i data-lucide="menu" class="w-8 h-8"></i>
+                </button>
+            </div>
+        </div>
+
+        <div id="mobile-menu" class="hidden md:hidden absolute top-full left-0 w-full px-4 -mt-2 pb-4">
+            <div class="glass-panel rounded-2xl p-6 flex flex-col space-y-4 shadow-2xl animate-in slide-in-from-top-4 duration-200">
+                <a href="/" class="text-lg font-medium hover:text-radio-accent transition border-b border-white/5 pb-2" onclick="toggleMobileMenu()">Start</a>
+                <a href="podcasty" class="text-lg font-bold hover:text-white transition flex items-center gap-2" onclick="toggleMobileMenu()">
+                    <i data-lucide="headphones" class="w-4 h-4"></i> Podcasty
+                </a>
+                <a href="artykuly" class="text-lg font-bold hover:text-white transition flex items-center gap-2" onclick="toggleMobileMenu()">
+                    <i data-lucide="file-text" class="w-4 h-4"></i> Artykuły
+                </a>
+                <a href="/" class="text-lg font-bold text-gray-400 hover:text-white transition flex items-center gap-2 border-t border-white/5 pt-2" onclick="toggleMobileMenu()">
+                    <i data-lucide="arrow-left" class="w-4 h-4"></i> Powrót na stronę główną
                 </a>
             </div>
         </div>
     </nav>
 
-    <!-- ARTICLE HERO -->
-    <header class="relative pt-32 pb-20 overflow-hidden">
-        <!-- Tło z gradientem i obrazkiem - użyto ujęcia na mikser -->
-        <div class="absolute inset-0 z-0">
-            <img src="mikser_close.jpg" class="w-full h-full object-cover opacity-20" alt="Tło artykułu">
-            <div class="absolute inset-0 bg-gradient-to-t from-radio-dark via-radio-dark/80 to-radio-dark/40"></div>
-        </div>
+    <header class="relative pt-36 pb-12 overflow-hidden">
+        <div class="absolute top-0 right-0 w-[400px] h-[400px] bg-radio-pink/10 rounded-full blur-[100px] translate-x-1/3 -translate-y-1/4 pointer-events-none"></div>
+        <div class="absolute top-20 left-0 w-[400px] h-[400px] bg-radio-accent/10 rounded-full blur-[100px] -translate-x-1/2 pointer-events-none"></div>
 
-        <div class="container mx-auto px-6 relative z-10 max-w-4xl text-center">
-            
-            <h1 class="text-4xl md:text-6xl font-black leading-tight mb-6 tracking-tight">
-                Cisza nie trwa wiecznie…
-            </h1>
-            
-            <p class="text-xl text-gray-300 leading-relaxed mb-8 max-w-2xl mx-auto">
-                …jak śpiewał Freddie Mercury <em>The Show Must Go On</em>. Projekt Uniradio przy Uniwersytecie Wrocławskim wchodzi w nowy semestr – i to z przytupem!
-            </p>
-
-            <div class="flex items-center justify-center gap-6 text-sm text-gray-400">
-                <div class="flex items-center gap-2">
-                    <div class="w-10 h-10 rounded-full border border-slate-600 bg-slate-800 flex items-center justify-center">
-                        <i data-lucide="user" class="w-5 h-5 text-gray-400"></i>
-                    </div>
-                    <div class="text-left">
-                        <span class="block text-white font-bold">Dawid Gruszka</span>
-                        <span class="text-xs">Autor</span>
-                    </div>
-                </div>
+        <div class="container mx-auto px-6 relative z-10 text-center max-w-4xl">
+            <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-slate-800 border border-slate-700 mb-6">
+                <i data-lucide="shield-check" class="w-8 h-8 text-radio-neon"></i>
             </div>
+            <h1 class="text-4xl md:text-6xl font-black leading-tight mb-6 tracking-tight">
+                Polityka Prywatności
+            </h1>
+            <p class="text-xl text-gray-400 leading-relaxed max-w-2xl mx-auto">
+                Dowiedz się, w jaki sposób dbamy o Twoje dane, gdy słuchasz naszych audycji lub przeglądasz stronę UniRadia.
+            </p>
         </div>
     </header>
 
-    <!-- MAIN CONTENT -->
-    <article class="container mx-auto px-6 relative z-10">
+    <article class="container mx-auto px-6 relative z-10 pb-12">
         <div class="flex flex-col lg:flex-row gap-12 justify-center">
             
-            <!-- Tekst artykułu -->
-            <div class="w-full lg:max-w-3xl article-content text-gray-300">
+            <div class="w-full lg:max-w-3xl article-content text-gray-300 bg-slate-900/40 p-8 md:p-12 rounded-3xl border border-slate-700/50 shadow-2xl glass-panel">
                 
-                <h2 class="mt-4">Zanim zapaliła się lampka ON AIR</h2>
-                <p class="drop-cap">
-                    Początki naszej radiowej historii sięgają 2002 roku, kiedy pod opieką redaktora Roberta Gawłowskiego powstał internetowy magazyn Zwrotnica. Kilka lat później idea projektu ewoluowała. Członkowie Zwrotnicy stworzyli Uniradio – projekt radiowy, który zmieniał się wraz z duchem czasu i podążał za nowymi trendami medialnymi. W tej formie działał prężnie aż do wybuchu pandemii COVID-19 w 2020 roku.
+                <p class="text-lg mt-2 font-medium text-white">
+                    Cześć! Cieszymy się, że odwiedzasz stronę internetową naszego studenckiego radia – <strong>UniRadio</strong>. Poniżej krótko i przejrzyście wyjaśniamy, w jaki sposób dbamy o Twoją prywatność oraz jakie dane gromadzimy, korzystając z naszej strony.
                 </p>
 
+                <h2>1. Kto administruje Twoimi danymi?</h2>
                 <p>
-                    Gdy świat zaczął wracać do normalności, inicjatywa również odżyła, choć w nieco zmienionej formie. Uniradio stało się przestrzenią do rozwijania umiejętności dziennikarskich, np. pisania tekstów, czy obsługi konsoli, w przystępny i twórczy sposób.
+                    Administratorem danych osobowych zbieranych za pośrednictwem tej strony jest zespół redakcyjny studenckiego koła naukowego/projektu <strong>UniRadio</strong>, działającego przy Instytucie Dziennikarstwa i Komunikacji Społecznej Uniwersytetu Wrocławskiego (ul. Fryderyka Joliot-Curie 15, 50-383 Wrocław, sala 102). 
+                    W razie jakichkolwiek pytań związanych z prywatnością, możesz napisać do nas na adres e-mail: <a href="mailto:projektuniradio@gmail.com">projektuniradio@gmail.com</a>.
                 </p>
 
-                <!-- Zdjęcie 1: Mikser -->
-                <figure class="my-10">
-                    <img src="mikser_close.jpg" alt="Zsuwaki na mikserze radiowym" class="w-full rounded-2xl border border-slate-700 shadow-2xl">
-                </figure>
-
-                <h2>Na antenie: studenci</h2>
+                <h2>2. Jakie dane zbieramy i w jakim celu?</h2>
                 <p>
-                    Od 2023 roku, średnio trzy razy w tygodniu, studenci Dziennikarstwa i Komunikacji Społecznej (i nie tylko!) spotykają się, aby organizować dzień radiowy złożony z ich autorskich audycji. Zajmują się także realizacją dźwięku i promocją w social mediach. Obecnie projektem opiekuje się dr Łukasz Śmigiel, a wsparcie techniczne zapewnia dr Jakub Wilk.
+                    Strona ma charakter informacyjny oraz promujący naszą działalność radiową. Zbieramy tylko te dane, które są niezbędne do jej działania lub z którymi sam się z nami podzielisz:
                 </p>
-                
+                <ul>
+                    <li><strong>Statystyki strony (Google Analytics):</strong> Korzystamy z narzędzia Google Analytics, aby wiedzieć, ile osób nas odwiedza, z jakich miast pochodzą nasi słuchacze i które podstrony są najpopularniejsze. Dane te są anonimowe i nie pozwalają nam na bezpośrednią identyfikację konkretnej osoby. Służą nam wyłącznie do ulepszania strony i naszego projektu.</li>
+                    <li><strong>Kontakt e-mail i rekrutacja:</strong> Jeśli napiszesz do nas maila lub wypełnisz nasz formularz rekrutacyjny, przekazujesz nam swój adres e-mail oraz inne dane zawarte w wiadomości. Używamy ich wyłącznie w celu odpowiedzi na Twoje zapytanie lub przeprowadzenia procesu rekrutacji do zespołu.</li>
+                    <li><strong>Osadzone Mapy Google (Google Maps):</strong> Na naszej stronie znajduje się interaktywna mapa dostarczana przez firmę Google LLC. Wyświetlenie tej mapy wiąże się z nawiązaniem bezpośredniego połączenia Twojej przeglądarki z serwerami Google. W związku z tym Google pobiera Twój adres IP oraz może używać własnych plików cookies w celu analizy ruchu, zgodnie z polityką prywatności firmy Google.</li>
+                </ul>
+
+                <h2>3. Pliki cookies (ciasteczka)</h2>
                 <p>
-                    Już teraz działamy prężnie – nie zmienia to jednak faktu, że wciąż chcemy się rozwijać. A miejsce na nowe pomysły jest zawsze. Jako inicjatywie studenckiej zależy nam na stworzeniu przestrzeni, w której ludzie tacy jak Ty, drogi czytelniku, mogą rozwijać swoje zainteresowania.
+                    Nasza strona wykorzystuje pliki cookies (niewielkie pliki tekstowe zapisywane w Twojej przeglądarce). Służą one do zapewnienia prawidłowego działania strony oraz zbierania anonimowych statystyk (wspomniany wyżej Google Analytics).
                 </p>
-
-                <!-- Zdjęcie 2: Student w studio -->
-                <figure class="my-10">
-                    <img src="jan_niezbedny.jpg" alt="Student pracujący przy konsoli i mikrofonie w studiu radiowym" class="w-full rounded-2xl border border-slate-700 shadow-2xl">
-                </figure>
-
-                <h2>Tę ciszę trzeba zapełnić</h2>
                 <p>
-                    Obecna ramówka składa się głównie z audycji autorskich i programów publicystycznych. Radio to jednak coś więcej niż tylko publicystyka. To także newsy, programy popularnonaukowe, reportaże, wywiady czy wstawki. Chcemy właśnie na nie zrobić miejsce – i tu właśnie pojawiasz się Ty. Jeśli masz trochę zapału, pomysł na siebie w przestrzeni radiowej, czy też po prostu chcesz się sprawdzić – wpadnij do nas!
+                    Jeśli nie zgadzasz się na zapisywanie plików cookies, możesz w każdej chwili zmienić ustawienia swojej przeglądarki internetowej i je zablokować lub usunąć.
                 </p>
 
-                <h2>Kontakt</h2>
+                <h2>4. Komu udostępniamy Twoje dane?</h2>
                 <p>
-                    Najlepiej kontaktować się z nami mailowo: <a href="mailto:projektuniradio@gmail.com" class="text-radio-accent hover:text-radio-neon transition-colors font-bold">projektuniradio@gmail.com</a> lub przez profil na Instagramie: <a href="https://instagram.com/uniradio.projekt" target="_blank" class="text-radio-accent hover:text-radio-neon transition-colors font-bold">uniradio.projekt</a>.
+                    Jako że korzystamy z zewnętrznych usług analitycznych i map, anonimowe dane o ruchu na stronie trafiają do firmy Google LLC. Twoje dane podane w wiadomościach e-mail lub formularzu rekrutacyjnym pozostają wyłącznie do wglądu zespołu redakcyjnego UniRadia i nie są przekazywane żadnym innym podmiotom (chyba że wymagałoby tego prawo).
                 </p>
 
-                <blockquote>
-                    Zapraszamy! Cisza nie trwa wiecznie, a gra słowem to nasza specjalność!
-                </blockquote>
+                <h2>5. Twoje prawa</h2>
+                <p>
+                    Zgodnie z obowiązującymi przepisami masz prawo do:
+                </p>
+                <ul>
+                    <li>Dostępu do swoich danych (np. tych wysłanych do nas w mailu).</li>
+                    <li>Poprawienia ich w dowolnym momencie.</li>
+                    <li>Zażądania całkowitego ich usunięcia.</li>
+                    <li>Wycofania zgody na ich przetwarzanie.</li>
+                </ul>
+                <p>
+                    Aby zrealizować którekolwiek z tych praw, wystarczy napisać wiadomość na adres <a href="mailto:projektuniradio@gmail.com">projektuniradio@gmail.com</a>.
+                </p>
 
-                <!-- Stopka autorska z docx -->
-                <div class="mt-12 pt-6 border-t border-slate-800 text-sm text-slate-500">
-                    <p><strong class="text-slate-400">Tekst:</strong> Dawid Gruszka, red. Zuzanna Biernacka</p>
-                    <p><strong class="text-slate-400">Zdjęcia:</strong> Dawid Gruszka</p>
-                </div>
+                <h2>6. Gdzie hostujemy stronę?</h2>
+                <p>
+                    Nasza strona internetowa jest w pełni hostowana na platformie <strong>GitHub Pages</strong>. Serwery platformy GitHub mogą dodatkowo gromadzić standardowe logi serwera (np. adresy IP odwiedzających) w celach zapewnienia bezpieczeństwa i utrzymania stabilności działania swoich usług.
+                </p>
 
             </div>
         </div>
     </article>
 
-    <!-- Footer -->
     <footer class="bg-slate-950 pt-12 pb-12 border-t border-slate-800">
         <div class="container mx-auto px-6 flex flex-col items-center text-center">
             <div class="flex items-center gap-2 mb-2">
                 <i data-lucide="radio" class="text-radio-accent w-5 h-5"></i>
-                <span class="text-lg font-bold">Uniradio</span>
+                <span class="text-lg font-bold">UniRadio</span>
             </div>
             <p class="text-gray-600 text-[10px] uppercase tracking-widest">Gramy słowem</p>
         </div>
     </footer>
 
-    <!-- Skrypty -->
+    <div id="cookie-banner" class="fixed bottom-0 left-0 w-full bg-slate-900/95 backdrop-blur-xl border-t border-slate-700 z-[70] py-6 px-4 md:px-8 transform translate-y-full transition-transform duration-700 flex flex-col md:flex-row items-center justify-between gap-6 shadow-[0_-10px_40px_rgba(0,0,0,0.5)]">
+        <div class="text-sm text-gray-300 text-justify md:text-left md:max-w-4xl">
+            <p class="font-bold text-white text-base mb-1">Cenimy Twoją prywatność 🍪</p>
+            Używamy plików cookie oraz podobnych technologii (m.in. Google Analytics i Google Maps) do analizy ruchu, poprawy bezpieczeństwa i zapewnienia pełnej funkcjonalności strony. Zanim te skrypty zostaną załadowane, potrzebujemy Twojej zgody. Więcej szczegółów znajdziesz w naszej <a href="polityka-prywatnosci" class="text-radio-neon hover:text-radio-pink transition-colors underline underline-offset-2">Polityce Prywatności</a>.
+        </div>
+        <div class="flex flex-col sm:flex-row items-center gap-3 shrink-0 w-full md:w-auto">
+            <button onclick="declineCookies()" class="w-full sm:w-auto px-6 py-3 rounded-xl border border-slate-600 text-gray-300 hover:bg-slate-800 transition font-medium text-sm">Odrzuć analitykę</button>
+            <button onclick="acceptCookies()" class="w-full sm:w-auto px-6 py-3 rounded-xl bg-radio-accent hover:bg-violet-600 text-white transition font-bold text-sm shadow-lg shadow-violet-900/50 hover:scale-105 active:scale-95">Akceptuję wszystkie</button>
+        </div>
+    </div>
+
     <script>
-        lucide.createIcons();
+        // --- SYSTEM COOKIES & RODO ---
+        const GA_TRACKING_ID = 'G-RX84HKZJEC'; // Podpięty prawdziwy kod Google Analytics
+
+        function loadGoogleAnalytics() {
+            if (window.gaLoaded) return;
+            const script = document.createElement('script');
+            script.src = `https://www.googletagmanager.com/gtag/js?id=G-RX84HKZJEC`;
+            script.async = true;
+            document.head.appendChild(script);
+
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', GA_TRACKING_ID);
+            window.gaLoaded = true;
+            console.log("Włączono skrypty śledzące.");
+        }
+
+        function enableServices() {
+            loadGoogleAnalytics(); 
+        }
+
+        window.acceptCookies = function() {
+            localStorage.setItem('cookieConsent', 'granted');
+            const banner = document.getElementById('cookie-banner');
+            if (banner) banner.classList.add('translate-y-full');
+            enableServices();
+        };
+
+        window.declineCookies = function() {
+            localStorage.setItem('cookieConsent', 'denied');
+            const banner = document.getElementById('cookie-banner');
+            if (banner) banner.classList.add('translate-y-full');
+        };
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Inicjalizacja ikon
+            lucide.createIcons();
+
+            // Obsługa pojawiania się banera cookies przy wejściu na stronę
+            const consent = localStorage.getItem('cookieConsent');
+            if (consent === 'granted') {
+                enableServices(); 
+            } else if (consent === null) {
+                setTimeout(() => {
+                    const banner = document.getElementById('cookie-banner');
+                    if (banner) banner.classList.remove('translate-y-full');
+                }, 800);
+            }
+        });
         
-        // Pasek postępu czytania
-        window.onscroll = function() {
-            let winScroll = document.body.scrollTop || document.documentElement.scrollTop;
-            let height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-            let scrolled = (winScroll / height) * 100;
-            document.getElementById("reading-progress").style.width = scrolled + "%";
-            
-            // Navbar effect
+        // Obsługa menu mobilnego
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        // Efekt scrollowania dla paska nawigacji
+        window.addEventListener('scroll', () => {
             const navbar = document.getElementById('navbar');
             if (window.scrollY > 50) { 
                 navbar.classList.add('bg-slate-900/90', 'shadow-lg'); 
             } else { 
                 navbar.classList.remove('bg-slate-900/90', 'shadow-lg'); 
             }
-        };
+        });
     </script>
 </body>
 </html>
