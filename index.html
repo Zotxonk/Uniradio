@@ -179,7 +179,8 @@
             
             <div class="relative hidden md:block group">
                 <div class="absolute inset-0 bg-radio-accent/20 rounded-2xl blur-xl group-hover:bg-radio-accent/30 transition duration-500"></div>
-                <img src="https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?q=80&w=1000&auto=format&fit=crop" alt="Studio radiowe" class="relative z-10 rounded-2xl shadow-2xl border border-slate-700 transform rotate-3 group-hover:rotate-0 transition duration-500 w-full h-[450px] object-cover grayscale group-hover:grayscale-0">
+                <!-- Podmienione główne zdjęcie na main-photo.jpg z efektem grayscale -->
+                <img src="main-photo.jpg" alt="Studio radiowe UniRadio" class="relative z-10 rounded-2xl shadow-2xl border border-slate-700 transform rotate-3 group-hover:rotate-0 transition duration-500 w-full h-[450px] object-cover grayscale group-hover:grayscale-0">
             </div>
         </div>
     </section>
@@ -476,60 +477,76 @@
 
     <!-- SKRYPTY INTERAKCJI -->
     <script>
-        // --- SYSTEM COOKIES & RODO ---
-        const GA_TRACKING_ID = 'G-RX84HKZJEC'; // Podpięty prawdziwy kod Google Analytics
+        // --- SYSTEM COOKIES & RODO (Tryb Google Consent Mode v2) ---
+        const GA_TRACKING_ID = 'G-RX84HKZJEC'; // Twój prawidłowy kod GA
 
-        function loadGoogleAnalytics() {
-            if (window.gaLoaded) return;
-            const script = document.createElement('script');
-            script.src = `https://www.googletagmanager.com/gtag/js?id=G-RX84HKZJEC`;
-            script.async = true;
-            document.head.appendChild(script);
+        // 1. Inicjalizacja Google Consent Mode przed załadowaniem skryptu
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
 
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', GA_TRACKING_ID);
-            window.gaLoaded = true;
-            console.log("Włączono skrypty śledzące.");
-        }
+        // Domyślnie blokujemy zbieranie danych dla analityki i reklam
+        gtag('consent', 'default', {
+            'analytics_storage': 'denied',
+            'ad_storage': 'denied',
+            'ad_user_data': 'denied',
+            'ad_personalization': 'denied'
+        });
 
+        // 2. Ładujemy sam skrypt Google Analytics (Zostanie załadowany, ale będzie czekał na zgodę)
+        const script = document.createElement('script');
+        script.src = `https://www.googletagmanager.com/gtag/js?id=${GA_TRACKING_ID}`;
+        script.async = true;
+        document.head.appendChild(script);
+
+        gtag('js', new Date());
+        gtag('config', GA_TRACKING_ID);
+        
+        // Funkcja uaktywniająca mapę i wysyłająca sygnał zgody do Google
         function enableServices() {
-            loadGoogleAnalytics(); // Uruchamia Analytics
-
+            // Odblokowanie ukrytej Mapy Google
             const mapIframe = document.getElementById('google-map-iframe');
             const mapPlaceholder = document.getElementById('map-placeholder');
             
-            // Wstrzyknięcie Mapy Google w miejsce atrapy
             if (mapIframe && mapIframe.getAttribute('data-src')) {
                 mapIframe.src = mapIframe.getAttribute('data-src');
                 mapIframe.removeAttribute('data-src');
             }
             if (mapPlaceholder) {
                 mapPlaceholder.style.opacity = '0';
-                setTimeout(() => mapPlaceholder.style.display = 'none', 500); // Płynne zanikanie atrapy
+                setTimeout(() => mapPlaceholder.style.display = 'none', 500); 
             }
+
+            // Wysyłamy do skryptu Google informację, że użytkownik wyraził zgodę (Sygnał 'update')
+            gtag('consent', 'update', {
+                'analytics_storage': 'granted',
+                'ad_storage': 'granted',
+                'ad_user_data': 'granted',
+                'ad_personalization': 'granted'
+            });
+            console.log("Zgody zaktualizowane - włączono wysyłanie danych do Google Analytics.");
         }
 
         window.acceptCookies = function() {
             localStorage.setItem('cookieConsent', 'granted');
             const banner = document.getElementById('cookie-banner');
             if (banner) banner.classList.add('translate-y-full');
-            enableServices();
+            enableServices(); // Uruchamia aktualizację zgody (Consent Mode Update)
         };
 
         window.declineCookies = function() {
             localStorage.setItem('cookieConsent', 'denied');
             const banner = document.getElementById('cookie-banner');
             if (banner) banner.classList.add('translate-y-full');
+            // Zgody pozostają jako 'denied' (odrzucone) zgodnie ze stanem domyślnym
         };
 
         document.addEventListener('DOMContentLoaded', () => {
-            // Obsługa pojawiania się banera cookies przy wejściu na stronę
+            // Sprawdzenie na starcie, czy użytkownik ma już zapisany wybór
             const consent = localStorage.getItem('cookieConsent');
             if (consent === 'granted') {
                 enableServices(); 
             } else if (consent === null) {
+                // Jeśli nie ma wyboru, pokaż po chwili baner
                 setTimeout(() => {
                     const banner = document.getElementById('cookie-banner');
                     if (banner) banner.classList.remove('translate-y-full');
