@@ -931,6 +931,15 @@
                             { time: "18:10", title: "Zejście z Anteny", presenter: "" }
                         ];
                     }
+
+                    // 26 Marca 2026 (Tylko Remek, bez Wojtka)
+                    if (formatDateStr(specificDate) === '2026-03-26' && dayInfo.id === 'czwartek') {
+                        renderedData = [
+                            { time: "18:55", title: "Wejście na Antenę", presenter: "" },
+                            { time: "19:00", title: "W co dzisiaj pogramy?", presenter: "Remek Sitnik" },
+                            { time: "19:45", title: "Zejście z Anteny", presenter: "" }
+                        ];
+                    }
                     
                     const styling = styleDictionary[dayInfo.color];
                     const col = document.createElement('div');
