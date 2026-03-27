@@ -940,6 +940,16 @@
                             { time: "19:45", title: "Zejście z Anteny", presenter: "" }
                         ];
                     }
+
+                    // 27 Marca 2026 (Końcówka Języka, Talkable)
+                    if (formatDateStr(specificDate) === '2026-03-27' && dayInfo.id === 'piatek') {
+                        renderedData = [
+                            { time: "18:00", title: "Wejście na Antenę", presenter: "" },
+                            { time: "18:05", title: "Końcówka Języka", presenter: "Jan Wróbel" },
+                            { time: "19:05", title: "Talkable", presenter: "Daisy" },
+                            { time: "20:05", title: "Zejście z Anteny", presenter: "" }
+                        ];
+                    }
                     
                     const styling = styleDictionary[dayInfo.color];
                     const col = document.createElement('div');
