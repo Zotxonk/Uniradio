@@ -62,6 +62,20 @@
         @media (max-width: 768px) {
             .lightbox-btn-text { display: none; }
         }
+
+        /* Płynne skalowanie i przesuwanie na desktopie */
+        #lightbox-img {
+            transition: transform 0.1s ease-out;
+            will-change: transform;
+            cursor: grab;
+        }
+        #lightbox-img:active {
+            cursor: grabbing;
+        }
+        /* Wyłączenie przejścia na mobilkach podczas gestów dla płynności */
+        #lightbox-img.no-transition {
+            transition: none;
+        }
     </style>
 </head>
 <body class="bg-radio-dark text-white font-sans antialiased overflow-x-hidden pb-24">
@@ -169,8 +183,8 @@
             <i data-lucide="chevron-left" class="w-8 h-8 md:w-10 md:h-10 transform group-hover:-translate-x-1 transition"></i>
         </button>
 
-        <div class="relative w-full max-w-5xl max-h-[80vh] px-16 flex items-center justify-center" onclick="closeLightbox(event)" id="lightbox-content">
-            <img id="lightbox-img" src="" alt="Powiększone zdjęcie" class="max-w-full max-h-[80vh] object-contain rounded-lg shadow-2xl ring-1 ring-white/10" onclick="event.stopPropagation()">
+        <div class="relative w-full max-w-5xl max-h-[80vh] px-16 flex items-center justify-center overflow-hidden" onclick="closeLightbox(event)" id="lightbox-content">
+            <img id="lightbox-img" src="" alt="Powiększone zdjęcie" draggable="false" class="max-w-full max-h-[80vh] object-contain rounded-lg shadow-2xl ring-1 ring-white/10" onclick="event.stopPropagation()">
         </div>
 
         <button onclick="nextImage(event)" class="absolute right-4 top-1/2 -translate-y-1/2 z-50 text-white/50 hover:text-white transition bg-slate-800/30 hover:bg-radio-accent p-4 md:p-6 rounded-full backdrop-blur-sm group">
@@ -426,6 +440,7 @@
             
             generateNavButtons();
             renderGallery();
+            setupZoomAndPan(); // Inicjalizacja zoomowania i przesuwania
         });
 
         // --- OBSŁUGA MENU MOBILNEGO ---
@@ -522,10 +537,131 @@
             lucide.createIcons();
         }
 
-        // --- LIGHTBOX LOGIC ---
+        // --- LIGHTBOX & ZOOM LOGIC ---
         const lightbox = document.getElementById('lightbox');
         const lightboxImg = document.getElementById('lightbox-img');
         const lightboxYear = document.getElementById('lightbox-year');
+        
+        // Zmienne do obsługi powiększenia i przesuwania
+        let currentScale = 1;
+        let currentTranslateX = 0;
+        let currentTranslateY = 0;
+        let isDragging = false;
+        let startX = 0, startY = 0;
+        let initialPinchDistance = null;
+        let lastScale = 1;
+
+        function resetZoom() {
+            currentScale = 1;
+            currentTranslateX = 0;
+            currentTranslateY = 0;
+            applyTransform();
+        }
+
+        function applyTransform() {
+            lightboxImg.style.transform = `translate(${currentTranslateX}px, ${currentTranslateY}px) scale(${currentScale})`;
+            if(currentScale > 1) {
+                lightboxImg.style.cursor = isDragging ? 'grabbing' : 'grab';
+            } else {
+                lightboxImg.style.cursor = 'default';
+            }
+        }
+
+        function getDistance(touch1, touch2) {
+            return Math.hypot(touch2.clientX - touch1.clientX, touch2.clientY - touch1.clientY);
+        }
+
+        function setupZoomAndPan() {
+            // Zoom kółkiem myszy na desktopie
+            lightboxImg.addEventListener('wheel', (e) => {
+                e.preventDefault();
+                const zoomSensitivity = 0.1;
+                const delta = e.deltaY < 0 ? 1 : -1;
+                
+                currentScale += delta * zoomSensitivity;
+                currentScale = Math.min(Math.max(1, currentScale), 5); // Ograniczenie powiększenia (1x - 5x)
+                
+                if (currentScale === 1) {
+                    currentTranslateX = 0;
+                    currentTranslateY = 0;
+                }
+                applyTransform();
+            });
+
+            // Obsługa dotyku (Pinch-to-zoom & Przesuwanie na mobilkach)
+            lightboxImg.addEventListener('touchstart', (e) => {
+                if (e.touches.length === 2) {
+                    // Start szczypnięcia (zoom)
+                    initialPinchDistance = getDistance(e.touches[0], e.touches[1]);
+                    lastScale = currentScale;
+                    lightboxImg.classList.add('no-transition'); // Wyłączenie animacji dla gładkiego przybliżania
+                } else if (e.touches.length === 1 && currentScale > 1) {
+                    // Start przeciągania
+                    isDragging = true;
+                    startX = e.touches[0].clientX - currentTranslateX;
+                    startY = e.touches[0].clientY - currentTranslateY;
+                    lightboxImg.classList.add('no-transition');
+                }
+            });
+
+            lightboxImg.addEventListener('touchmove', (e) => {
+                if (e.touches.length === 2) {
+                    e.preventDefault(); // Blokada scrolla strony
+                    const currentDistance = getDistance(e.touches[0], e.touches[1]);
+                    const scaleModifier = currentDistance / initialPinchDistance;
+                    
+                    currentScale = Math.min(Math.max(1, lastScale * scaleModifier), 5);
+                    if (currentScale === 1) {
+                        currentTranslateX = 0;
+                        currentTranslateY = 0;
+                    }
+                    applyTransform();
+                } else if (e.touches.length === 1 && isDragging) {
+                    e.preventDefault();
+                    currentTranslateX = e.touches[0].clientX - startX;
+                    currentTranslateY = e.touches[0].clientY - startY;
+                    applyTransform();
+                }
+            });
+
+            lightboxImg.addEventListener('touchend', (e) => {
+                if (e.touches.length < 2) {
+                    initialPinchDistance = null;
+                }
+                if (e.touches.length === 0) {
+                    isDragging = false;
+                    lightboxImg.classList.remove('no-transition'); // Przywrócenie animacji przejść
+                }
+            });
+
+            // Przeciąganie myszką na desktopie
+            lightboxImg.addEventListener('mousedown', (e) => {
+                e.preventDefault(); // Zablokowanie domyślnego przeciągania (powstawania poświaty zdjęcia)
+                if (currentScale > 1) {
+                    isDragging = true;
+                    startX = e.clientX - currentTranslateX;
+                    startY = e.clientY - currentTranslateY;
+                    lightboxImg.classList.add('no-transition');
+                    applyTransform();
+                }
+            });
+
+            window.addEventListener('mousemove', (e) => {
+                if (isDragging && currentScale > 1 && !lightbox.classList.contains('hidden')) {
+                    currentTranslateX = e.clientX - startX;
+                    currentTranslateY = e.clientY - startY;
+                    applyTransform();
+                }
+            });
+
+            window.addEventListener('mouseup', () => {
+                if (isDragging) {
+                    isDragging = false;
+                    lightboxImg.classList.remove('no-transition');
+                    applyTransform();
+                }
+            });
+        }
 
         function openLightbox(index) {
             currentLightboxIndex = index;
@@ -549,10 +685,12 @@
             setTimeout(() => {
                 lightbox.classList.add('hidden');
                 document.body.style.overflow = ''; 
+                resetZoom(); // Reset powiększenia po zamknięciu
             }, 300);
         }
 
         function updateLightboxContent() {
+            resetZoom(); // Reset powiększenia przy zmianie zdjęcia
             const imgData = allImagesSorted[currentLightboxIndex];
             
             lightboxImg.style.opacity = '0';
