@@ -637,7 +637,7 @@
                     ],
                     piatek: [
                         { time: "17:00", title: "Wejście na Antenę", presenter: "" },
-                        { time: "17:05", title: "(Nie)dobre, bo polskie", presenter: "Lauri Potocki i Dawid Gruszka" },
+                        { time: "17:05", title: "Końcówka Języka", presenter: "Jan Wróbel" },
                         { time: "18:10", title: "Talkable", presenter: "Daisy" },
                         { time: "19:10", title: "Zejście z Anteny", presenter: "" }
                     ]
@@ -653,6 +653,7 @@
 
             // Zmienne stanu dla kalendarza
             let currentDate = new Date(); // Miesiąc wyświetlany w kalendarzu
+            currentDate.setDate(1); // Naprawa błędu przeskakiwania krótkich miesięcy (np. z 31 marca na 1 maja)
             let selectedDate = getClosestBroadcastDate(new Date()); // Data obecnie wybrana
 
             // Inicjalizacja Startowa
@@ -703,10 +704,12 @@
 
             // Obsługa strzałek kalendarza (możliwość nawigacji również w przeszłość)
             document.getElementById('prev-month').addEventListener('click', () => {
+                currentDate.setDate(1); // Zabezpieczenie przez JSowym błędem dni
                 currentDate.setMonth(currentDate.getMonth() - 1);
                 renderCalendar();
             });
             document.getElementById('next-month').addEventListener('click', () => {
+                currentDate.setDate(1); // Zabezpieczenie przez JSowym błędem dni
                 currentDate.setMonth(currentDate.getMonth() + 1);
                 renderCalendar();
             });
