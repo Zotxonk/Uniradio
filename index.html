@@ -3,8 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Uniradio - Gramy Słowem</title>
-    <!-- Wymuszenie ikony - rozszerzone wsparcie dla różnych przeglądarek (PNG + większe rozmiary) -->
+    
+    <!-- SEO: Podstawowe Tagi -->
+    <title>Uniradio - Gramy Słowem | Radio Studenckie UWr Wrocław</title>
+    <meta name="description" content="Uniradio to niezależne, studenckie radio internetowe Wydziału Dziennikarstwa i Komunikacji Społecznej Uniwersytetu Wrocławskiego. Słuchaj na żywo, sprawdzaj ramówkę i dołącz do naszej redakcji!">
+    <meta name="keywords" content="uniradio, radio studenckie, uwr, uniwersytet wrocławski, radio internetowe wrocław, dziennikarstwo uwr, radio, audycje studenckie">
+    <meta name="author" content="Uniradio UWr">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://uniradioprojekt.pl/">
+
+    <!-- SEO: Open Graph (Facebook, Discord, LinkedIn) -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://uniradioprojekt.pl/">
+    <meta property="og:title" content="Uniradio - Gramy Słowem | Radio Studenckie UWr">
+    <meta property="og:description" content="Niezależne radio internetowe studentów Dziennikarstwa UWr. Słuchaj naszych autorskich audycji na żywo!">
+    <meta property="og:image" content="https://uniradioprojekt.pl/main-photo.jpg">
+    <meta property="og:locale" content="pl_PL">
+
+    <!-- SEO: Twitter Cards -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Uniradio - Gramy Słowem">
+    <meta name="twitter:description" content="Niezależne radio internetowe studentów Dziennikarstwa UWr. Tworzymy z pasją od 2002 roku.">
+    <meta name="twitter:image" content="https://uniradioprojekt.pl/main-photo.jpg">
+
+    <!-- Wymuszenie ikony - rozszerzone wsparcie dla różnych przeglądarek -->
     <link rel="icon" type="image/png" sizes="32x32" href="logogradientbeztekstu.png">
     <link rel="icon" type="image/png" sizes="192x192" href="logogradientbeztekstu.png">
     <link rel="shortcut icon" type="image/png" href="logogradientbeztekstu.png">
@@ -14,22 +36,50 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Ikony -->
     <script src="https://unpkg.com/lucide@latest"></script>
-    <!-- Fonty: DM Sans (Szeroki zakres wag dla lepszej estetyki) -->
+    <!-- Fonty: DM Sans -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap" rel="stylesheet">
     
+    <!-- Dane Strukturalne Schema.org (JSON-LD dla Radia/Organizacji) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "RadioStation",
+      "name": "Uniradio",
+      "alternateName": "Uniradio UWr",
+      "url": "https://uniradioprojekt.pl",
+      "logo": "https://uniradioprojekt.pl/logogradientbeztekstu.png",
+      "description": "Niezależne radio internetowe Wydziału Dziennikarstwa i Komunikacji Społecznej Uniwersytetu Wrocławskiego.",
+      "foundingDate": "2002",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Fryderyka Joliot-Curie 15, sala 102",
+        "addressLocality": "Wrocław",
+        "postalCode": "50-383",
+        "addressCountry": "PL"
+      },
+      "parentOrganization": {
+        "@type": "CollegeOrUniversity",
+        "name": "Uniwersytet Wrocławski"
+      },
+      "sameAs": [
+        "https://www.instagram.com/uniradio.projekt"
+      ]
+    }
+    </script>
+
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     fontFamily: {
-                        sans: ['DM Sans', 'sans-serif'], // Zmiana na DM Sans
+                        sans: ['DM Sans', 'sans-serif'], 
                     },
                     colors: {
                         'radio-dark': '#0f172a',
-                        'radio-accent': '#8b5cf6', // Fioletowy akcent
-                        'radio-neon': '#38bdf8',   // Błękitny neon
+                        'radio-accent': '#8b5cf6', 
+                        'radio-neon': '#38bdf8',   
                         'radio-pink': '#f472b6',
                     },
                     animation: {
@@ -48,23 +98,12 @@
     </script>
     <style>
         /* Custom Scrollbar */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #1e293b;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #475569;
-            border-radius: 4px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #64748b;
-        }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #1e293b; }
+        ::-webkit-scrollbar-thumb { background: #475569; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #64748b; }
         
-        html {
-            scroll-behavior: smooth;
-        }
+        html { scroll-behavior: smooth; }
         
         .glass-panel {
             background: rgba(30, 41, 59, 0.7);
@@ -546,7 +585,9 @@
             const cancelledDates = [
                 '2026-02-27', // Wykluczony piątek z poprzednich tygodni
                 '2026-03-04', // Wykluczona środa 4 marca
-                '2026-03-25'  // Wykluczona środa 25 marca
+                '2026-03-25', // Wykluczona środa 25 marca
+                '2026-04-02', // Wykluczony czwartek 2 kwietnia
+                '2026-04-03'  // Wykluczony piątek 3 kwietnia
             ];
 
             // Funkcja pomocnicza do ujednoliconego formatowania dat (YYYY-MM-DD)
