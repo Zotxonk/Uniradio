@@ -895,7 +895,44 @@
                     
                     // Sprawdzenie czy wyliczona data nie jest anulowana - np. anulowana środa z bieżącego tygodnia
                     if (cancelledDates.includes(formatDateStr(specificDate))) {
-                        // Tworzymy pusty kontener (dziurę), aby czwartek i piątek na dużych ekranach pozostały w swoich kolumnach
+                        // --- BANER WIELKANOCNY ---
+                        if (formatDateStr(specificDate) === '2026-04-02') {
+                            const bannerSlot = document.createElement('div');
+                            // Dodane mt-14 (56px) - co odpowiada wysokości zignorowanego tytułu "Czwartek" i jego marginesu, wyrównując z kafelkami Środy.
+                            bannerSlot.className = 'md:col-span-1 lg:col-span-2 flex mt-14';
+                            bannerSlot.innerHTML = `
+                                <div class="glass-panel p-4 rounded-xl border-l-4 border-radio-pink bg-gradient-to-br from-violet-900/60 via-slate-900/40 to-blue-900/60 flex flex-col items-center justify-center text-center w-full relative overflow-hidden group shadow-[0_0_20px_rgba(244,114,182,0.15)]">
+                                    <div class="absolute -top-10 -right-10 w-24 h-24 bg-radio-neon/20 rounded-full blur-2xl"></div>
+                                    <div class="absolute -bottom-10 -left-10 w-24 h-24 bg-radio-pink/20 rounded-full blur-2xl"></div>
+                                    
+                                    <!-- Ikonki w trójkąt -->
+                                    <div class="flex flex-col items-center mb-1 relative z-10">
+                                        <span class="text-5xl mb-[-8px]">🐰</span>
+                                        <div class="flex gap-10">
+                                            <span class="text-5xl">🐣</span>
+                                            <span class="text-5xl">🌷</span>
+                                        </div>
+                                    </div>
+
+                                    <h3 class="text-3xl font-black mb-1 text-white drop-shadow-[0_0_8px_rgba(56,189,248,0.6)] relative z-10">Wesołych Świąt!</h3>
+                                    <p class="text-gray-200 text-s md:text-sm max-w-md mx-auto relative z-10 leading-snug">
+                                        Życzymy wszystkim słuchaczom oraz członkom uniradia spokojnych, <span class="text-radio-pink font-bold">uni</span>radosnych Świąt Wielkanocnych i mokrego Dyngusa!
+                                    </p>
+                                    
+                                    <div class="mt-2 flex items-center gap-2 text-[16px] font-bold text-radio-neon relative z-10">
+                                        <i data-lucide="radio" class="w-3 h-3"></i> Słyszymy się po świętach!
+                                    </div>
+                                </div>
+                            `;
+                            container.appendChild(bannerSlot);
+                            return;
+                        }
+                        if (formatDateStr(specificDate) === '2026-04-03') {
+                            // Piątek (03.04) jest pochłonięty przez szeroki baner dodany w czwartek, nie dodajemy nawet pustego slotu
+                            return;
+                        }
+
+                        // Tworzy puste kontener (dziurę) dla innych, standardowo anulowanych dni
                         const emptySlot = document.createElement('div');
                         emptySlot.className = 'hidden lg:block'; 
                         container.appendChild(emptySlot);

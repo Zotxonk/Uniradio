@@ -573,14 +573,29 @@
         }
 
         function setupZoomAndPan() {
-            // Zoom kółkiem myszy na desktopie
+            // Zoom kółkiem myszy na desktopie - celujący w pozycję kursora
             lightboxImg.addEventListener('wheel', (e) => {
                 e.preventDefault();
-                const zoomSensitivity = 0.1;
+                const zoomSensitivity = 0.25; 
                 const delta = e.deltaY < 0 ? 1 : -1;
                 
+                const prevScale = currentScale;
                 currentScale += delta * zoomSensitivity;
-                currentScale = Math.min(Math.max(1, currentScale), 5); // Ograniczenie powiększenia (1x - 5x)
+                currentScale = Math.min(Math.max(1, currentScale), 10); // Ograniczenie powiększenia (1x - 10x)
+                
+                if (currentScale !== prevScale) {
+                    const scaleRatio = currentScale / prevScale;
+                    
+                    // Pozycja myszy względem środka ekranu (początku układu współrzędnych transform)
+                    const centerX = window.innerWidth / 2;
+                    const centerY = window.innerHeight / 2;
+                    const mouseX = e.clientX - centerX;
+                    const mouseY = e.clientY - centerY;
+                    
+                    // Matematyczna korekta przesunięcia, aby punkt pod kursorem pozostał nieruchomy w oknie podczas skalowania
+                    currentTranslateX = currentTranslateX - (mouseX - currentTranslateX) * (scaleRatio - 1);
+                    currentTranslateY = currentTranslateY - (mouseY - currentTranslateY) * (scaleRatio - 1);
+                }
                 
                 if (currentScale === 1) {
                     currentTranslateX = 0;
@@ -611,7 +626,7 @@
                     const currentDistance = getDistance(e.touches[0], e.touches[1]);
                     const scaleModifier = currentDistance / initialPinchDistance;
                     
-                    currentScale = Math.min(Math.max(1, lastScale * scaleModifier), 5);
+                    currentScale = Math.min(Math.max(1, lastScale * scaleModifier), 10); // Ograniczenie powiększenia (1x - 10x)
                     if (currentScale === 1) {
                         currentTranslateX = 0;
                         currentTranslateY = 0;
