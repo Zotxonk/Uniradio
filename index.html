@@ -32,14 +32,18 @@
     <link rel="shortcut icon" type="image/png" href="logogradientbeztekstu.png">
     <link rel="apple-touch-icon" href="logogradientbeztekstu.png">
     
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Ikony -->
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <!-- Fonty: DM Sans -->
+    <!-- Tailwind CSS (bez defer, aby zapobiec FOUC na wersji CDN) -->
+    <!-- Ikony (zoptymalizowane - atrybut defer usuwa blokowanie renderowania) -->
+    <script src="https://unpkg.com/lucide@latest" defer></script>
+    
+    <!-- Fonty: DM Sans (zoptymalizowane - asynchroniczne ładowanie) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap" rel="stylesheet">
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap" media="print" onload="this.media='all'">
+    <noscript>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap">
+    </noscript>
     
     <!-- Dane Strukturalne Schema.org (JSON-LD dla Radia/Organizacji) -->
     <script type="application/ld+json">
@@ -69,33 +73,8 @@
     }
     </script>
 
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['DM Sans', 'sans-serif'], 
-                    },
-                    colors: {
-                        'radio-dark': '#0f172a',
-                        'radio-accent': '#8b5cf6', 
-                        'radio-neon': '#38bdf8',   
-                        'radio-pink': '#f472b6',
-                    },
-                    animation: {
-                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-                        'equalizer': 'equalizer 1s infinite',
-                    },
-                    keyframes: {
-                        equalizer: {
-                            '0%, 100%': { height: '20%' },
-                            '50%': { height: '100%' },
-                        }
-                    }
-                }
-            }
-        }
-    </script>
+    <link rel="stylesheet" href="css/uniradio.min.css">
+    
     <style>
         /* Custom Scrollbar */
         ::-webkit-scrollbar { width: 8px; }
@@ -210,7 +189,7 @@
             
             <div class="relative hidden md:block group">
                 <div class="absolute inset-0 bg-radio-accent/20 rounded-2xl blur-xl group-hover:bg-radio-accent/30 transition duration-500"></div>
-                <!-- Podmienione główne zdjęcie na main-photo.jpg z efektem grayscale -->
+                <!-- Podmienione główne zdjęcie na main-photo.webp z efektem grayscale -->
                 <img src="main-photo.webp" alt="Studio radiowe UniRadio" class="relative z-10 rounded-2xl shadow-2xl border border-slate-700 transform rotate-3 group-hover:rotate-0 transition duration-500 w-full h-[450px] object-cover grayscale group-hover:grayscale-0">
             </div>
         </div>
