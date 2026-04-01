@@ -88,6 +88,33 @@
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
+
+        /* Suwak Głośności */
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #fff;
+            cursor: pointer;
+            transition: transform 0.1s;
+        }
+        input[type=range]::-webkit-slider-thumb:hover {
+            transform: scale(1.2);
+        }
+        input[type=range]::-moz-range-thumb {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #fff;
+            cursor: pointer;
+            border: none;
+            transition: transform 0.1s;
+        }
+        input[type=range]::-moz-range-thumb:hover {
+            transform: scale(1.2);
+        }
     </style>
 </head>
 <body class="bg-radio-dark text-white font-sans antialiased overflow-x-hidden w-full pb-24">
@@ -476,15 +503,24 @@
                 </div>
             </div>
             
-            <!-- Przycisk Play -->
+            <!-- Przycisk Play - Zmieniony by uruchamiał zintegrowany player -->
             <div class="flex items-center justify-center shrink-0 px-2">
-                <button onclick="openPlayer()" aria-label="Odtwarzaj radio na żywo" class="w-12 h-12 rounded-full bg-white text-radio-dark flex items-center justify-center hover:scale-105 transition">
-                    <i data-lucide="play" class="w-6 h-6 fill-current translate-x-[1px]"></i>
+                <button onclick="toggleBottomPlayer()" aria-label="Odtwarzaj radio na żywo" class="w-12 h-12 rounded-full bg-white text-radio-dark flex items-center justify-center hover:scale-105 transition" id="bottom-play-btn">
+                    <span id="icon-play-wrapper" class="flex items-center justify-center"><i data-lucide="play" class="w-6 h-6 fill-current translate-x-[1px]"></i></span>
+                    <span id="icon-pause-wrapper" class="flex items-center justify-center hidden"><i data-lucide="pause" class="w-6 h-6 fill-current"></i></span>
                 </button>
             </div>
             
-            <!-- Puste wypełnienie dla symetrii -->
-            <div class="flex-1"></div>
+            <!-- Kontrola głośności -->
+            <div class="flex-1 flex justify-end items-center gap-2 sm:gap-3 pr-2">
+                <button onclick="toggleMute()" id="mute-btn" aria-label="Wycisz/Odwieś" class="text-gray-400 hover:text-white transition flex items-center justify-center shrink-0 w-6 h-6">
+                    <span id="icon-vol-2"><i data-lucide="volume-2" class="w-5 h-5"></i></span>
+                    <span id="icon-vol-1" class="hidden"><i data-lucide="volume-1" class="w-5 h-5"></i></span>
+                    <span id="icon-vol-x" class="hidden"><i data-lucide="volume-x" class="w-5 h-5"></i></span>
+                </button>
+                <input type="range" id="volume-slider" min="0" max="1" step="0.01" value="0.5" aria-label="Głośność"
+                       class="w-20 sm:w-28 md:w-36 h-1.5 bg-slate-700 rounded-lg appearance-none cursor-pointer transition-all">
+            </div>
         </div>
     </div>
 
@@ -1061,8 +1097,84 @@
             if (direction === 'up') { list.scrollBy({ top: -scrollAmount, behavior: 'smooth' }); }
             else { list.scrollBy({ top: scrollAmount, behavior: 'smooth' }); }
         }
+        
+        // Funkcja starego przycisku u góry (zostawiona w spokoju)
         function openPlayer() { window.open('https://uniradioprojekt.radio12345.com/', 'UniRadioPlayer', 'width=400,height=600,menubar=no,toolbar=no,location=no,status=no'); }
         
+        // --- NOWY SYSTEM ZINTEGROWANEGO ODTWARZACZA (Dla paska na dole) ---
+        const radioStreamUrl = "https://uk6freenew.listen2myradio.com/live.mp3?typeportmount=s1_4501_stream_788952852";
+        let radioAudioPlayer = new Audio(radioStreamUrl);
+        let isRadioPlaying = false;
+        let previousVolume = 0.5;
+        radioAudioPlayer.volume = previousVolume;
+
+        function toggleBottomPlayer() {
+            const playWrapper = document.getElementById('icon-play-wrapper');
+            const pauseWrapper = document.getElementById('icon-pause-wrapper');
+
+            if (isRadioPlaying) {
+                // Zatrzymaj i zresetuj źródło (by zapobiec buforowaniu strumienia w tle)
+                radioAudioPlayer.pause();
+                radioAudioPlayer.src = "";
+                
+                // Zmiana ikon
+                playWrapper.classList.remove('hidden');
+                pauseWrapper.classList.add('hidden');
+                isRadioPlaying = false;
+            } else {
+                // Załaduj strumień ponownie (by odtwarzać "na żywo" a nie z cache)
+                radioAudioPlayer.src = radioStreamUrl;
+                radioAudioPlayer.play().catch(error => {
+                    console.error("Błąd podczas odtwarzania radia:", error);
+                });
+                
+                // Zmiana ikon
+                playWrapper.classList.add('hidden');
+                pauseWrapper.classList.remove('hidden');
+                isRadioPlaying = true;
+            }
+        }
+
+        // Regulacja głośności
+        const volumeSlider = document.getElementById('volume-slider');
+        
+        if (volumeSlider) {
+            volumeSlider.addEventListener('input', (e) => {
+                const val = parseFloat(e.target.value);
+                radioAudioPlayer.volume = val;
+                updateVolumeIcon(val);
+            });
+        }
+
+        function toggleMute() {
+            if (radioAudioPlayer.volume > 0) {
+                previousVolume = radioAudioPlayer.volume;
+                radioAudioPlayer.volume = 0;
+                if (volumeSlider) volumeSlider.value = 0;
+                updateVolumeIcon(0);
+            } else {
+                const newVol = previousVolume > 0 ? previousVolume : 0.5;
+                radioAudioPlayer.volume = newVol;
+                if (volumeSlider) volumeSlider.value = newVol;
+                updateVolumeIcon(newVol);
+            }
+        }
+
+        function updateVolumeIcon(val) {
+            document.getElementById('icon-vol-2').classList.add('hidden');
+            document.getElementById('icon-vol-1').classList.add('hidden');
+            document.getElementById('icon-vol-x').classList.add('hidden');
+
+            if (val === 0) {
+                document.getElementById('icon-vol-x').classList.remove('hidden');
+            } else if (val < 0.5) {
+                document.getElementById('icon-vol-1').classList.remove('hidden');
+            } else {
+                document.getElementById('icon-vol-2').classList.remove('hidden');
+            }
+        }
+        // ---------------------------------------------------------------------
+
         // Funkcja do obsługi menu mobilnego
         function toggleMobileMenu() {
             const menu = document.getElementById('mobile-menu');
