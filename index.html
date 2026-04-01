@@ -5,25 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <!-- SEO: Podstawowe Tagi -->
-    <title>Uniradio - Gramy Słowem | Studencki Projekt Radiowy Wrocław</title>
-    <meta name="description" content="Uniradio to niezależny, studencki, internetowy projekt radiowy przy Wydziałe Dziennikarstwa i Komunikacji Społecznej Uniwersytetu Wrocławskiego. Słuchaj na żywo, sprawdzaj ramówkę i dołącz do naszej redakcji!">
-    <meta name="keywords" content="uniradio, radio studenckie, uwr, uniradio projekt, uniwersytet wrocławski, radio internetowe wrocław, dziennikarstwo uwr, radio, audycje studenckie, uni radio">
-    <meta name="author" content="Uniradio">
+    <title>Uniradio - Gramy Słowem | Studencki Projket Radiowy Wrocław</title>
+    <meta name="description" content="Uniradio to niezależny, studencki projekt radiowy przy Wydziale Dziennikarstwa i Komunikacji Społecznej Uniwersytetu Wrocławskiego. Słuchaj na żywo, sprawdzaj ramówkę i dołącz do naszej redakcji!">
+    <meta name="keywords" content="uniradio, radio studenckie, uwr, uniwersytet wrocławski, radio internetowe wrocław, dziennikarstwo uwr, radio, uni radio, audycje studenckie, instytut dziennikarstwa radio">
+    <meta name="author" content="Uniradio Wrocław">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://uniradioprojekt.pl/">
 
     <!-- SEO: Open Graph (Facebook, Discord, LinkedIn) -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://uniradioprojekt.pl/">
-    <meta property="og:title" content="Uniradio - Gramy Słowem | Studencki Projekt Radiowy Wrocław">
-    <meta property="og:description" content="Niezależny projekt radiowy studentów Dziennikarstwa UWr. Słuchaj naszych autorskich audycji na żywo!">
+    <meta property="og:title" content="Uniradio - Gramy Słowem | Studencki Projket Radiowy Wrocław">
+    <meta property="og:description" content="Niezależne internetowy projekt radiowy studentów Dziennikarstwa UWr. Słuchaj naszych autorskich audycji na żywo!">
     <meta property="og:image" content="https://uniradioprojekt.pl/main-photo.webp">
     <meta property="og:locale" content="pl_PL">
 
     <!-- SEO: Twitter Cards -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Uniradio - Gramy Słowem">
-    <meta name="twitter:description" content="Niezależny projekt radiowy studentów Dziennikarstwa UWr. Tworzymy z pasją od 2002 roku.">
+    <meta name="twitter:description" content="Niezależne internetowy projekt radiowy studentów Dziennikarstwa UWr. Tworzymy z pasją od 2002 roku.">
     <meta name="twitter:image" content="https://uniradioprojekt.pl/main-photo.webp">
 
     <!-- Wymuszenie ikony - rozszerzone wsparcie dla różnych przeglądarek -->
@@ -50,10 +50,10 @@
       "@context": "https://schema.org",
       "@type": "RadioStation",
       "name": "Uniradio",
-      "alternateName": "Projekt Uniradio",
+      "alternateName": "Uniradio Wrocław",
       "url": "https://uniradioprojekt.pl",
       "logo": "https://uniradioprojekt.pl/logogradientbeztekstu.png",
-      "description": "Niezależny projekt radiowy Wydziału Dziennikarstwa i Komunikacji Społecznej Uniwersytetu Wrocławskiego.",
+      "description": "Niezależny internetowy projekt radiowy przy Wydziale Dziennikarstwa i Komunikacji Społecznej Uniwersytetu Wrocławskiego.",
       "foundingDate": "2002",
       "address": {
         "@type": "PostalAddress",
@@ -88,94 +88,6 @@
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
-        /* --- PRIMA APRILIS CSS --- */
-/* 1. Blokada mobilna */
-@media (max-width: 767px) {
-    body > * { display: none !important; }
-    body::before {
-        content: "STRONA ZABLOKOWANA NA TELEFONACH! Wsiadaj na konia i odpalaj komputer albo tryb komputerowy w telefonie 🐎";
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        height: 100vh;
-        width: 100vw;
-        background: #5C4033;
-        color: white;
-        font-size: 24px;
-        font-weight: bold;
-        text-align: center;
-        padding: 20px;
-        box-sizing: border-box;
-    }
-}
-
-/* 2. Style kowbojskie */
-.text-cowboy-brown { color: #5C4033 !important; }
-.bg-cowboy-brown { background-color: #5C4033 !important; }
-.hover\:bg-cowboy-dark:hover { background-color: #3E2B22 !important; }
-
-/* 3. Pulsujący banner na środku zdjęcia */
-@keyframes pulse-banner {
-    0% { transform: translate(-50%, -50%) scale(1); opacity: 0.8; }
-    50% { transform: translate(-50%, -50%) scale(1.15) rotate(-3deg); opacity: 1; color: #facc15; }
-    100% { transform: translate(-50%, -50%) scale(1); opacity: 0.8; }
-}
-.banner-kliknij {
-    animation: pulse-banner 0.8s infinite alternate;
-}
-
-/* 4. Efekt trzęsienia MLG */
-@keyframes mlg-shake {
-    0% { transform: translate(2px, 1px) rotate(0deg); }
-    10% { transform: translate(-1px, -2px) rotate(-1deg); }
-    20% { transform: translate(-3px, 0px) rotate(1deg); }
-    30% { transform: translate(3px, 2px) rotate(0deg); }
-    40% { transform: translate(1px, -1px) rotate(1deg); }
-    50% { transform: translate(-1px, 2px) rotate(-1deg); }
-    60% { transform: translate(-3px, 1px) rotate(0deg); }
-    70% { transform: translate(3px, 1px) rotate(-1deg); }
-    80% { transform: translate(-1px, -1px) rotate(1deg); }
-    90% { transform: translate(1px, 2px) rotate(0deg); }
-    100% { transform: translate(1px, -2px) rotate(-1deg); }
-}
-.mlg-active {
-    animation: mlg-shake 0.1s infinite;
-    /* --- FULL WESTERN MODE --- */
-body.western-mode {
-    background-color: #3d2b1f !important; /* Ciemne drewno */
-    color: #f3e5ab !important; /* Kolor pergaminu/pszenicy */
-}
-
-/* Zmiana paneli i nawigacji */
-.western-mode .glass-panel, 
-.western-mode nav, 
-.western-mode footer, 
-.western-mode #player-bar {
-    background: rgba(61, 43, 31, 0.95) !important;
-    border-color: #8b4513 !important;
-}
-
-/* Zmiana kolorów akcentowych (neonów) na kowbojskie */
-.western-mode .text-radio-neon, 
-.western-mode .text-radio-pink, 
-.western-mode .text-radio-accent,
-.western-mode #schedule-variant-title span {
-    color: #cd853f !important; /* Kolor skóry/siodła */
-}
-
-.western-mode .bg-radio-accent, 
-.western-mode .bg-radio-neon,
-.western-mode .bg-radio-pink {
-    background-color: #8b4513 !important;
-}
-
-/* Styl dla baneru nad zdjęciem */
-#kliknij-mnie {
-    top: 50%; /* Środek w pionie */
-    left: 50%; /* Środek w poziomie */
-    transform: translate(-50%, -50%); /* Dokładne centrowanie */
-}
-}
     </style>
 </head>
 <body class="bg-radio-dark text-white font-sans antialiased overflow-x-hidden w-full pb-24">
@@ -259,36 +171,26 @@ body.western-mode {
         <div class="absolute bottom-0 right-0 w-[300px] h-[300px] md:w-[500px] md:h-[500px] bg-radio-neon/10 rounded-full blur-[80px] md:blur-[120px] translate-x-1/3 translate-y-1/3"></div>
 
         <div class="container mx-auto px-6 grid md:grid-cols-2 gap-8 md:gap-12 items-center relative z-10 w-full">
-<div class="space-y-4 md:space-y-5">
-    <h1 id="main-title" class="text-5xl md:text-7xl font-extrabold leading-tight break-words">
-        UNIRADIO <br>
-        <span class="text-transparent bg-clip-text bg-gradient-to-r from-radio-accent to-radio-neon">GRAMY SŁOWEM</span>
-    </h1>
-    <p class="text-gray-400 text-lg max-w-lg text-justify">
-        Niezależne radio internetowe Wydziału Dziennikarstwa UWr. Tu studenci poznają tajniki pracy radiowej od kuchni, tworząc autorskie audycje i realizując dźwięk z pasją od 2002 roku.
-    </p>
-    <div class="flex gap-4 pt-2">
-        <button id="main-play-btn" onclick="openPlayer()" class="bg-radio-accent hover:bg-violet-700 text-white w-full sm:w-auto px-12 md:px-24 py-4 md:py-5 rounded-full font-bold flex items-center justify-center gap-2 transition shadow-lg shadow-violet-900/50 text-lg md:text-xl hover:scale-105 active:scale-95">
-            <i data-lucide="play" class="fill-current w-6 h-6 md:w-7 md:h-7"></i> Słuchaj Teraz
-        </button>
-    </div>
-</div>
+            <div class="space-y-4 md:space-y-5">
+                <h1 class="text-5xl md:text-7xl font-extrabold leading-tight break-words">
+                    UNIRADIO <br>
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-radio-accent to-radio-neon">GRAMY SŁOWEM</span>
+                </h1>
+                <p class="text-gray-400 text-lg max-w-lg text-justify">
+                    Niezależne radio internetowe Wydziału Dziennikarstwa UWr. Tu&nbsp;studenci poznają tajniki pracy radiowej od&nbsp;kuchni, tworząc autorskie audycje i&nbsp;realizując dźwięk z&nbsp;pasją od&nbsp;2002&nbsp;roku.
+                </p>
+                <div class="flex gap-4 pt-2">
+                    <!-- Pogrubiony i powiększony przycisk na desktopach -->
+                    <button onclick="openPlayer()" class="bg-radio-accent hover:bg-violet-700 text-white w-full sm:w-auto px-12 md:px-24 py-4 md:py-5 rounded-full font-bold flex items-center justify-center gap-2 transition shadow-lg shadow-violet-900/50 text-lg md:text-xl hover:scale-105 active:scale-95">
+                        <i data-lucide="play" class="fill-current w-6 h-6 md:w-7 md:h-7"></i> Słuchaj Teraz
+                    </button>
+                </div>
+            </div>
             
-<audio id="country-music" loop preload="auto">
-    <source src="https://archive.org/download/lp_keep-it-country_erhardt-country/disc1%2F02.01.%20Good%20Ole%20Country%20Music.mp3?tunnel=1" type="audio/mpeg">
-</audio>
-
-<div class="relative hidden md:block group cursor-pointer" id="hero-image-container">
-    <div id="kliknij-mnie" class="absolute z-50 text-4xl font-black text-yellow-500 banner-kliknij drop-shadow-[0_0_10px_rgba(0,0,0,0.8)] whitespace-nowrap pointer-events-none">
-        KLIKNIJ ZDJĘCIE!
-    </div>
-    
-    <div class="absolute inset-0 bg-radio-accent/20 rounded-2xl blur-xl group-hover:bg-radio-accent/30 transition duration-500"></div>
-    
-    <img id="main-hero-img" src="main-photo.webp" alt="Studio radiowe UniRadio" class="relative z-10 rounded-2xl shadow-2xl border border-slate-700 transform rotate-3 group-hover:rotate-0 transition duration-500 w-full h-[450px] object-cover grayscale group-hover:grayscale-0">
-    
-    <div id="mlg-container" class="absolute inset-0 z-20 pointer-events-none overflow-hidden rounded-2xl"></div>
-</div>
+            <div class="relative hidden md:block group">
+                <div class="absolute inset-0 bg-radio-accent/20 rounded-2xl blur-xl group-hover:bg-radio-accent/30 transition duration-500"></div>
+                <img src="main-photo.webp" alt="Studio radiowe UniRadio" class="relative z-10 rounded-2xl shadow-2xl border border-slate-700 transform rotate-3 group-hover:rotate-0 transition duration-500 w-full h-[450px] object-cover grayscale group-hover:grayscale-0">
+            </div>
         </div>
     </section>
 
@@ -1167,69 +1069,11 @@ body.western-mode {
             menu.classList.toggle('hidden');
         }
 
-window.addEventListener('scroll', () => {
+        window.addEventListener('scroll', () => {
             const navbar = document.getElementById('navbar');
             if (window.scrollY > 50) { navbar.classList.add('bg-slate-900/90', 'shadow-lg'); }
             else { navbar.classList.remove('bg-slate-900/90', 'shadow-lg'); }
         });
-
-        // --- SKRYPT PRIMA APRILIS: WESTERN MODE ---
-        const audio = document.getElementById('country-music');
-        
-        // 1. Muzyka po kliknięciu GDZIEKOLWIEK na stronie
-        const playMusic = () => {
-            if (audio && audio.paused) {
-                audio.play().catch(e => console.log("Błąd audio:", e));
-            }
-        };
-        document.addEventListener('click', playMusic, { once: true });
-        document.addEventListener('keydown', playMusic, { once: true });
-
-        // 2. Elementy transformacji
-        const heroContainer = document.getElementById('hero-image-container');
-        const mainImg = document.getElementById('main-hero-img'); // Nasze zdjęcie
-        const mainTitle = document.getElementById('main-title');
-        const playBtn = document.getElementById('main-play-btn');
-        const bannerKliknij = document.getElementById('kliknij-mnie');
-        let westernActivated = false;
-
-        if (heroContainer) {
-            // Transformacja stylu po NAJECHANIU
-            heroContainer.addEventListener('mouseenter', () => {
-                if (westernActivated) return;
-                westernActivated = true;
-
-                document.body.classList.add('western-mode');
-
-                if (mainTitle) {
-                    mainTitle.innerHTML = `UNIRADIO <br> <span class="text-cowboy-brown font-black">GRAMY COUNTRY</span>`;
-                }
-                if (playBtn) {
-                    playBtn.innerHTML = `<i data-lucide="play" class="fill-current w-6 h-6 md:w-7 md:h-7"></i> SŁUCHAJ TERAZ COWBOJU IHH AHH`;
-                    playBtn.classList.add('bg-cowboy-brown', 'hover:bg-cowboy-dark');
-                    if (window.lucide) lucide.createIcons();
-                }
-
-                // Efekt trzęsienia przy zmianie trybu
-                document.body.style.animation = "mlg-shake 0.3s ease-in-out";
-                setTimeout(() => { document.body.style.animation = ""; }, 300);
-            });
-
-            // Podmiana ZDJĘCIA i UKRYCIE NAPISU po KLIKNIĘCIU
-            heroContainer.addEventListener('click', () => {
-                if (mainImg) {
-                    mainImg.src = '620877727_4445429962345319_2593729638342359229_n.jpg';
-                    // Usuwamy grayscale, żeby kowbojskie zdjęcie było od razu kolorowe i wyraźne
-                    mainImg.classList.remove('grayscale');
-                    mainImg.style.filter = "none";
-                }
-                
-                // Ukrywamy pulsujący napis DOPIERO po kliknięciu
-                if (bannerKliknij) {
-                    bannerKliknij.style.display = 'none';
-                }
-            });
-        }
     </script>
 </body>
 </html>
