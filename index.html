@@ -541,11 +541,13 @@
             'ad_personalization': 'denied'
         });
 
-        // 2. Ładujemy sam skrypt Google Analytics (Zostanie załadowany, ale będzie czekał na zgodę)
-        const script = document.createElement('script');
-        script.src = `https://www.googletagmanager.com/gtag/js?id=${GA_TRACKING_ID}`;
-        script.async = true;
-        document.head.appendChild(script);
+// 2.  Ładowanie skryptu Google Analytics 
+        setTimeout(() => {
+            const script = document.createElement('script');
+            script.src = `https://www.googletagmanager.com/gtag/js?id=${GA_TRACKING_ID}`;
+            script.async = true;
+            document.head.appendChild(script);
+        }, 3500); 
 
         gtag('js', new Date());
         gtag('config', GA_TRACKING_ID);
