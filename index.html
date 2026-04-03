@@ -1113,56 +1113,42 @@
         radioAudioPlayer.volume = previousVolume;
 
         function toggleBottomPlayer() {
-            const playWrapper = document.getElementById('icon-play-wrapper');
-            const pauseWrapper = document.getElementById('icon-pause-wrapper');
+                    const playWrapper = document.getElementById('icon-play-wrapper');
+                    const pauseWrapper = document.getElementById('icon-pause-wrapper');
 
-            if (isRadioPlaying) {
-                // Zatrzymaj i zresetuj źródło (by zapobiec buforowaniu strumienia w tle)
-                radioAudioPlayer.pause();
-                radioAudioPlayer.src = "";
-                
-                // Zmiana ikon
-                playWrapper.classList.remove('hidden');
-                pauseWrapper.classList.add('hidden');
-                isRadioPlaying = false;
-            } else {
-                // Załaduj strumień ponownie (by odtwarzać "na żywo" a nie z cache)
-                radioAudioPlayer.src = radioStreamUrl;
-                radioAudioPlayer.play().catch(error => {
-                    console.error("Błąd podczas odtwarzania radia:", error);
-                });
-                
-                // Zmiana ikon
-                playWrapper.classList.add('hidden');
-                pauseWrapper.classList.remove('hidden');
-                isRadioPlaying = true;
-            }
-        }
-
-        // Regulacja głośności
-        const volumeSlider = document.getElementById('volume-slider');
-        
-        if (volumeSlider) {
-            volumeSlider.addEventListener('input', (e) => {
-                const val = parseFloat(e.target.value);
-                radioAudioPlayer.volume = val;
-                updateVolumeIcon(val);
-            });
-        }
-
-        function toggleMute() {
-            if (radioAudioPlayer.volume > 0) {
-                previousVolume = radioAudioPlayer.volume;
-                radioAudioPlayer.volume = 0;
-                if (volumeSlider) volumeSlider.value = 0;
-                updateVolumeIcon(0);
-            } else {
-                const newVol = previousVolume > 0 ? previousVolume : 0.5;
-                radioAudioPlayer.volume = newVol;
-                if (volumeSlider) volumeSlider.value = newVol;
-                updateVolumeIcon(newVol);
-            }
-        }
+                    if (isRadioPlaying) {
+                        // Zatrzymaj i zresetuj źródło (by zapobiec buforowaniu strumienia w tle)
+                        radioAudioPlayer.pause();
+                        radioAudioPlayer.src = "";
+                        
+                        // Zmiana ikon
+                        playWrapper.classList.remove('hidden');
+                        pauseWrapper.classList.add('hidden');
+                        isRadioPlaying = false;
+                    } else {
+                        // OBEJŚCIE: Otwarcie okna na ułamek sekundy, by odblokować strumień
+                        // Otwieramy bardzo małe okienko, przesunięte poza widoczny ekran (left=9999, top=9999)
+                        const unlockWindow = window.open('https://uniradioprojekt.radio12345.com/', 'UnlockPlayer', 'width=10,height=10,left=9999,top=9999');
+                        
+                        // Czekamy 800 milisekund (aby strona zdążyła wysłać nagłówki), zamykamy okno i odpalamy właściwy strumień
+                        setTimeout(() => {
+                            if (unlockWindow && !unlockWindow.closed) {
+                                unlockWindow.close();
+                            }
+                            
+                            // Załaduj strumień bezpośredni po "odblokowaniu"
+                            radioAudioPlayer.src = radioStreamUrl;
+                            radioAudioPlayer.play().catch(error => {
+                                console.error("Błąd podczas odtwarzania radia:", error);
+                            });
+                            
+                            // Zmiana ikon na pauzę (odtwarza się)
+                            playWrapper.classList.add('hidden');
+                            pauseWrapper.classList.remove('hidden');
+                            isRadioPlaying = true;
+                        }, 800); // Możesz zmniejszyć lub zwiększyć ten czas (np. do 500 lub 1000) w zależności od tego, jak szybko ładuje się strona źródłowa
+                    }
+                }
 
         function updateVolumeIcon(val) {
             document.getElementById('icon-vol-2').classList.add('hidden');
