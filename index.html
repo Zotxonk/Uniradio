@@ -1163,6 +1163,35 @@
                 document.getElementById('icon-vol-2').classList.remove('hidden');
             }
         }
+        // Obsługa suwaka głośności (zmiana wartości podczas przesuwania)
+        document.getElementById('volume-slider').addEventListener('input', (e) => {
+            const vol = parseFloat(e.target.value);
+            radioAudioPlayer.volume = vol;
+            
+            // Zapisujemy głośność, by móc do niej wrócić po wyciszeniu i odciszeniu
+            if (vol > 0) {
+                previousVolume = vol; 
+            }
+            updateVolumeIcon(vol);
+        });
+
+        // Funkcja wyciszania (Mute) podpięta pod kliknięcie w ikonę głośnika
+        function toggleMute() {
+            const slider = document.getElementById('volume-slider');
+            
+            if (radioAudioPlayer.volume > 0) {
+                // Wyciszamy
+                previousVolume = radioAudioPlayer.volume; 
+                radioAudioPlayer.volume = 0;
+                slider.value = 0;
+            } else {
+                // Odciszamy (przywracamy zapisaną wcześniej głośność)
+                radioAudioPlayer.volume = previousVolume > 0 ? previousVolume : 0.5;
+                slider.value = radioAudioPlayer.volume;
+            }
+            
+            updateVolumeIcon(radioAudioPlayer.volume);
+        }
         // ---------------------------------------------------------------------
 
         // Funkcja do obsługi menu mobilnego
