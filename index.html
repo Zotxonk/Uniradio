@@ -76,24 +76,10 @@
         
         html { scroll-behavior: smooth; }
         
-        /* Zoptymalizowany Glass Panel - brak blur na mobile dla wydajności */
         .glass-panel {
-            background: rgba(30, 41, 59, 0.95);
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        
-        @media (min-width: 768px) {
-            .glass-panel {
-                background: rgba(30, 41, 59, 0.7);
-                backdrop-filter: blur(10px);
-                -webkit-backdrop-filter: blur(10px);
-            }
-        }
-
-        /* Klasa akceleracji sprzętowej */
-        .hw-accel {
-            transform: translateZ(0);
-            will-change: transform, opacity;
         }
 
         /* Suwak Głośności */
@@ -126,7 +112,7 @@
 </head>
 <body class="bg-radio-dark text-white font-sans antialiased overflow-x-hidden w-full pb-24">
 
-    <nav class="fixed w-full z-50 transition-all duration-300 hw-accel" id="navbar">
+    <nav class="fixed w-full z-50 transition-all duration-300" id="navbar">
         <div class="container mx-auto px-6 py-4 flex justify-between items-center glass-panel rounded-b-2xl mt-0 relative z-50">
             <a href="#home" class="flex items-center gap-3 hover:opacity-90 transition group">
                 <img src="logo-uniradio.webp" 
@@ -166,7 +152,7 @@
             <div class="flex items-center gap-4">
                 <a href="https://www.instagram.com/uniradio.projekt" target="_blank" aria-label="Odwiedź nasz profil na Instagramie"
                    class="flex items-center gap-2 bg-gradient-to-tr from-radio-accent/20 to-radio-pink/20 hover:from-radio-accent hover:to-radio-pink text-white px-4 py-2 rounded-full transition-all duration-300 border border-white/10 group shadow-lg shadow-radio-accent/10">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5 group-hover:scale-110 transition hw-accel"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5 group-hover:scale-110 transition"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
                     <span class="text-xs font-bold hidden lg:inline">Instagram</span>
                 </a>
 
@@ -177,7 +163,7 @@
         </div>
 
         <div id="mobile-menu" class="hidden md:hidden absolute top-full left-0 w-full px-4 -mt-2 pb-4">
-            <div class="glass-panel rounded-2xl p-6 flex flex-col space-y-4 shadow-2xl">
+            <div class="glass-panel rounded-2xl p-6 flex flex-col space-y-4 shadow-2xl animate-in slide-in-from-top-4 duration-200">
                 <a href="#home" class="text-lg font-medium hover:text-radio-accent transition border-b border-white/5 pb-2" onclick="toggleMobileMenu()">Start</a>
                 <a href="#schedule" class="text-lg font-medium hover:text-radio-accent transition border-b border-white/5 pb-2" onclick="toggleMobileMenu()">Ramówka</a>
                 <a href="#team" class="text-lg font-medium hover:text-radio-accent transition border-b border-white/5 pb-2" onclick="toggleMobileMenu()">Zespół</a>
@@ -197,8 +183,8 @@
 
     <main>
     <section id="home" class="relative min-h-screen flex items-center pt-20 pb-32 overflow-hidden scroll-mt-24 w-full">
-        <div class="absolute top-0 left-0 w-64 h-64 md:w-96 md:h-96 bg-radio-accent/20 rounded-full blur-[50px] md:blur-[100px] -translate-x-1/2 -translate-y-1/2 hw-accel transform-gpu pointer-events-none"></div>
-        <div class="absolute bottom-0 right-0 w-[300px] h-[300px] md:w-[500px] md:h-[500px] bg-radio-neon/10 rounded-full blur-[50px] md:blur-[120px] translate-x-1/3 translate-y-1/3 hw-accel transform-gpu pointer-events-none"></div>
+        <div class="absolute top-0 left-0 w-64 h-64 md:w-96 md:h-96 bg-radio-accent/20 rounded-full blur-[80px] md:blur-[100px] -translate-x-1/2 -translate-y-1/2"></div>
+        <div class="absolute bottom-0 right-0 w-[300px] h-[300px] md:w-[500px] md:h-[500px] bg-radio-neon/10 rounded-full blur-[80px] md:blur-[120px] translate-x-1/3 translate-y-1/3"></div>
 
         <div class="container mx-auto px-6 grid md:grid-cols-2 gap-8 md:gap-12 items-center relative z-10 w-full">
             <div class="space-y-4 md:space-y-5">
@@ -210,13 +196,13 @@
                     Niezależny projekt radiowy przy Wydziale Dziennikarstwa UWr. Tu studenci poznają tajniki pracy radiowej od kuchni, tworząc autorskie audycje i realizując dźwięk z pasją od 2002 roku.
                 </p>
                 <div class="flex gap-4 pt-2">
-                    <button onclick="openPlayer()" class="bg-radio-accent hover:bg-violet-700 text-white w-full sm:w-auto px-12 md:px-24 py-4 md:py-5 rounded-full font-bold flex items-center justify-center gap-2 transition shadow-lg shadow-violet-900/50 text-lg md:text-xl hover:scale-105 active:scale-95 hw-accel">
+                    <button onclick="openPlayer()" class="bg-radio-accent hover:bg-violet-700 text-white w-full sm:w-auto px-12 md:px-24 py-4 md:py-5 rounded-full font-bold flex items-center justify-center gap-2 transition shadow-lg shadow-violet-900/50 text-lg md:text-xl hover:scale-105 active:scale-95">
                         <i data-lucide="play" class="fill-current w-6 h-6 md:w-7 md:h-7"></i> Słuchaj Teraz
                     </button>
                 </div>
             </div>
             
-            <div class="relative hidden md:block group hw-accel">
+            <div class="relative hidden md:block group">
                 <div class="absolute inset-0 bg-radio-accent/20 rounded-2xl blur-xl group-hover:bg-radio-accent/30 transition duration-500"></div>
                 <img src="main-photo.webp" alt="Studio radiowe UniRadio" class="relative z-10 rounded-2xl shadow-2xl border border-slate-700 transform rotate-3 group-hover:rotate-0 transition duration-500 w-full h-[450px] object-cover grayscale group-hover:grayscale-0">
             </div>
@@ -442,7 +428,7 @@
                         <i data-lucide="map-pin" class="w-12 h-12 text-gray-500 mb-4 animate-bounce"></i>
                         <h4 class="text-xl font-bold text-white mb-2">Mapa zablokowana ze względu na prywatność</h4>
                         <p class="text-gray-400 mb-6 max-w-md text-sm">Aby wyświetlić interaktywną mapę, potrzebujemy Twojej zgody na wczytanie plików cookie firmy Google.</p>
-                        <button onclick="acceptCookies()" class="bg-radio-accent hover:bg-violet-600 text-white px-6 py-3 rounded-full font-bold transition-all hover:scale-105 active:scale-95 shadow-lg shadow-violet-900/50 text-sm hw-accel">Zaakceptuj Cookies i Pokaż Mapę</button>
+                        <button onclick="acceptCookies()" class="bg-radio-accent hover:bg-violet-600 text-white px-6 py-3 rounded-full font-bold transition-all hover:scale-105 active:scale-95 shadow-lg shadow-violet-900/50 text-sm">Zaakceptuj Cookies i Pokaż Mapę</button>
                     </div>
                     <iframe id="google-map-iframe" title="Mapa z lokalizacją studia Uniradio" data-src="https://maps.google.com/maps?q=51.11103944446098,17.053642186250958&hl=pl&z=18&output=embed" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" class="grayscale opacity-80 hover:grayscale-0 hover:opacity-100 transition duration-700"></iframe>
                 </div>
@@ -465,22 +451,22 @@
         </div>
     </footer>
 
-    <div id="cookie-banner" class="fixed bottom-0 left-0 w-full bg-slate-900/95 md:backdrop-blur-xl border-t border-slate-700 z-[70] py-6 px-4 md:px-8 transform translate-y-full transition-transform duration-700 flex flex-col md:flex-row items-center justify-between gap-6 shadow-[0_-10px_40px_rgba(0,0,0,0.5)] hw-accel">
+    <div id="cookie-banner" class="fixed bottom-0 left-0 w-full bg-slate-900/95 backdrop-blur-xl border-t border-slate-700 z-[70] py-6 px-4 md:px-8 transform translate-y-full transition-transform duration-700 flex flex-col md:flex-row items-center justify-between gap-6 shadow-[0_-10px_40px_rgba(0,0,0,0.5)]">
         <div class="text-sm text-gray-300 text-justify md:text-left md:max-w-4xl">
             <p class="font-bold text-white text-base mb-1">Cenimy Twoją prywatność 🍪</p>
             Używamy plików cookie oraz podobnych technologii (m.in. Google Analytics i Google Maps) do analizy ruchu, poprawy bezpieczeństwa i zapewnienia pełnej funkcjonalności strony. Zanim te skrypty zostaną załadowane, potrzebujemy Twojej zgody. Więcej szczegółów znajdziesz w naszej <a href="polityka-prywatnosci" class="text-radio-neon hover:text-radio-pink transition-colors underline underline-offset-2">Polityce Prywatności</a>.
         </div>
         <div class="flex flex-col sm:flex-row items-center gap-3 shrink-0 w-full md:w-auto">
             <button onclick="declineCookies()" class="w-full sm:w-auto px-6 py-3 rounded-xl border border-slate-600 text-gray-300 hover:bg-slate-800 transition font-medium text-sm">Odrzuć analitykę</button>
-            <button onclick="acceptCookies()" class="w-full sm:w-auto px-6 py-3 rounded-xl bg-radio-accent hover:bg-violet-600 text-white transition font-bold text-sm shadow-lg shadow-violet-900/50 hover:scale-105 active:scale-95 hw-accel">Akceptuję wszystkie</button>
+            <button onclick="acceptCookies()" class="w-full sm:w-auto px-6 py-3 rounded-xl bg-radio-accent hover:bg-violet-600 text-white transition font-bold text-sm shadow-lg shadow-violet-900/50 hover:scale-105 active:scale-95">Akceptuję wszystkie</button>
         </div>
     </div>
 
-    <div class="fixed bottom-0 left-0 w-full bg-slate-900 md:bg-slate-900/95 md:backdrop-blur-lg border-t border-slate-700 z-50 py-3 hw-accel" id="player-bar">
+    <div class="fixed bottom-0 left-0 w-full bg-slate-900/95 backdrop-blur-lg border-t border-slate-700 z-50 py-3" id="player-bar">
         <div class="container mx-auto px-6 flex items-center justify-between">
             <div class="flex items-center gap-4 flex-1 min-w-0">
                 <div class="w-12 h-12 bg-slate-800 rounded-lg overflow-hidden shrink-0 relative">
-                    <img src="462547296_1491965518304482_2108257348268410961_n.jpg" loading="lazy" class="w-full h-full object-cover opacity-80" alt="Okładka transmisji">
+                    <img src="462547296_1491965518304482_2108257348268410961_n.jpg" class="w-full h-full object-cover opacity-80" alt="Okładka transmisji">
                 </div>
                 <div class="hidden sm:block overflow-hidden min-w-0">
                     <h4 class="font-bold text-sm truncate text-white">Transmisja na żywo</h4>
@@ -489,7 +475,7 @@
             </div>
             
             <div class="flex items-center justify-center shrink-0 px-2">
-                <button onclick="toggleBottomPlayer()" aria-label="Odtwarzaj radio na żywo" class="w-12 h-12 rounded-full bg-white text-radio-dark flex items-center justify-center hover:scale-105 transition hw-accel" id="bottom-play-btn">
+                <button onclick="toggleBottomPlayer()" aria-label="Odtwarzaj radio na żywo" class="w-12 h-12 rounded-full bg-white text-radio-dark flex items-center justify-center hover:scale-105 transition" id="bottom-play-btn">
                     <span id="icon-play-wrapper" class="flex items-center justify-center"><i data-lucide="play" class="w-6 h-6 fill-current translate-x-[1px]"></i></span>
                     <span id="icon-pause-wrapper" class="flex items-center justify-center hidden"><i data-lucide="pause" class="w-6 h-6 fill-current"></i></span>
                 </button>
@@ -1193,22 +1179,11 @@
             menu.classList.toggle('hidden');
         }
 
-        // Zoptymalizowane nasłuchiwanie scrolla z requestAnimationFrame
-        let ticking = false;
         window.addEventListener('scroll', () => {
-            if (!ticking) {
-                window.requestAnimationFrame(() => {
-                    const navbar = document.getElementById('navbar');
-                    if (window.scrollY > 50) { 
-                        navbar.classList.add('bg-slate-900/90', 'shadow-lg'); 
-                    } else { 
-                        navbar.classList.remove('bg-slate-900/90', 'shadow-lg'); 
-                    }
-                    ticking = false;
-                });
-                ticking = true;
-            }
-        }, { passive: true });
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) { navbar.classList.add('bg-slate-900/90', 'shadow-lg'); }
+            else { navbar.classList.remove('bg-slate-900/90', 'shadow-lg'); }
+        });
     </script>
 </body>
 </html>
