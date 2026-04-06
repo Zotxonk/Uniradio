@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <!-- SEO: Podstawowe Tagi -->
     <title>Uniradio - Gramy Słowem | Studencki Projekt Radiowy Wrocław</title>
     <meta name="description" content="Uniradio to niezależny, studencki projekt radiowy przy Wydziale Dziennikarstwa i Komunikacji Społecznej UWr. Słuchaj na żywo, sprawdzaj ramówkę i dołącz do nas!">
     <meta name="keywords" content="uniradio, radio studenckie, uwr, uniwersytet wrocławski, radio internetowe wrocław, dziennikarstwo uwr, radio, uni radio, audycje studenckie, instytut dziennikarstwa radio">
@@ -12,7 +11,6 @@
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://uniradioprojekt.pl/">
 
-    <!-- SEO: Open Graph (Facebook, Discord, LinkedIn) -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://uniradioprojekt.pl/">
     <meta property="og:title" content="Uniradio - Gramy Słowem | Studencki Projekt Radiowy Wrocław">
@@ -20,22 +18,18 @@
     <meta property="og:image" content="https://uniradioprojekt.pl/main-photo.webp">
     <meta property="og:locale" content="pl_PL">
 
-    <!-- SEO: Twitter Cards -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Uniradio - Gramy Słowem">
     <meta name="twitter:description" content="Niezależne internetowy projekt radiowy studentów Dziennikarstwa UWr. Tworzymy z pasją od 2002 roku.">
     <meta name="twitter:image" content="https://uniradioprojekt.pl/main-photo.webp">
 
-    <!-- Wymuszenie ikony - rozszerzone wsparcie dla różnych przeglądarek -->
     <link rel="icon" type="image/png" sizes="32x32" href="logotyp.png">
     <link rel="icon" type="image/png" sizes="192x192" href="logotyp.png">
     <link rel="shortcut icon" type="image/webp" href="logotyp.png">
     <link rel="apple-touch-icon" href="logotyp.png">
     
-    <!-- Ikony (zoptymalizowane - atrybut defer usuwa blokowanie renderowania) -->
     <script src="https://unpkg.com/lucide@latest" defer></script>
     
-    <!-- Fonty: DM Sans (zoptymalizowane - asynchroniczne ładowanie) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap">
@@ -44,7 +38,6 @@
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap">
     </noscript>
     
-    <!-- Dane Strukturalne Schema.org (JSON-LD dla Radia/Organizacji) -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -119,10 +112,8 @@
 </head>
 <body class="bg-radio-dark text-white font-sans antialiased overflow-x-hidden w-full pb-24">
 
-    <!-- Navbar -->
     <nav class="fixed w-full z-50 transition-all duration-300" id="navbar">
         <div class="container mx-auto px-6 py-4 flex justify-between items-center glass-panel rounded-b-2xl mt-0 relative z-50">
-            <!-- Logo z mechanizmem Fallback -->
             <a href="#home" class="flex items-center gap-3 hover:opacity-90 transition group">
                 <img src="logo-uniradio.webp" 
                      alt="UniRadio Logo" 
@@ -146,7 +137,6 @@
                 </div>
             </a>
             
-            <!-- Linki Desktop -->
             <div class="hidden md:flex items-center space-x-8 font-medium">
                 <a href="#home" class="hover:text-radio-accent transition">Start</a>
                 <a href="#schedule" class="hover:text-radio-accent transition">Ramówka</a>
@@ -172,7 +162,6 @@
             </div>
         </div>
 
-        <!-- Mobile Menu -->
         <div id="mobile-menu" class="hidden md:hidden absolute top-full left-0 w-full px-4 -mt-2 pb-4">
             <div class="glass-panel rounded-2xl p-6 flex flex-col space-y-4 shadow-2xl animate-in slide-in-from-top-4 duration-200">
                 <a href="#home" class="text-lg font-medium hover:text-radio-accent transition border-b border-white/5 pb-2" onclick="toggleMobileMenu()">Start</a>
@@ -192,7 +181,6 @@
         </div>
     </nav>
 
-    <!-- Hero Section -->
     <main>
     <section id="home" class="relative min-h-screen flex items-center pt-20 pb-32 overflow-hidden scroll-mt-24 w-full">
         <div class="absolute top-0 left-0 w-64 h-64 md:w-96 md:h-96 bg-radio-accent/20 rounded-full blur-[80px] md:blur-[100px] -translate-x-1/2 -translate-y-1/2"></div>
@@ -205,10 +193,9 @@
                     <span class="text-transparent bg-clip-text bg-gradient-to-r from-radio-accent to-radio-neon">GRAMY SŁOWEM</span>
                 </h1>
                 <p class="text-gray-400 text-lg max-w-lg text-justify">
-                    Niezależny projekt radiowy przy Wydziale Dziennikarstwa UWr. Tu&nbsp;studenci poznają tajniki pracy radiowej od&nbsp;kuchni, tworząc autorskie audycje i&nbsp;realizując dźwięk z&nbsp;pasją od&nbsp;2002&nbsp;roku.
+                    Niezależny projekt radiowy przy Wydziale Dziennikarstwa UWr. Tu studenci poznają tajniki pracy radiowej od kuchni, tworząc autorskie audycje i realizując dźwięk z pasją od 2002 roku.
                 </p>
                 <div class="flex gap-4 pt-2">
-                    <!-- Pogrubiony i powiększony przycisk na desktopach -->
                     <button onclick="openPlayer()" class="bg-radio-accent hover:bg-violet-700 text-white w-full sm:w-auto px-12 md:px-24 py-4 md:py-5 rounded-full font-bold flex items-center justify-center gap-2 transition shadow-lg shadow-violet-900/50 text-lg md:text-xl hover:scale-105 active:scale-95">
                         <i data-lucide="play" class="fill-current w-6 h-6 md:w-7 md:h-7"></i> Słuchaj Teraz
                     </button>
@@ -222,7 +209,6 @@
         </div>
     </section>
 
-    <!-- Schedule Section (Z wariantami i kalendarzem) -->
     <section id="schedule" class="py-12 bg-slate-900/50 scroll-mt-24">
         <div class="container mx-auto px-6">
             <h2 class="text-3xl font-bold mb-10 flex items-center gap-3">
@@ -230,7 +216,6 @@
             </h2>
 
             <div class="grid lg:grid-cols-4 gap-8">
-                <!-- Kalendarz -->
                 <div class="lg:col-span-1">
                     <div class="glass-panel p-6 rounded-2xl border border-slate-700/50 sticky top-28 shadow-xl">
                         <div class="flex justify-between items-center mb-6">
@@ -244,10 +229,8 @@
                         </div>
                         
                         <div id="calendar-grid" class="flex flex-col gap-1 text-center text-sm font-medium">
-                            <!-- JS automatycznie wygeneruje tutaj dni miesiąca (pogrupowane w tygodnie) -->
-                        </div>
+                            </div>
                         
-                        <!-- Legenda kalendarza -->
                         <div class="mt-8 space-y-3">
                             <div class="text-xs text-gray-400 flex items-center gap-3">
                                 <span class="w-3 h-3 rounded bg-slate-900 border border-slate-700"></span> 
@@ -267,17 +250,14 @@
                     </div>
                 </div>
 
-                <!-- Panele Ramówki -->
                 <div class="lg:col-span-3">
                     <div class="mb-8 border-b border-slate-700/50 pb-4">
                         <h3 id="schedule-variant-title" class="text-3xl font-bold">
-                            <!-- Wypełniane przez JavaScript -->
-                        </h3>
+                            </h3>
                     </div>
                     
                     <div id="schedule-panels" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                        <!-- Wypełniane przez JavaScript dniami i audycjami -->
-                    </div>
+                        </div>
                     
                     <div class="mt-12 text-center bg-slate-800/30 p-6 rounded-2xl border border-slate-700/50 hover:bg-slate-800/50 transition duration-300">
                         <p class="text-gray-400 text-sm">Chcesz poprowadzić własną audycję? <a href="#contact" class="text-radio-accent hover:text-radio-pink transition font-bold text-lg ml-2">Zgłoś się do nas!</a></p>
@@ -287,7 +267,6 @@
         </div>
     </section>
 
-    <!-- ZESPÓŁ -->
     <section id="team" class="py-12 relative border-t border-slate-800/50 scroll-mt-24">
         <div class="container mx-auto px-6">
             <div class="text-center mb-10">
@@ -295,7 +274,6 @@
             </div>
 
             <div class="grid md:grid-cols-2 gap-12">
-                <!-- Realizacja -->
                 <div>
                     <h3 class="text-xl font-bold mb-6 flex items-center gap-2">
                         <i data-lucide="sliders" class="text-radio-pink"></i> Realizacja
@@ -320,7 +298,6 @@
                     </div>
                 </div>
 
-                <!-- Twórcy -->
                 <div>
                     <h3 class="text-xl font-bold mb-6 flex items-center gap-2">
                         <i data-lucide="mic" class="text-radio-neon"></i> Twórcy
@@ -410,7 +387,6 @@
         </div>
     </section>
 
-    <!-- CONTACT & ABOUT -->
     <section id="contact" class="py-12 relative overflow-hidden bg-gradient-to-b from-radio-dark to-slate-950 scroll-mt-24">
         <div class="container mx-auto px-6 relative z-10">
             <div class="text-center mb-12">
@@ -420,16 +396,16 @@
             <div class="max-w-4xl mx-auto glass-panel p-8 md:p-12 rounded-3xl mb-12 border border-slate-700/50">
                 <div class="space-y-6 text-gray-300 leading-relaxed text-lg text-justify">
                     <p>
-                        <span class="text-radio-accent font-bold text-xl">Uniradio</span> to&nbsp;niezależne, nieustannie rozwijające się radio internetowe wydziału dziennikarstwa i&nbsp;komunikacji społecznej UWr. Projekt studencki zainicjowano w&nbsp;ówczesnej Katedrze Dziennikarstwa w&nbsp;2002 roku, a&nbsp;obecnie działa pod&nbsp;okiem <span class="text-white font-semibold">dr. Łukasza Śmigla</span>.
+                        <span class="text-radio-accent font-bold text-xl">Uniradio</span> to niezależne, nieustannie rozwijające się radio internetowe wydziału dziennikarstwa i komunikacji społecznej UWr. Projekt studencki zainicjowano w ówczesnej Katedrze Dziennikarstwa w 2002 roku, a obecnie działa pod okiem <span class="text-white font-semibold">dr. Łukasza Śmigla</span>.
                     </p>
                     <p>
-                        W&nbsp;obrębie projektu studenci mogą poznawać tajniki pracy radiowców „od&nbsp;kuchni” — uczyć się przygotowywania autorskich audycji, realizowania dźwięku oraz odpowiadania za&nbsp;promocję projektu. Zdobyte doświadczenie niejednokrotnie pozwoliło absolwentom kontynuować pasję w&nbsp;profesjonalnych instytucjach medialnych, takich jak <span class="text-radio-neon">Radio Wrocław</span> czy <span class="text-radio-neon">Radio RAM</span>.
+                        W obrębie projektu studenci mogą poznawać tajniki pracy radiowców „od kuchni” — uczyć się przygotowywania autorskich audycji, realizowania dźwięku oraz odpowiadania za promocję projektu. Zdobyte doświadczenie niejednokrotnie pozwoliło absolwentom kontynuować pasję w profesjonalnych instytucjach medialnych, takich jak <span class="text-radio-neon">Radio Wrocław</span> czy <span class="text-radio-neon">Radio RAM</span>.
                     </p>
                     <p>
-                        Audycje nadawane są z&nbsp;<span class="text-white font-semibold">sali radiowej 102</span> w&nbsp;budynku Instytutu Dziennikarstwa przy ulicy Joliot-Curie, a&nbsp;materiały rozpowszechniane online.
+                        Audycje nadawane są z <span class="text-white font-semibold">sali radiowej 102</span> w budynku Instytutu Dziennikarstwa przy ulicy Joliot-Curie, a materiały rozpowszechniane online.
                     </p>
                     <p>
-                        Ramówka ustalana jest na&nbsp;początku każdego semestru, koncentrując się na&nbsp;kreatywności oraz wkładzie własnym uczestników projektu, umożliwiając jednocześnie naukę poprzez eksperymenty z&nbsp;formą. <span class="text-radio-pink font-semibold">Realizacja dźwięku</span> skupia się na&nbsp;kontroli aspektów technicznych emitowanego materiału, czego studenci mogą nauczyć się między innymi na&nbsp;specjalnych szkoleniach organizowanych przez <span class="text-white font-semibold">dr. Jakuba Wilka</span>. Tworzenie materiałów promocyjnych obejmuje robienie zdjęć, grafik, postów na&nbsp;media społecznościowe oraz nadzór strony internetowej projektu.
+                        Ramówka ustalana jest na początku każdego semestru, koncentrując się na kreatywności oraz wkładzie własnym uczestników projektu, umożliwiając jednocześnie naukę poprzez eksperymenty z formą. <span class="text-radio-pink font-semibold">Realizacja dźwięku</span> skupia się na kontroli aspektów technicznych emitowanego materiału, czego studenci mogą nauczyć się między innymi na specjalnych szkoleniach organizowanych przez <span class="text-white font-semibold">dr. Jakuba Wilka</span>. Tworzenie materiałów promocyjnych obejmuje robienie zdjęć, grafik, postów na media społecznościowe oraz nadzór strony internetowej projektu.
                     </p>
                     
                     <div class="border-t border-slate-700 pt-6 mt-8">
@@ -444,19 +420,16 @@
                 </div>
             </div>
 
-            <!-- MAPA -->
             <div class="max-w-5xl mx-auto text-center">
                 <h3 class="text-2xl font-bold mb-4">Tutaj znajdziesz nasze studio</h3>
                 <p class="text-gray-400 mb-8">Fryderyka Joliot-Curie 15, Wrocław, sala 102.</p>
                 <div class="glass-panel p-2 rounded-2xl overflow-hidden h-[400px] md:h-[500px] border border-slate-700/50 relative">
-                    <!-- Placeholder Mapy przed akceptacją cookies -->
                     <div id="map-placeholder" class="absolute inset-0 flex flex-col items-center justify-center bg-slate-800/95 z-10 p-6 transition-opacity duration-500 rounded-xl">
                         <i data-lucide="map-pin" class="w-12 h-12 text-gray-500 mb-4 animate-bounce"></i>
                         <h4 class="text-xl font-bold text-white mb-2">Mapa zablokowana ze względu na prywatność</h4>
                         <p class="text-gray-400 mb-6 max-w-md text-sm">Aby wyświetlić interaktywną mapę, potrzebujemy Twojej zgody na wczytanie plików cookie firmy Google.</p>
                         <button onclick="acceptCookies()" class="bg-radio-accent hover:bg-violet-600 text-white px-6 py-3 rounded-full font-bold transition-all hover:scale-105 active:scale-95 shadow-lg shadow-violet-900/50 text-sm">Zaakceptuj Cookies i Pokaż Mapę</button>
                     </div>
-                    <!-- Zablokowany iframe (data-src zamiast src) -->
                     <iframe id="google-map-iframe" title="Mapa z lokalizacją studia Uniradio" data-src="https://maps.google.com/maps?q=51.11103944446098,17.053642186250958&hl=pl&z=18&output=embed" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" class="grayscale opacity-80 hover:grayscale-0 hover:opacity-100 transition duration-700"></iframe>
                 </div>
             </div>
@@ -464,7 +437,6 @@
     </section>
     </main>
 
-    <!-- Footer (bez górnej linii, wtopiony w tło) -->
     <footer class="bg-slate-950 pt-10 pb-28 md:pb-24">
         <div class="container mx-auto px-6 flex flex-col items-center text-center">
             <div class="flex items-center gap-2 mb-1">
@@ -479,7 +451,6 @@
         </div>
     </footer>
 
-    <!-- COOKIE BANNER -->
     <div id="cookie-banner" class="fixed bottom-0 left-0 w-full bg-slate-900/95 backdrop-blur-xl border-t border-slate-700 z-[70] py-6 px-4 md:px-8 transform translate-y-full transition-transform duration-700 flex flex-col md:flex-row items-center justify-between gap-6 shadow-[0_-10px_40px_rgba(0,0,0,0.5)]">
         <div class="text-sm text-gray-300 text-justify md:text-left md:max-w-4xl">
             <p class="font-bold text-white text-base mb-1">Cenimy Twoją prywatność 🍪</p>
@@ -491,10 +462,8 @@
         </div>
     </div>
 
-    <!-- STICKY PLAYER BAR -->
     <div class="fixed bottom-0 left-0 w-full bg-slate-900/95 backdrop-blur-lg border-t border-slate-700 z-50 py-3" id="player-bar">
         <div class="container mx-auto px-6 flex items-center justify-between">
-            <!-- Informacje o transmisji -->
             <div class="flex items-center gap-4 flex-1 min-w-0">
                 <div class="w-12 h-12 bg-slate-800 rounded-lg overflow-hidden shrink-0 relative">
                     <img src="462547296_1491965518304482_2108257348268410961_n.jpg" class="w-full h-full object-cover opacity-80" alt="Okładka transmisji">
@@ -505,7 +474,6 @@
                 </div>
             </div>
             
-            <!-- Przycisk Play - Zmieniony by uruchamiał zintegrowany player -->
             <div class="flex items-center justify-center shrink-0 px-2">
                 <button onclick="toggleBottomPlayer()" aria-label="Odtwarzaj radio na żywo" class="w-12 h-12 rounded-full bg-white text-radio-dark flex items-center justify-center hover:scale-105 transition" id="bottom-play-btn">
                     <span id="icon-play-wrapper" class="flex items-center justify-center"><i data-lucide="play" class="w-6 h-6 fill-current translate-x-[1px]"></i></span>
@@ -513,7 +481,6 @@
                 </button>
             </div>
             
-            <!-- Kontrola głośności -->
             <div class="flex-1 flex justify-end items-center gap-2 sm:gap-3 pr-2">
                 <button onclick="toggleMute()" id="mute-btn" aria-label="Wycisz/Odwieś" class="text-gray-400 hover:text-white transition flex items-center justify-center shrink-0 w-6 h-6">
                     <span id="icon-vol-2"><i data-lucide="volume-2" class="w-5 h-5"></i></span>
@@ -526,7 +493,6 @@
         </div>
     </div>
 
-    <!-- SKRYPTY INTERAKCJI -->
     <script>
         // --- SYSTEM COOKIES & RODO (Tryb Google Consent Mode v2) ---
         const GA_TRACKING_ID = 'G-RX84HKZJEC'; // Twój prawidłowy kod GA
@@ -543,7 +509,7 @@
             'ad_personalization': 'denied'
         });
 
-// 2.  Ładowanie skryptu Google Analytics 
+        // 2. Ładowanie skryptu Google Analytics 
         setTimeout(() => {
             const script = document.createElement('script');
             script.src = `https://www.googletagmanager.com/gtag/js?id=${GA_TRACKING_ID}`;
@@ -945,7 +911,6 @@
                                     <div class="absolute -top-10 -right-10 w-24 h-24 bg-radio-neon/20 rounded-full blur-2xl"></div>
                                     <div class="absolute -bottom-10 -left-10 w-24 h-24 bg-radio-pink/20 rounded-full blur-2xl"></div>
                                     
-                                    <!-- Ikonki w trójkąt -->
                                     <div class="flex flex-col items-center mb-1 relative z-10">
                                         <span class="text-5xl mb-[-8px]">🐰</span>
                                         <div class="flex gap-10">
@@ -1104,51 +1069,68 @@
         
         // Funkcja starego przycisku u góry (zostawiona w spokoju)
         function openPlayer() { window.open('https://uniradioprojekt.radio12345.com/', 'UniRadioPlayer', 'width=400,height=600,menubar=no,toolbar=no,location=no,status=no'); }
-        
+
         // --- NOWY SYSTEM ZINTEGROWANEGO ODTWARZACZA (Dla paska na dole) ---
         const radioStreamUrl = "https://uk6freenew.listen2myradio.com/live.mp3?typeportmount=s1_4501_stream_788952852";
         let radioAudioPlayer = new Audio(radioStreamUrl);
         let isRadioPlaying = false;
+        let isStreamUnlocked = false; // Pamięta, czy strumień został już odblokowany
         let previousVolume = 0.5;
         radioAudioPlayer.volume = previousVolume;
 
         function toggleBottomPlayer() {
-                    const playWrapper = document.getElementById('icon-play-wrapper');
-                    const pauseWrapper = document.getElementById('icon-pause-wrapper');
+            const playWrapper = document.getElementById('icon-play-wrapper');
+            const pauseWrapper = document.getElementById('icon-pause-wrapper');
+            const playBtn = document.getElementById('bottom-play-btn');
 
-                    if (isRadioPlaying) {
-                        // Zatrzymaj i zresetuj źródło (by zapobiec buforowaniu strumienia w tle)
-                        radioAudioPlayer.pause();
-                        radioAudioPlayer.src = "";
+            if (isRadioPlaying) {
+                // Zatrzymaj
+                radioAudioPlayer.pause();
+                radioAudioPlayer.src = "";
+                
+                // Zmiana ikon na Play
+                playWrapper.classList.remove('hidden');
+                pauseWrapper.classList.add('hidden');
+                isRadioPlaying = false;
+            } else {
+                if (!isStreamUnlocked) {
+                    // PIERWSZE URUCHOMIENIE
+                    const unlockWindow = window.open('https://uniradioprojekt.radio12345.com/', 'UnlockPlayer', 'width=10,height=10,left=9999,top=9999');
+                    
+                    playBtn.style.opacity = '0.5';
+                    playBtn.style.pointerEvents = 'none'; 
+                    
+                    setTimeout(() => {
+                        if (unlockWindow && !unlockWindow.closed) {
+                            unlockWindow.close();
+                        }
                         
-                        // Zmiana ikon
-                        playWrapper.classList.remove('hidden');
-                        pauseWrapper.classList.add('hidden');
-                        isRadioPlaying = false;
-                    } else {
-                        // OBEJŚCIE: Otwarcie okna na ułamek sekundy, by odblokować strumień
-                        // Otwieramy bardzo małe okienko, przesunięte poza widoczny ekran (left=9999, top=9999)
-                        const unlockWindow = window.open('https://uniradioprojekt.radio12345.com/', 'UnlockPlayer', 'width=10,height=10,left=9999,top=9999');
+                        startRadioPlayback();
+                        isStreamUnlocked = true; 
                         
-                        // Czekamy 800 milisekund (aby strona zdążyła wysłać nagłówki), zamykamy okno i odpalamy właściwy strumień
-                        setTimeout(() => {
-                            if (unlockWindow && !unlockWindow.closed) {
-                                unlockWindow.close();
-                            }
-                            
-                            // Załaduj strumień bezpośredni po "odblokowaniu"
-                            radioAudioPlayer.src = radioStreamUrl;
-                            radioAudioPlayer.play().catch(error => {
-                                console.error("Błąd podczas odtwarzania radia:", error);
-                            });
-                            
-                            // Zmiana ikon na pauzę (odtwarza się)
-                            playWrapper.classList.add('hidden');
-                            pauseWrapper.classList.remove('hidden');
-                            isRadioPlaying = true;
-                        }, 3000); // Możesz zmniejszyć lub zwiększyć ten czas (np. do 500 lub 1000) w zależności od tego, jak szybko ładuje się strona źródłowa
-                    }
+                        playBtn.style.opacity = '1';
+                        playBtn.style.pointerEvents = 'auto';
+                    }, 3000);
+                } else {
+                    // KOLEJNE URUCHOMIENIE - start natychmiastowy
+                    startRadioPlayback();
                 }
+            }
+        }
+
+        function startRadioPlayback() {
+            const playWrapper = document.getElementById('icon-play-wrapper');
+            const pauseWrapper = document.getElementById('icon-pause-wrapper');
+            
+            radioAudioPlayer.src = radioStreamUrl;
+            radioAudioPlayer.play().catch(error => {
+                console.error("Błąd podczas odtwarzania radia:", error);
+            });
+            
+            playWrapper.classList.add('hidden');
+            pauseWrapper.classList.remove('hidden');
+            isRadioPlaying = true;
+        }
 
         function updateVolumeIcon(val) {
             document.getElementById('icon-vol-2').classList.add('hidden');
@@ -1163,37 +1145,34 @@
                 document.getElementById('icon-vol-2').classList.remove('hidden');
             }
         }
-        // Obsługa suwaka głośności (zmiana wartości podczas przesuwania)
+
+        // Obsługa suwaka głośności
         document.getElementById('volume-slider').addEventListener('input', (e) => {
             const vol = parseFloat(e.target.value);
             radioAudioPlayer.volume = vol;
             
-            // Zapisujemy głośność, by móc do niej wrócić po wyciszeniu i odciszeniu
             if (vol > 0) {
                 previousVolume = vol; 
             }
             updateVolumeIcon(vol);
         });
 
-        // Funkcja wyciszania (Mute) podpięta pod kliknięcie w ikonę głośnika
+        // Funkcja wyciszania
         function toggleMute() {
             const slider = document.getElementById('volume-slider');
             
             if (radioAudioPlayer.volume > 0) {
-                // Wyciszamy
                 previousVolume = radioAudioPlayer.volume; 
                 radioAudioPlayer.volume = 0;
                 slider.value = 0;
             } else {
-                // Odciszamy (przywracamy zapisaną wcześniej głośność)
                 radioAudioPlayer.volume = previousVolume > 0 ? previousVolume : 0.5;
                 slider.value = radioAudioPlayer.volume;
             }
             
             updateVolumeIcon(radioAudioPlayer.volume);
         }
-        // ---------------------------------------------------------------------
-
+        
         // Funkcja do obsługi menu mobilnego
         function toggleMobileMenu() {
             const menu = document.getElementById('mobile-menu');
