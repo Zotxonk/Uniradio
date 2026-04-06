@@ -464,13 +464,13 @@
 
     <div class="fixed bottom-0 left-0 w-full bg-slate-900/95 backdrop-blur-lg border-t border-slate-700 z-50 py-3" id="player-bar">
         <div class="container mx-auto px-6 flex items-center justify-between">
-            <div class="flex items-center gap-4 flex-1 min-w-0">
-                <div class="w-12 h-12 bg-slate-800 rounded-lg overflow-hidden shrink-0 relative">
+            <div class="flex items-center gap-3 sm:gap-4 flex-1 min-w-0">
+                <div class="hidden sm:block w-12 h-12 bg-slate-800 rounded-lg overflow-hidden shrink-0 relative">
                     <img src="462547296_1491965518304482_2108257348268410961_n.jpg" class="w-full h-full object-cover opacity-80" alt="Okładka transmisji">
                 </div>
-                <div class="hidden sm:block overflow-hidden min-w-0">
-                    <h4 class="font-bold text-sm truncate text-white">Transmisja na żywo</h4>
-                    <p class="text-xs text-gray-400 truncate">Uniradio Projekt</p>
+                <div class="block overflow-hidden min-w-0">
+                    <h4 id="player-title" class="font-bold text-sm truncate text-white flex items-center gap-1.5 transition-colors duration-300">Transmisja na żywo</h4>
+                    <p id="player-subtitle" class="text-xs text-gray-400 truncate transition-colors duration-300">Uniradio Projekt</p>
                 </div>
             </div>
             
@@ -872,15 +872,86 @@
                 return div;
             }
 
-            // RENDEROWANIE RAMÓWKI (w zależności od zaznaczonego tygodnia z kalendarza)
+            // --- NOWA FUNKCJA POMOCNICZA: Pobiera ramówkę dla danej daty (uwzględniając wyjątki) ---
+            function getShowsForSpecificDate(specificDate, dayId) {
+                const dateStr = formatDateStr(specificDate);
+                if (cancelledDates.includes(dateStr)) return null;
+                
+                const variantKey = getWeekVariant(specificDate);
+                const data = scheduleData[variantKey];
+                if (!data || !data[dayId]) return null;
+                
+                let renderedData = JSON.parse(JSON.stringify(data[dayId])); // Kopia głęboka dla bezpieczeństwa
+                
+                // Wyjątki okazjonalne
+                if (dateStr === '2026-02-26' && dayId === 'czwartek') {
+                    renderedData = renderedData.map(item => {
+                        if (item.time === '19:00') { return { time: "19:00", title: "Kram", presenter: "Dawid Gruszka" }; }
+                        return item;
+                    });
+                }
+                if (dateStr === '2026-03-05' && dayId === 'czwartek') {
+                    renderedData = [
+                        { time: "17:00", title: "Wejście na Antenę", presenter: "" },
+                        { time: "17:05", title: "Przesłuchano", presenter: "Isia Bond i Laura Potaczek" },
+                        { time: "17:35", title: "Naczynia Połączone", presenter: "Jasiu Wątroba" },
+                        { time: "18:15", title: "Głos Azji", presenter: "Weronika Kosobudzka" },
+                        { time: "19:15", title: "Wzgórza Opowieści", presenter: "Wojtek Paszko" },
+                        { time: "20:15", title: "Shuffle", presenter: "Dawid Gruszka i Zuza Biernacka" },
+                        { time: "21:15", title: "(Nie)dobre, bo polskie", presenter: "Dawid Gruszka i Lauri Potocki" },
+                        { time: "22:15", title: "Zejście z Anteny", presenter: "" }
+                    ];
+                }
+                if (dateStr === '2026-03-06' && dayId === 'piatek') {
+                    renderedData = [
+                        { time: "17:00", title: "Wejście na Antenę", presenter: "" },
+                        { time: "17:05", title: "Blaszak", presenter: "Lauri Potocki" },
+                        { time: "18:05", title: "Końcówka Języka", presenter: "Jan Wróbel" },
+                        { time: "19:05", title: "Talkable", presenter: "Daisy" },
+                        { time: "20:05", title: "Is this love at first read?", presenter: "Jack" },
+                        { time: "21:05", title: "Zejście z Anteny", presenter: "" }
+                    ];
+                }
+                if (dateStr === '2026-03-13' && dayId === 'piatek') {
+                    renderedData = [
+                        { time: "17:00", title: "Wejście na Antenę", presenter: "" },
+                        { time: "17:05", title: "Końcówka Języka", presenter: "Jan Wróbel" },
+                        { time: "18:10", title: "Is this love at first read?", presenter: "Jack" },
+                        { time: "19:10", title: "Zejście z Anteny", presenter: "" }
+                    ];
+                }
+                if (dateStr === '2026-03-20' && dayId === 'piatek') {
+                    renderedData = [
+                        { time: "17:00", title: "Wejście na Antenę", presenter: "" },
+                        { time: "17:05", title: "(Nie)dobre, bo polskie", presenter: "Lauri Potocki i Dawid Gruszka" },
+                        { time: "18:10", title: "Zejście z Anteny", presenter: "" }
+                    ];
+                }
+                if (dateStr === '2026-03-26' && dayId === 'czwartek') {
+                    renderedData = [
+                        { time: "18:55", title: "Wejście na Antenę", presenter: "" },
+                        { time: "19:00", title: "W co dzisiaj pogramy?", presenter: "Remek Sitnik" },
+                        { time: "19:45", title: "Zejście z Anteny", presenter: "" }
+                    ];
+                }
+                if (dateStr === '2026-03-27' && dayId === 'piatek') {
+                    renderedData = [
+                        { time: "18:00", title: "Wejście na Antenę", presenter: "" },
+                        { time: "18:05", title: "Końcówka Języka", presenter: "Jan Wróbel" },
+                        { time: "19:05", title: "Talkable", presenter: "Daisy" },
+                        { time: "20:05", title: "Zejście z Anteny", presenter: "" }
+                    ];
+                }
+                
+                return renderedData;
+            }
+
+            // RENDEROWANIE RAMÓWKI (Aktualizacja UI)
             function renderSchedule() {
                 const variantKey = getWeekVariant(selectedDate);
-                const data = scheduleData[variantKey];
-
                 const container = document.getElementById('schedule-panels');
-                container.innerHTML = ''; // Czyścimy przed załadowaniem
+                container.innerHTML = ''; 
 
-                // Ustawianie tytułu
                 const scheduleTitle = document.getElementById('schedule-variant-title');
                 scheduleTitle.innerHTML = `<span class="text-white">Ramówka</span>`;
 
@@ -891,7 +962,6 @@
                 ];
 
                 layoutDays.forEach(dayInfo => {
-                    // Obliczanie dokładnej daty dla iterowanego dnia (środa, czwartek lub piątek) w wybranym tygodniu
                     const specificDate = new Date(selectedDate);
                     specificDate.setHours(0,0,0,0);
                     const day = specificDate.getDay() === 0 ? 7 : specificDate.getDay(); 
@@ -899,12 +969,11 @@
                     const offset = dayOffsets[dayInfo.id] - day;
                     specificDate.setDate(specificDate.getDate() + offset);
                     
-                    // Sprawdzenie czy wyliczona data nie jest anulowana - np. anulowana środa z bieżącego tygodnia
-                    if (cancelledDates.includes(formatDateStr(specificDate))) {
-                        // --- BANER WIELKANOCNY ---
-                        if (formatDateStr(specificDate) === '2026-04-02') {
+                    const dateStr = formatDateStr(specificDate);
+
+                    if (cancelledDates.includes(dateStr)) {
+                        if (dateStr === '2026-04-02') {
                             const bannerSlot = document.createElement('div');
-                            // Dodane mt-14 (56px) - co odpowiada wysokości zignorowanego tytułu "Czwartek" i jego marginesu, wyrównując z kafelkami Środy.
                             bannerSlot.className = 'md:col-span-1 lg:col-span-2 flex mt-14';
                             bannerSlot.innerHTML = `
                                 <div class="glass-panel p-4 rounded-xl border-l-4 border-radio-pink bg-gradient-to-br from-violet-900/60 via-slate-900/40 to-blue-900/60 flex flex-col items-center justify-center text-center w-full relative overflow-hidden group shadow-[0_0_20px_rgba(244,114,182,0.15)]">
@@ -913,17 +982,12 @@
                                     
                                     <div class="flex flex-col items-center mb-1 relative z-10">
                                         <span class="text-5xl mb-[-8px]">🐰</span>
-                                        <div class="flex gap-10">
-                                            <span class="text-5xl">🐣</span>
-                                            <span class="text-5xl">🌷</span>
-                                        </div>
+                                        <div class="flex gap-10"><span class="text-5xl">🐣</span><span class="text-5xl">🌷</span></div>
                                     </div>
-
                                     <h3 class="text-3xl font-black mb-1 text-white drop-shadow-[0_0_8px_rgba(56,189,248,0.6)] relative z-10">Wesołych Świąt!</h3>
                                     <p class="text-gray-200 text-s md:text-sm max-w-md mx-auto relative z-10 leading-snug">
                                         Życzymy wszystkim słuchaczom oraz członkom uniradia spokojnych, <span class="text-radio-pink font-bold">uni</span>radosnych Świąt Wielkanocnych i mokrego Dyngusa!
                                     </p>
-                                    
                                     <div class="mt-2 flex items-center gap-2 text-[16px] font-bold text-radio-neon relative z-10">
                                         <i data-lucide="radio" class="w-3 h-3"></i> Słyszymy się po świętach!
                                     </div>
@@ -932,102 +996,23 @@
                             container.appendChild(bannerSlot);
                             return;
                         }
-                        if (formatDateStr(specificDate) === '2026-04-03') {
-                            // Piątek (03.04) jest pochłonięty przez szeroki baner dodany w czwartek, nie dodajemy nawet pustego slotu
-                            return;
-                        }
-
-                        // Tworzy puste kontener (dziurę) dla innych, standardowo anulowanych dni
+                        if (dateStr === '2026-04-03') return;
+                        
                         const emptySlot = document.createElement('div');
                         emptySlot.className = 'hidden lg:block'; 
                         container.appendChild(emptySlot);
                         return; 
                     }
 
-                    const dayData = data[dayInfo.id];
-                    if (!dayData) {
+                    let renderedData = getShowsForSpecificDate(specificDate, dayInfo.id);
+                    
+                    if (!renderedData) {
                         const emptySlot = document.createElement('div');
                         emptySlot.className = 'hidden lg:block'; 
                         container.appendChild(emptySlot);
                         return;
                     }
-                    
-                    let renderedData = dayData;
 
-                    // --- WYJĄTKI OKAZJONALNE ---
-
-                    // 26 Lutego 2026 (Kram)
-                    if (formatDateStr(specificDate) === '2026-02-26' && dayInfo.id === 'czwartek') {
-                        renderedData = renderedData.map(item => {
-                            if (item.time === '19:00') { return { time: "19:00", title: "Kram", presenter: "Dawid Gruszka" }; }
-                            return item;
-                        });
-                    }
-
-                    // 5 Marca 2026 (Dzień Otwarty)
-                    if (formatDateStr(specificDate) === '2026-03-05' && dayInfo.id === 'czwartek') {
-                        renderedData = [
-                            { time: "17:00", title: "Wejście na Antenę", presenter: "" },
-                            { time: "17:05", title: "Przesłuchano", presenter: "Isia Bond i Laura Potaczek" },
-                            { time: "17:35", title: "Naczynia Połączone", presenter: "Jasiu Wątroba" },
-                            { time: "18:15", title: "Głos Azji", presenter: "Weronika Kosobudzka" },
-                            { time: "19:15", title: "Wzgórza Opowieści", presenter: "Wojtek Paszko" },
-                            { time: "20:15", title: "Shuffle", presenter: "Dawid Gruszka i Zuza Biernacka" },
-                            { time: "21:15", title: "(Nie)dobre, bo polskie", presenter: "Dawid Gruszka i Lauri Potocki" },
-                            { time: "22:15", title: "Zejście z Anteny", presenter: "" }
-                        ];
-                    }
-
-                    // 6 Marca 2026 (Blaszak zamiast (Nie)dobre, bo polskie + Końcówka Języka i przesunięta reszta)
-                    if (formatDateStr(specificDate) === '2026-03-06' && dayInfo.id === 'piatek') {
-                        renderedData = [
-                            { time: "17:00", title: "Wejście na Antenę", presenter: "" },
-                            { time: "17:05", title: "Blaszak", presenter: "Lauri Potocki" },
-                            { time: "18:05", title: "Końcówka Języka", presenter: "Jan Wróbel" },
-                            { time: "19:05", title: "Talkable", presenter: "Daisy" },
-                            { time: "20:05", title: "Is this love at first read?", presenter: "Jack" },
-                            { time: "21:05", title: "Zejście z Anteny", presenter: "" }
-                        ];
-                    }
-
-                    // 13 Marca 2026 (Końcówka Języka zamiast (Nie)dobre, bo polskie + dodany Jack, brak Talkable)
-                    if (formatDateStr(specificDate) === '2026-03-13' && dayInfo.id === 'piatek') {
-                        renderedData = [
-                            { time: "17:00", title: "Wejście na Antenę", presenter: "" },
-                            { time: "17:05", title: "Końcówka Języka", presenter: "Jan Wróbel" },
-                            { time: "18:10", title: "Is this love at first read?", presenter: "Jack" },
-                            { time: "19:10", title: "Zejście z Anteny", presenter: "" }
-                        ];
-                    }
-
-                    // 20 Marca 2026 (Tylko (Nie)dobre, bo polskie)
-                    if (formatDateStr(specificDate) === '2026-03-20' && dayInfo.id === 'piatek') {
-                        renderedData = [
-                            { time: "17:00", title: "Wejście na Antenę", presenter: "" },
-                            { time: "17:05", title: "(Nie)dobre, bo polskie", presenter: "Lauri Potocki i Dawid Gruszka" },
-                            { time: "18:10", title: "Zejście z Anteny", presenter: "" }
-                        ];
-                    }
-
-                    // 26 Marca 2026 (Tylko Remek, bez Wojtka)
-                    if (formatDateStr(specificDate) === '2026-03-26' && dayInfo.id === 'czwartek') {
-                        renderedData = [
-                            { time: "18:55", title: "Wejście na Antenę", presenter: "" },
-                            { time: "19:00", title: "W co dzisiaj pogramy?", presenter: "Remek Sitnik" },
-                            { time: "19:45", title: "Zejście z Anteny", presenter: "" }
-                        ];
-                    }
-
-                    // 27 Marca 2026 (Końcówka Języka, Talkable)
-                    if (formatDateStr(specificDate) === '2026-03-27' && dayInfo.id === 'piatek') {
-                        renderedData = [
-                            { time: "18:00", title: "Wejście na Antenę", presenter: "" },
-                            { time: "18:05", title: "Końcówka Języka", presenter: "Jan Wróbel" },
-                            { time: "19:05", title: "Talkable", presenter: "Daisy" },
-                            { time: "20:05", title: "Zejście z Anteny", presenter: "" }
-                        ];
-                    }
-                    
                     const styling = styleDictionary[dayInfo.color];
                     const col = document.createElement('div');
                     
@@ -1038,12 +1023,45 @@
                         <div class="space-y-4">
                     `;
 
-                    renderedData.forEach(item => {
+                    renderedData.forEach((item, index) => {
+                        const nextItem = renderedData[index + 1];
+                        
+                        // --- SPRAWDZENIE CZY TO OBECNA AUDYCJA ---
+                        const now = new Date();
+                        let isPlayingNow = false;
+                        
+                        if (now.getFullYear() === specificDate.getFullYear() && 
+                            now.getMonth() === specificDate.getMonth() && 
+                            now.getDate() === specificDate.getDate()) {
+                            
+                            const currentStr = String(now.getHours()).padStart(2, '0') + ':' + String(now.getMinutes()).padStart(2, '0');
+                            if (currentStr >= item.time && (!nextItem || currentStr < nextItem.time) && 
+                                item.title !== "Wejście na Antenę" && item.title !== "Zejście z Anteny") {
+                                isPlayingNow = true;
+                            }
+                        }
+
                         const presenterHtml = item.presenter ? `<p class="text-sm text-gray-400 mt-1">${item.presenter}</p>` : '';
+                        
+                        // --- STYLIZACJA KARTY (ZE STYLEM DLA LIVE) ---
+                        let blockClasses = `glass-panel p-4 rounded-xl border-l-4 ${styling.borderL} ${styling.borderHover} transition-colors duration-300 group relative`;
+                        let liveBadge = '';
+                        
+                        if (isPlayingNow) {
+                            blockClasses = `glass-panel p-4 rounded-xl border-2 border-red-500 bg-red-950/20 transition-all duration-300 group relative shadow-[0_0_20px_rgba(239,68,68,0.2)] scale-[1.02]`;
+                            liveBadge = `
+                                <div class="absolute top-3 right-3 flex items-center gap-1.5 bg-red-500/20 px-2.5 py-1 rounded-md border border-red-500/40 backdrop-blur-md">
+                                    <span class="w-2 h-2 rounded-full bg-red-500 animate-pulse"></span>
+                                    <span class="text-[10px] font-bold text-red-400 uppercase tracking-wider hidden sm:inline">Teraz Gramy</span>
+                                </div>
+                            `;
+                        }
+
                         html += `
-                            <div class="glass-panel p-4 rounded-xl border-l-4 ${styling.borderL} ${styling.borderHover} transition-colors duration-300 group">
-                                <span class="${styling.text} font-bold text-sm font-mono tracking-wide mb-1 block">${item.time}</span>
-                                <h4 class="text-lg font-bold text-white group-hover:${styling.text} transition">${item.title}</h4>
+                            <div class="${blockClasses}">
+                                ${liveBadge}
+                                <span class="${isPlayingNow ? 'text-red-400' : styling.text} font-bold text-sm font-mono tracking-wide mb-1 block">${item.time}</span>
+                                <h4 class="text-lg font-bold text-white group-hover:${styling.text} transition pr-8 sm:pr-28">${item.title}</h4>
                                 ${presenterHtml}
                             </div>
                         `;
@@ -1054,10 +1072,70 @@
                     container.appendChild(col);
                 });
 
-                // Re-inicjalizacja ikon
                 lucide.createIcons();
             }
-        });
+
+            // --- GLOBALNY SYSTEM NASŁUCHUJĄCY AUDYCJI NA ŻYWO ---
+            let lastPlayingTitle = null;
+
+            function updateLivePlayerStatus() {
+                const now = new Date();
+                const day = now.getDay();
+                
+                let dayId = '';
+                if (day === 3) dayId = 'sroda';
+                else if (day === 4) dayId = 'czwartek';
+                else if (day === 5) dayId = 'piatek';
+
+                const playerTitle = document.getElementById('player-title');
+                const playerSubtitle = document.getElementById('player-subtitle');
+                
+                let currentlyPlaying = null;
+
+                if (dayId) {
+                    const showsForToday = getShowsForSpecificDate(now, dayId);
+                    if (showsForToday) {
+                        const currentStr = String(now.getHours()).padStart(2, '0') + ':' + String(now.getMinutes()).padStart(2, '0');
+                        for (let i = 0; i < showsForToday.length; i++) {
+                            const item = showsForToday[i];
+                            const nextItem = showsForToday[i + 1];
+                            
+                            // Jeśli aktualny czas mieści się w ramach czasowych bloku i nie jest to intro/outro
+                            if (currentStr >= item.time && (!nextItem || currentStr < nextItem.time)) {
+                                if (item.title !== "Wejście na Antenę" && item.title !== "Zejście z Anteny") {
+                                    currentlyPlaying = item;
+                                }
+                                break;
+                            }
+                        }
+                    }
+                }
+
+                if (currentlyPlaying) {
+                    if (lastPlayingTitle !== currentlyPlaying.title) {
+                        lastPlayingTitle = currentlyPlaying.title;
+                        // Jeśli użytkownik ma zaznaczony obecny tydzień - zaktualizuj też widok siatki ramówki
+                        if (isSameWeek(now, selectedDate)) renderSchedule(); 
+                    }
+                    playerTitle.innerHTML = `<span class="w-2.5 h-2.5 rounded-full bg-red-500 animate-pulse shrink-0"></span> <span class="truncate">Teraz Gramy: ${currentlyPlaying.title}</span>`;
+                    playerSubtitle.textContent = currentlyPlaying.presenter || "Uniradio Projekt";
+                    playerTitle.classList.add('text-red-400');
+                    playerTitle.classList.remove('text-white');
+                } else {
+                    if (lastPlayingTitle !== null) {
+                        lastPlayingTitle = null;
+                        if (isSameWeek(now, selectedDate)) renderSchedule();
+                    }
+                    playerTitle.innerHTML = `Transmisja na żywo`;
+                    playerSubtitle.textContent = "Uniradio Projekt";
+                    playerTitle.classList.remove('text-red-400');
+                    playerTitle.classList.add('text-white');
+                }
+            }
+
+            // Inicjalizacja sprawdzania i interwał
+            updateLivePlayerStatus();
+            setInterval(updateLivePlayerStatus, 60000); // Sprawdzaj co minutę
 
         // Ogólne małe funkcje
         function scrollCreators(direction) {
@@ -1183,6 +1261,7 @@
             const navbar = document.getElementById('navbar');
             if (window.scrollY > 50) { navbar.classList.add('bg-slate-900/90', 'shadow-lg'); }
             else { navbar.classList.remove('bg-slate-900/90', 'shadow-lg'); }
+        });
         });
     </script>
 </body>
