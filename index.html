@@ -956,6 +956,7 @@
 
                     // --- WYJĄTKI OKAZJONALNE ---
 
+                    
                     // 26 Lutego 2026 (Kram)
                     if (formatDateStr(specificDate) === '2026-02-26' && dayInfo.id === 'czwartek') {
                         renderedData = renderedData.map(item => {
@@ -1026,6 +1027,16 @@
                             { time: "19:05", title: "Talkable", presenter: "Daisy" },
                             { time: "20:05", title: "Zejście z Anteny", presenter: "" }
                         ];
+                    }
+                    
+                    // 8 Kwietnia 2026 (My name is Bond zamiast Queer Corner)
+                    if (formatDateStr(specificDate) === '2026-04-08' && dayInfo.id === 'sroda') {
+                        renderedData = renderedData.map(item => {
+                            if (item.time === '18:05') { 
+                                return { time: "18:05", title: "My name is Bond", presenter: "Isia Bond" }; 
+                            }
+                            return item;
+                        });
                     }
                     
                     const styling = styleDictionary[dayInfo.color];
