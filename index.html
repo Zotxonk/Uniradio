@@ -706,11 +706,14 @@
                 ];
             }
             if (dateStr === '2026-04-08' && dayId === 'sroda') {
-                renderedData = renderedData.map(item => {
-                    if (item.time === '18:05') { return { time: "18:05", title: "My name is Bond", presenter: "Isia Bond" }; }
-                    return item;
-                });
+                renderedData = renderedData
+                    .map(item => {
+                        if (item.time === '18:05') { return { time: "18:05", title: "My name is Bond", presenter: "Isia Bond" }; }
+                        return item;
+                    })
+                    .filter(item => item.title !== "Blaszak"); // Jednorazowe usunięcie Blaszaka
             }
+            
             
             return renderedData;
         }
