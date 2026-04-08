@@ -192,7 +192,7 @@
                     UNIRADIO <br>
                     <span class="text-transparent bg-clip-text bg-gradient-to-r from-radio-accent to-radio-neon">GRAMY SŁOWEM</span>
                 </h1>
-                <p class="text-gray-400 text-lg max-w-lg text-justify">
+                <p class="text-gray-400 text-lg max-w-lg text-left md:text-justify">
                     Niezależny projekt radiowy przy Wydziale Dziennikarstwa UWr. Tu studenci poznają tajniki pracy radiowej od kuchni, tworząc autorskie audycje i realizując dźwięk z pasją od 2002 roku.
                 </p>
                 <div class="flex gap-4 pt-2">
@@ -394,7 +394,7 @@
             </div>
 
             <div class="max-w-4xl mx-auto glass-panel p-8 md:p-12 rounded-3xl mb-12 border border-slate-700/50">
-                <div class="space-y-6 text-gray-300 leading-relaxed text-lg text-justify">
+                <div class="space-y-6 text-gray-300 leading-relaxed text-lg text-left md:text-justify">
                     <p>
                         <span class="text-radio-accent font-bold text-xl">Uniradio</span> to niezależne, nieustannie rozwijające się radio internetowe wydziału dziennikarstwa i komunikacji społecznej UWr. Projekt studencki zainicjowano w ówczesnej Katedrze Dziennikarstwa w 2002 roku, a obecnie działa pod okiem <span class="text-white font-semibold">dr. Łukasza Śmigla</span>.
                     </p>
@@ -452,7 +452,7 @@
     </footer>
 
     <div id="cookie-banner" class="fixed bottom-0 left-0 w-full bg-slate-900/95 backdrop-blur-xl border-t border-slate-700 z-[70] py-6 px-4 md:px-8 transform translate-y-full transition-transform duration-700 flex flex-col md:flex-row items-center justify-between gap-6 shadow-[0_-10px_40px_rgba(0,0,0,0.5)]">
-        <div class="text-sm text-gray-300 text-justify md:text-left md:max-w-4xl">
+        <div class="text-sm text-gray-300 text-left md:max-w-4xl">
             <p class="font-bold text-white text-base mb-1">Cenimy Twoją prywatność 🍪</p>
             Używamy plików cookie oraz podobnych technologii (m.in. Google Analytics i Google Maps) do analizy ruchu, poprawy bezpieczeństwa i zapewnienia pełnej funkcjonalności strony. Zanim te skrypty zostaną załadowane, potrzebujemy Twojej zgody. Więcej szczegółów znajdziesz w naszej <a href="polityka-prywatnosci" class="text-radio-neon hover:text-radio-pink transition-colors underline underline-offset-2">Polityce Prywatności</a>.
         </div>
@@ -465,12 +465,13 @@
     <div class="fixed bottom-0 left-0 w-full bg-slate-900/95 backdrop-blur-lg border-t border-slate-700 z-50 py-3" id="player-bar">
         <div class="container mx-auto px-6 flex items-center justify-between">
             <div class="flex items-center gap-4 flex-1 min-w-0">
-                <div class="w-12 h-12 bg-slate-800 rounded-lg overflow-hidden shrink-0 relative">
+                <div class="hidden sm:block w-12 h-12 bg-slate-800 rounded-lg overflow-hidden shrink-0 relative">
                     <img src="462547296_1491965518304482_2108257348268410961_n.jpg" class="w-full h-full object-cover opacity-80" alt="Okładka transmisji">
                 </div>
-                <div class="hidden sm:block overflow-hidden min-w-0">
-                    <h4 class="font-bold text-sm truncate text-white">Transmisja na żywo</h4>
-                    <p class="text-xs text-gray-400 truncate">Uniradio Projekt</p>
+                <!-- Dynamicznie aktualizowana nazwa audycji i twórcy -->
+                <div class="flex flex-col justify-center overflow-hidden min-w-0">
+                    <h4 class="font-bold text-sm truncate text-white" id="player-show-title">Transmisja na żywo</h4>
+                    <div id="player-show-presenter" class="text-xs text-gray-400 truncate mt-0.5">Uniradio Projekt</div>
                 </div>
             </div>
             
@@ -494,14 +495,12 @@
     </div>
 
     <script>
-        // --- SYSTEM COOKIES & RODO (Tryb Google Consent Mode v2) ---
-        const GA_TRACKING_ID = 'G-RX84HKZJEC'; // Twój prawidłowy kod GA
+        // --- SYSTEM COOKIES & RODO ---
+        const GA_TRACKING_ID = 'G-RX84HKZJEC';
 
-        // 1. Inicjalizacja Google Consent Mode przed załadowaniem skryptu
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
 
-        // Domyślnie blokujemy zbieranie danych dla analityki i reklam
         gtag('consent', 'default', {
             'analytics_storage': 'denied',
             'ad_storage': 'denied',
@@ -509,7 +508,6 @@
             'ad_personalization': 'denied'
         });
 
-        // 2. Ładowanie skryptu Google Analytics 
         setTimeout(() => {
             const script = document.createElement('script');
             script.src = `https://www.googletagmanager.com/gtag/js?id=${GA_TRACKING_ID}`;
@@ -520,9 +518,7 @@
         gtag('js', new Date());
         gtag('config', GA_TRACKING_ID);
         
-        // Funkcja uaktywniająca mapę i wysyłająca sygnał zgody do Google
         function enableServices() {
-            // Odblokowanie ukrytej Mapy Google
             const mapIframe = document.getElementById('google-map-iframe');
             const mapPlaceholder = document.getElementById('map-placeholder');
             
@@ -535,140 +531,295 @@
                 setTimeout(() => mapPlaceholder.style.display = 'none', 500); 
             }
 
-            // Wysyłamy do skryptu Google informację, że użytkownik wyraził zgodę (Sygnał 'update')
             gtag('consent', 'update', {
                 'analytics_storage': 'granted',
                 'ad_storage': 'granted',
                 'ad_user_data': 'granted',
                 'ad_personalization': 'granted'
             });
-            console.log("Zgody zaktualizowane - włączono wysyłanie danych do Google Analytics.");
         }
 
         window.acceptCookies = function() {
             localStorage.setItem('cookieConsent', 'granted');
             const banner = document.getElementById('cookie-banner');
             if (banner) banner.classList.add('translate-y-full');
-            enableServices(); // Uruchamia aktualizację zgody (Consent Mode Update)
+            enableServices();
         };
 
         window.declineCookies = function() {
             localStorage.setItem('cookieConsent', 'denied');
             const banner = document.getElementById('cookie-banner');
             if (banner) banner.classList.add('translate-y-full');
-            // Zgody pozostają jako 'denied' (odrzucone) zgodnie ze stanem domyślnym
         };
 
+        // --- BAZA DANYCH RAMÓWKI ---
+        const scheduleData = {
+            wariant1: {
+                name: "Wariant 1",
+                sroda: [
+                    { time: "18:00", title: "Wejście na Antenę", presenter: "" },
+                    { time: "18:05", title: "Głos Azji", presenter: "Weronika Kosobudzka" },
+                    { time: "19:05", title: "Blaszak", presenter: "Lauri Potocki" },
+                    { time: "20:05", title: "Zejście z Anteny", presenter: "" }
+                ],
+                czwartek: [
+                    { time: "17:10", title: "Wejście na Antenę", presenter: "" },
+                    { time: "17:15", title: "My name is Bond", presenter: "Isia Bond" },
+                    { time: "18:00", title: "Wzgórza Opowieści", presenter: "Wojtek Paszko" },
+                    { time: "19:00", title: "Miszmasz", presenter: "Klaudia Latańska i Marlena Gąsiorowska" },
+                    { time: "19:45", title: "Zejście z Anteny", presenter: "" }
+                ],
+                piatek: [
+                    { time: "17:00", title: "Wejście na Antenę", presenter: "" },
+                    { time: "17:05", title: "(Nie)dobre, bo polskie", presenter: "Lauri Potocki i Dawid Gruszka" },
+                    { time: "18:10", title: "Talkable", presenter: "Daisy" },
+                    { time: "19:10", title: "Is this love at first read?", presenter: "Jack" },
+                    { time: "20:10", title: "Zejście z Anteny", presenter: "" }
+                ]
+            },
+            wariant2: {
+                name: "Wariant 2",
+                sroda: [
+                    { time: "18:00", title: "Wejście na Antenę", presenter: "" },
+                    { time: "18:05", title: "Queer Corner", presenter: "Ola Kuchnowska" },
+                    { time: "19:05", title: "Blaszak", presenter: "Lauri Potocki" },
+                    { time: "20:05", title: "Zejście z Anteny", presenter: "" }
+                ],
+                czwartek: [
+                    { time: "18:10", title: "Wejście na Antenę", presenter: "" },
+                    { time: "18:15", title: "Tajemnice Historii", presenter: "Wojtek Paszko" },
+                    { time: "19:00", title: "W co dzisiaj pogramy?", presenter: "Remek Sitnik" },
+                    { time: "19:45", title: "Zejście z Anteny", presenter: "" }
+                ],
+                piatek: [
+                    { time: "17:00", title: "Wejście na Antenę", presenter: "" },
+                    { time: "17:05", title: "Końcówka Języka", presenter: "Jan Wróbel" },
+                    { time: "18:10", title: "Talkable", presenter: "Daisy" },
+                    { time: "19:10", title: "Zejście z Anteny", presenter: "" }
+                ]
+            }
+        };
+
+        const minAllowedDate = new Date(2026, 1, 25); 
+        const cancelledDates = [
+            '2026-02-27', '2026-03-04', '2026-03-25', '2026-04-02', '2026-04-03'
+        ];
+
+        // --- POMOCNICZE FUNKCJE CZASOWE ---
+        function formatDateStr(dateObj) {
+            return `${dateObj.getFullYear()}-${String(dateObj.getMonth()+1).padStart(2,'0')}-${String(dateObj.getDate()).padStart(2,'0')}`;
+        }
+
+        // Zwraca obecny czas strefy polskiej dla precyzyjnego podświetlania na żywo
+        function getNow() {
+            return new Date(new Date().toLocaleString("en-US", {timeZone: "Europe/Warsaw"}));
+        }
+
+        function getWeekVariant(date) {
+            const target = new Date(date.valueOf());
+            const dayNr = (target.getDay() + 6) % 7; 
+            target.setDate(target.getDate() - dayNr + 3); 
+            const firstThursday = target.valueOf();
+            target.setMonth(0, 1);
+            if (target.getDay() !== 4) {
+                target.setMonth(0, 1 + ((4 - target.getDay()) + 7) % 7);
+            }
+            const weekNumber = 1 + Math.ceil((firstThursday - target) / 604800000);
+            return (weekNumber % 2 === 0) ? 'wariant1' : 'wariant2';
+        }
+
+        // --- LOGIKA POBIERANIA I MODYFIKOWANIA RAMÓWKI ---
+        function getScheduleForDate(dateObj) {
+            const dateStr = formatDateStr(dateObj);
+            if (cancelledDates.includes(dateStr)) return null;
+
+            const day = dateObj.getDay();
+            let dayId = '';
+            if (day === 3) dayId = 'sroda';
+            else if (day === 4) dayId = 'czwartek';
+            else if (day === 5) dayId = 'piatek';
+            else return null;
+
+            const variantKey = getWeekVariant(dateObj);
+            const baseData = scheduleData[variantKey][dayId];
+            if (!baseData) return null;
+
+            let renderedData = JSON.parse(JSON.stringify(baseData));
+
+            // Zastosowanie wyjątków
+            if (dateStr === '2026-02-26' && dayId === 'czwartek') {
+                renderedData = renderedData.map(item => {
+                    if (item.time === '19:00') { return { time: "19:00", title: "Kram", presenter: "Dawid Gruszka" }; }
+                    return item;
+                });
+            }
+            if (dateStr === '2026-03-05' && dayId === 'czwartek') {
+                renderedData = [
+                    { time: "17:00", title: "Wejście na Antenę", presenter: "" },
+                    { time: "17:05", title: "Przesłuchano", presenter: "Isia Bond i Laura Potaczek" },
+                    { time: "17:35", title: "Naczynia Połączone", presenter: "Jasiu Wątroba" },
+                    { time: "18:15", title: "Głos Azji", presenter: "Weronika Kosobudzka" },
+                    { time: "19:15", title: "Wzgórza Opowieści", presenter: "Wojtek Paszko" },
+                    { time: "20:15", title: "Shuffle", presenter: "Dawid Gruszka i Zuza Biernacka" },
+                    { time: "21:15", title: "(Nie)dobre, bo polskie", presenter: "Dawid Gruszka i Lauri Potocki" },
+                    { time: "22:15", title: "Zejście z Anteny", presenter: "" }
+                ];
+            }
+            if (dateStr === '2026-03-06' && dayId === 'piatek') {
+                renderedData = [
+                    { time: "17:00", title: "Wejście na Antenę", presenter: "" },
+                    { time: "17:05", title: "Blaszak", presenter: "Lauri Potocki" },
+                    { time: "18:05", title: "Końcówka Języka", presenter: "Jan Wróbel" },
+                    { time: "19:05", title: "Talkable", presenter: "Daisy" },
+                    { time: "20:05", title: "Is this love at first read?", presenter: "Jack" },
+                    { time: "21:05", title: "Zejście z Anteny", presenter: "" }
+                ];
+            }
+            if (dateStr === '2026-03-13' && dayId === 'piatek') {
+                renderedData = [
+                    { time: "17:00", title: "Wejście na Antenę", presenter: "" },
+                    { time: "17:05", title: "Końcówka Języka", presenter: "Jan Wróbel" },
+                    { time: "18:10", title: "Is this love at first read?", presenter: "Jack" },
+                    { time: "19:10", title: "Zejście z Anteny", presenter: "" }
+                ];
+            }
+            if (dateStr === '2026-03-20' && dayId === 'piatek') {
+                renderedData = [
+                    { time: "17:00", title: "Wejście na Antenę", presenter: "" },
+                    { time: "17:05", title: "(Nie)dobre, bo polskie", presenter: "Lauri Potocki i Dawid Gruszka" },
+                    { time: "18:10", title: "Zejście z Anteny", presenter: "" }
+                ];
+            }
+            if (dateStr === '2026-03-26' && dayId === 'czwartek') {
+                renderedData = [
+                    { time: "18:55", title: "Wejście na Antenę", presenter: "" },
+                    { time: "19:00", title: "W co dzisiaj pogramy?", presenter: "Remek Sitnik" },
+                    { time: "19:45", title: "Zejście z Anteny", presenter: "" }
+                ];
+            }
+            if (dateStr === '2026-03-27' && dayId === 'piatek') {
+                renderedData = [
+                    { time: "18:00", title: "Wejście na Antenę", presenter: "" },
+                    { time: "18:05", title: "Końcówka Języka", presenter: "Jan Wróbel" },
+                    { time: "19:05", title: "Talkable", presenter: "Daisy" },
+                    { time: "20:05", title: "Zejście z Anteny", presenter: "" }
+                ];
+            }
+            if (dateStr === '2026-04-08' && dayId === 'sroda') {
+                renderedData = renderedData.map(item => {
+                    if (item.time === '18:05') { return { time: "18:05", title: "My name is Bond", presenter: "Isia Bond" }; }
+                    return item;
+                });
+            }
+            
+            return renderedData;
+        }
+
+        // --- SPRAWDZANIE CO TERAZ LECI ---
+        function getCurrentShowInfo() {
+            const now = getNow();
+            const schedule = getScheduleForDate(now);
+            if (!schedule) return null;
+
+            const currentMinutes = now.getHours() * 60 + now.getMinutes();
+
+            for (let i = 0; i < schedule.length; i++) {
+                const item = schedule[i];
+                const [hours, mins] = item.time.split(':').map(Number);
+                const itemMinutes = hours * 60 + mins;
+
+                let nextItemMinutes = 24 * 60; // Domyślnie do północy
+                if (schedule[i+1]) {
+                    const [nHours, nMins] = schedule[i+1].time.split(':').map(Number);
+                    nextItemMinutes = nHours * 60 + nMins;
+                }
+
+                if (currentMinutes >= itemMinutes && currentMinutes < nextItemMinutes) {
+                    if (item.title.toLowerCase().includes("zejście")) return null; // Koniec ramówki na ten dzień
+                    return { ...item, dateStr: formatDateStr(now) };
+                }
+            }
+            return null;
+        }
+
+        // Funkcja do oznaczania i zmiany DOM pod "Na żywo"
+        function updateLiveStatus() {
+            const currentShow = getCurrentShowInfo();
+
+            // 1. Zmiana paska odtwarzacza
+            const titleEl = document.getElementById('player-show-title');
+            const presenterEl = document.getElementById('player-show-presenter');
+
+            if (titleEl && presenterEl) {
+                if (currentShow) {
+                    titleEl.textContent = currentShow.title;
+                    if (currentShow.title === "Wejście na Antenę") {
+                        presenterEl.innerHTML = `<span class="flex items-center gap-1.5 text-radio-neon font-bold"><span class="w-2 h-2 rounded-full bg-radio-neon animate-pulse shadow-[0_0_8px_#38bdf8]"></span> Zaraz zaczynamy...</span>`;
+                    } else {
+                        const presText = currentShow.presenter ? ` • ${currentShow.presenter}` : '';
+                        presenterEl.innerHTML = `<span class="flex items-center gap-1.5 text-radio-neon font-bold"><span class="w-2 h-2 rounded-full bg-radio-neon animate-pulse shadow-[0_0_8px_#38bdf8]"></span> ${presText}</span>`;
+                    }
+                } else {
+                    titleEl.textContent = "Transmisja na żywo";
+                    presenterEl.textContent = "Uniradio Projekt";
+                }
+            }
+
+            // 2. Usunięcie starych podświetleń z ramówki
+            document.querySelectorAll('.schedule-item-live-badge').forEach(el => el.remove());
+            document.querySelectorAll('.schedule-item-active').forEach(el => {
+                el.classList.remove('ring-2', 'ring-radio-neon', 'shadow-[0_0_15px_rgba(56,189,248,0.3)]', 'bg-slate-800/80', 'schedule-item-active');
+            });
+
+            // 3. Dodanie podświetlenia dla obecnego show (jeśli kalendarz wyświetla ten tydzień)
+            if (currentShow) {
+                const targetId = `schedule-item-${currentShow.dateStr}-${currentShow.time.replace(':','')}`;
+                const targetEl = document.getElementById(targetId);
+                
+                if (targetEl) {
+                    targetEl.classList.add('ring-2', 'ring-radio-neon', 'shadow-[0_0_15px_rgba(56,189,248,0.3)]', 'bg-slate-800/80', 'schedule-item-active');
+                    if (!targetEl.querySelector('.schedule-item-live-badge')) {
+                        const badge = document.createElement('span');
+                        badge.className = 'schedule-item-live-badge absolute top-4 right-4 flex items-center gap-1.5 text-[10px] sm:text-xs font-bold text-radio-neon animate-pulse uppercase tracking-wider';
+                        badge.innerHTML = `<span class="w-2 h-2 rounded-full bg-radio-neon shadow-[0_0_8px_#38bdf8]"></span> TERAZ GRAMY`;
+                        targetEl.appendChild(badge);
+                    }
+                }
+            }
+        }
+
         document.addEventListener('DOMContentLoaded', () => {
-            // Sprawdzenie na starcie, czy użytkownik ma już zapisany wybór
             const consent = localStorage.getItem('cookieConsent');
             if (consent === 'granted') {
                 enableServices(); 
             } else if (consent === null) {
-                // Jeśli nie ma wyboru, pokaż po chwili baner
                 setTimeout(() => {
                     const banner = document.getElementById('cookie-banner');
                     if (banner) banner.classList.remove('translate-y-full');
                 }, 800);
             }
 
-            // Inicjalizacja stałych komponentów
             lucide.createIcons();
 
-            // --- ZMIENNE STANU I OGRANICZENIA ---
-            const minAllowedDate = new Date(2026, 1, 25); // 25 lutego 2026 - najstarsza dopuszczalna data w kalendarzu
-            
-            // Wpisz daty w formacie 'YYYY-MM-DD', aby usunąć je całkowicie z ramówki
-            const cancelledDates = [
-                '2026-02-27', // Wykluczony piątek z poprzednich tygodni
-                '2026-03-04', // Wykluczona środa 4 marca
-                '2026-03-25', // Wykluczona środa 25 marca
-                '2026-04-02', // Wykluczony czwartek 2 kwietnia
-                '2026-04-03'  // Wykluczony piątek 3 kwietnia
-            ];
+            let currentDate = getNow(); 
+            currentDate.setDate(1); 
+            let selectedDate = getClosestBroadcastDate(getNow()); 
 
-            // Funkcja pomocnicza do ujednoliconego formatowania dat (YYYY-MM-DD)
-            function formatDateStr(dateObj) {
-                return `${dateObj.getFullYear()}-${String(dateObj.getMonth()+1).padStart(2,'0')}-${String(dateObj.getDate()).padStart(2,'0')}`;
-            }
-
-            // --- BAZA DANYCH RAMÓWKI (Wariant 1 i 2) ---
-            const scheduleData = {
-                wariant1: {
-                    name: "Wariant 1",
-                    sroda: [
-                        { time: "18:00", title: "Wejście na Antenę", presenter: "" },
-                        { time: "18:05", title: "Głos Azji", presenter: "Weronika Kosobudzka" },
-                        { time: "19:05", title: "Blaszak", presenter: "Lauri Potocki" },
-                        { time: "20:05", title: "Zejście z Anteny", presenter: "" }
-                    ],
-                    czwartek: [
-                        { time: "17:10", title: "Wejście na Antenę", presenter: "" },
-                        { time: "17:15", title: "My name is Bond", presenter: "Isia Bond" },
-                        { time: "18:00", title: "Wzgórza Opowieści", presenter: "Wojtek Paszko" },
-                        { time: "19:00", title: "Miszmasz", presenter: "Klaudia Latańska i Marlena Gąsiorowska" },
-                        { time: "19:45", title: "Zejście z Anteny", presenter: "" }
-                    ],
-                    piatek: [
-                        { time: "17:00", title: "Wejście na Antenę", presenter: "" },
-                        { time: "17:05", title: "(Nie)dobre, bo polskie", presenter: "Lauri Potocki i Dawid Gruszka" },
-                        { time: "18:10", title: "Talkable", presenter: "Daisy" },
-                        { time: "19:10", title: "Is this love at first read?", presenter: "Jack" },
-                        { time: "20:10", title: "Zejście z Anteny", presenter: "" }
-                    ]
-                },
-                wariant2: {
-                    name: "Wariant 2",
-                    sroda: [
-                        { time: "18:00", title: "Wejście na Antenę", presenter: "" },
-                        { time: "18:05", title: "Queer Corner", presenter: "Ola Kuchnowska" },
-                        { time: "19:05", title: "Blaszak", presenter: "Lauri Potocki" },
-                        { time: "20:05", title: "Zejście z Anteny", presenter: "" }
-                    ],
-                    czwartek: [
-                        { time: "18:10", title: "Wejście na Antenę", presenter: "" },
-                        { time: "18:15", title: "Tajemnice Historii", presenter: "Wojtek Paszko" },
-                        { time: "19:00", title: "W co dzisiaj pogramy?", presenter: "Remek Sitnik" },
-                        { time: "19:45", title: "Zejście z Anteny", presenter: "" }
-                    ],
-                    piatek: [
-                        { time: "17:00", title: "Wejście na Antenę", presenter: "" },
-                        { time: "17:05", title: "Końcówka Języka", presenter: "Jan Wróbel" },
-                        { time: "18:10", title: "Talkable", presenter: "Daisy" },
-                        { time: "19:10", title: "Zejście z Anteny", presenter: "" }
-                    ]
-                }
-            };
-
-            // Klasy Tailwind dla poszczególnych dni - dla poprawnego renderowania w locie
-            const styleDictionary = {
-                'radio-neon': { text: 'text-radio-neon', bg: 'bg-radio-neon', borderHover: 'hover:border-radio-neon', borderL: 'border-radio-neon/50' },
-                'radio-pink': { text: 'text-radio-pink', bg: 'bg-radio-pink', borderHover: 'hover:border-radio-pink', borderL: 'border-radio-pink/50' },
-                'radio-accent': { text: 'text-radio-accent', bg: 'bg-radio-accent', borderHover: 'hover:border-radio-accent', borderL: 'border-radio-accent/50' }
-            };
-
-            // Zmienne stanu dla kalendarza
-            let currentDate = new Date(); // Miesiąc wyświetlany w kalendarzu
-            currentDate.setDate(1); // Naprawa błędu przeskakiwania krótkich miesięcy (np. z 31 marca na 1 maja)
-            let selectedDate = getClosestBroadcastDate(new Date()); // Data obecnie wybrana
-
-            // Inicjalizacja Startowa
             renderCalendar();
             renderSchedule();
 
-            // FUNKCJE POMOCNICZE
-            // Szuka najbliższego dostępnego dnia audycyjnego omijając odwołane daty i stare tygodnie
+            // Oś czasu: uaktualnij status co minutę by reagować na wejście audycji na żywo
+            setInterval(updateLiveStatus, 60000);
+
             function getClosestBroadcastDate(date) {
                 let current = new Date(date);
                 current.setHours(0,0,0,0);
                 
-                // Upewniamy się, że nie startujemy z okresu przed zablokowaną datą
                 if (current < minAllowedDate) {
                     current = new Date(minAllowedDate);
                     current.setHours(0,0,0,0);
                 }
 
-                // Szukaj do 7 dni w przód
                 for(let i = 0; i < 7; i++) {
                     const testDate = new Date(current);
                     testDate.setDate(current.getDate() + i);
@@ -682,41 +833,21 @@
                 return current;
             }
 
-            // Funkcja obliczająca czy dany tydzień (dla zadanej daty) to Wariant 1 (tyg. parzyste) czy Wariant 2 (nieparzyste)
-            function getWeekVariant(date) {
-                const target = new Date(date.valueOf());
-                const dayNr = (target.getDay() + 6) % 7; 
-                target.setDate(target.getDate() - dayNr + 3); 
-                const firstThursday = target.valueOf();
-                target.setMonth(0, 1);
-                if (target.getDay() !== 4) {
-                    target.setMonth(0, 1 + ((4 - target.getDay()) + 7) % 7);
-                }
-                const weekNumber = 1 + Math.ceil((firstThursday - target) / 604800000);
-                
-                // Zwracamy wariant na podstawie numeru tygodnia w roku
-                return (weekNumber % 2 === 0) ? 'wariant1' : 'wariant2';
-            }
-
-            // Obsługa strzałek kalendarza (możliwość nawigacji również w przeszłość)
             document.getElementById('prev-month').addEventListener('click', () => {
-                currentDate.setDate(1); // Zabezpieczenie przez JSowym błędem dni
+                currentDate.setDate(1); 
                 currentDate.setMonth(currentDate.getMonth() - 1);
                 renderCalendar();
             });
             document.getElementById('next-month').addEventListener('click', () => {
-                currentDate.setDate(1); // Zabezpieczenie przez JSowym błędem dni
+                currentDate.setDate(1); 
                 currentDate.setMonth(currentDate.getMonth() + 1);
                 renderCalendar();
             });
 
-            // RENDEROWANIE KALENDARZA
             function renderCalendar() {
                 const grid = document.getElementById('calendar-grid');
                 const monthYearLabel = document.getElementById('calendar-month-year');
                 grid.innerHTML = '';
-                
-                // Przestawiamy grid na układ kolumnowy dla wierszy (tygodni)
                 grid.className = 'flex flex-col gap-1 text-center text-sm font-medium';
 
                 const year = currentDate.getFullYear();
@@ -727,30 +858,23 @@
 
                 const firstDay = new Date(year, month, 1).getDay();
                 const daysInMonth = new Date(year, month + 1, 0).getDate();
-
-                // Poprawka na start od Poniedziałku (0 = Poniedziałek, 6 = Niedziela)
                 let startDay = firstDay === 0 ? 6 : firstDay - 1;
 
                 let currentWeekRow = createWeekRow();
                 let weekHasAllowedDays = false;
-                
-                // Obliczenie daty prawdziwego "dzisiaj" dla wyróżnienia
-                const realToday = new Date();
+                const realToday = getNow();
 
-                // Puste kratki (padding na początek pierwszego tygodnia miesiąca)
                 for (let i = 0; i < startDay; i++) {
                     currentWeekRow.appendChild(createCalendarCell('', false, false, false));
                 }
 
-                // Generowanie dni miesiąca
                 for (let i = 1; i <= daysInMonth; i++) {
                     const dateObj = new Date(year, month, i);
                     const dayOfWeek = dateObj.getDay();
                     const dateStr = formatDateStr(dateObj);
 
-                    let isBroadcastDay = (dayOfWeek >= 3 && dayOfWeek <= 5); // 3=Śr, 4=Czw, 5=Pt
+                    let isBroadcastDay = (dayOfWeek >= 3 && dayOfWeek <= 5); 
                     
-                    // Ustalenie czy dany dzień nie znajduje się w wyjątkach do ominięcia
                     if (cancelledDates.includes(dateStr)) {
                         isBroadcastDay = false;
                     }
@@ -758,14 +882,10 @@
                     if (dateObj >= minAllowedDate) {
                         weekHasAllowedDays = true;
                     } else {
-                        // Wygaszenie dni nadawczych z niedozwolonych/minionych tygodni (< 25 lutego) 
                         isBroadcastDay = false;
                     }
 
-                    // Sprawdzanie czy iterowany dzień należy do tego samego tygodnia co wybrana data
                     const isSelectedWeek = isSameWeek(dateObj, selectedDate);
-                    
-                    // Sprawdzenie czy dany dzień to absolutnie dzisiejszy dzień (np 2 marca)
                     const isToday = dateObj.getFullYear() === realToday.getFullYear() &&
                                     dateObj.getMonth() === realToday.getMonth() &&
                                     dateObj.getDate() === realToday.getDate();
@@ -773,9 +893,7 @@
                     const cell = createCalendarCell(i, isBroadcastDay, isSelectedWeek, isToday, dateObj);
                     currentWeekRow.appendChild(cell);
 
-                    // Reagowanie na koniec tygodnia (Niedziela) lub koniec miesiąca
                     if (dayOfWeek === 0 || i === daysInMonth) {
-                        // Wypełnienie pustymi dniami na koniec miesiąca
                         if (i === daysInMonth && dayOfWeek !== 0) {
                             let endDay = dayOfWeek === 0 ? 6 : dayOfWeek - 1;
                             for (let j = endDay + 1; j < 7; j++) {
@@ -783,13 +901,12 @@
                             }
                         }
 
-                        // W zależności od tego czy tydzień należy do dozwolonych dat dodajemy funkcje hover/onclick
                         if (weekHasAllowedDays) {
                             if (isSameWeek(new Date(year, month, i), selectedDate)) {
                                 currentWeekRow.classList.add('bg-slate-800/80', 'ring-1', 'ring-radio-accent/50');
                             }
     
-                            let repDate = new Date(year, month, i); // Reprezentacyjna data z tego tygodnia
+                            let repDate = new Date(year, month, i); 
                             currentWeekRow.onclick = () => {
                                 selectedDate = repDate;
                                 renderCalendar();
@@ -797,31 +914,26 @@
                             };
                             currentWeekRow.classList.add('group/week', 'cursor-pointer', 'hover:bg-slate-800');
                         } else {
-                            // Tydzień niedozwolony (starszy niż 25 luty) - nieklikalny, wygląda natywnie jak dni "Brak audycji"
                             currentWeekRow.classList.remove('group/week', 'cursor-pointer', 'hover:bg-slate-800');
                             currentWeekRow.classList.add('cursor-not-allowed', 'pointer-events-none');
                         }
 
-                        // Dodajemy wyrenderowany tydzień do kalendarza
                         grid.appendChild(currentWeekRow);
                         
-                        // Przygotowanie nowego wiersza jeśli to nie koniec miesiąca
                         if (i !== daysInMonth) {
                             currentWeekRow = createWeekRow();
-                            weekHasAllowedDays = false; // Reset weryfikacji dla nowego tygodnia
+                            weekHasAllowedDays = false; 
                         }
                     }
                 }
             }
 
-            // Tworzy kontener dla całego tygodnia (wiersz)
             function createWeekRow() {
                 const div = document.createElement('div');
                 div.className = 'grid grid-cols-7 gap-1 rounded-lg transition-colors p-1 -mx-1';
                 return div;
             }
 
-            // Sprawdza czy dwie daty należą do tego samego tygodnia kalendarzowego
             function isSameWeek(date1, date2) {
                 if (!date1 || !date2) return false;
                 const d1 = new Date(date1);
@@ -829,16 +941,15 @@
                 
                 d1.setHours(0,0,0,0);
                 const diff1 = d1.getDay() === 0 ? 6 : d1.getDay() - 1;
-                d1.setDate(d1.getDate() - diff1); // Przesunięcie do poniedziałku
+                d1.setDate(d1.getDate() - diff1); 
                 
                 d2.setHours(0,0,0,0);
                 const diff2 = d2.getDay() === 0 ? 6 : d2.getDay() - 1;
-                d2.setDate(d2.getDate() - diff2); // Przesunięcie do poniedziałku
+                d2.setDate(d2.getDate() - diff2); 
                 
                 return d1.getTime() === d2.getTime();
             }
 
-            // Tworzenie pojedynczego kwadracika w kalendarzu
             function createCalendarCell(dayNum, isBroadcast, isSelectedWeek, isToday, dateObj) {
                 const div = document.createElement('div');
                 div.className = 'py-2 rounded-md transition-all flex flex-col items-center justify-center relative ';
@@ -862,7 +973,6 @@
                     div.className += 'bg-slate-900/40 text-slate-500 group-hover/week:text-slate-300 ';
                 }
 
-                // Dodanie wskaźnika "Dzisiaj"
                 if (isToday) {
                     div.className += ' ring-2 ring-radio-pink/80 z-20 shadow-[0_0_10px_rgba(244,114,182,0.3)] ';
                     innerSpan += `<div class="absolute bottom-1 w-1 h-1 rounded-full bg-radio-pink shadow-[0_0_5px_#f472b6]"></div>`;
@@ -872,15 +982,10 @@
                 return div;
             }
 
-            // RENDEROWANIE RAMÓWKI (w zależności od zaznaczonego tygodnia z kalendarza)
             function renderSchedule() {
-                const variantKey = getWeekVariant(selectedDate);
-                const data = scheduleData[variantKey];
-
                 const container = document.getElementById('schedule-panels');
-                container.innerHTML = ''; // Czyścimy przed załadowaniem
+                container.innerHTML = ''; 
 
-                // Ustawianie tytułu
                 const scheduleTitle = document.getElementById('schedule-variant-title');
                 scheduleTitle.innerHTML = `<span class="text-white">Ramówka</span>`;
 
@@ -890,8 +995,13 @@
                     { id: 'piatek', name: 'Piątek', color: 'radio-accent', icon: 'radio' }
                 ];
 
+                const styleDictionary = {
+                    'radio-neon': { text: 'text-radio-neon', bg: 'bg-radio-neon', borderHover: 'hover:border-radio-neon', borderL: 'border-radio-neon/50' },
+                    'radio-pink': { text: 'text-radio-pink', bg: 'bg-radio-pink', borderHover: 'hover:border-radio-pink', borderL: 'border-radio-pink/50' },
+                    'radio-accent': { text: 'text-radio-accent', bg: 'bg-radio-accent', borderHover: 'hover:border-radio-accent', borderL: 'border-radio-accent/50' }
+                };
+
                 layoutDays.forEach(dayInfo => {
-                    // Obliczanie dokładnej daty dla iterowanego dnia (środa, czwartek lub piątek) w wybranym tygodniu
                     const specificDate = new Date(selectedDate);
                     specificDate.setHours(0,0,0,0);
                     const day = specificDate.getDay() === 0 ? 7 : specificDate.getDay(); 
@@ -899,12 +1009,11 @@
                     const offset = dayOffsets[dayInfo.id] - day;
                     specificDate.setDate(specificDate.getDate() + offset);
                     
-                    // Sprawdzenie czy wyliczona data nie jest anulowana - np. anulowana środa z bieżącego tygodnia
-                    if (cancelledDates.includes(formatDateStr(specificDate))) {
-                        // --- BANER WIELKANOCNY ---
-                        if (formatDateStr(specificDate) === '2026-04-02') {
+                    const dateStr = formatDateStr(specificDate);
+
+                    if (cancelledDates.includes(dateStr)) {
+                        if (dateStr === '2026-04-02') {
                             const bannerSlot = document.createElement('div');
-                            // Dodane mt-14 (56px) - co odpowiada wysokości zignorowanego tytułu "Czwartek" i jego marginesu, wyrównując z kafelkami Środy.
                             bannerSlot.className = 'md:col-span-1 lg:col-span-2 flex mt-14';
                             bannerSlot.innerHTML = `
                                 <div class="glass-panel p-4 rounded-xl border-l-4 border-radio-pink bg-gradient-to-br from-violet-900/60 via-slate-900/40 to-blue-900/60 flex flex-col items-center justify-center text-center w-full relative overflow-hidden group shadow-[0_0_20px_rgba(244,114,182,0.15)]">
@@ -932,111 +1041,20 @@
                             container.appendChild(bannerSlot);
                             return;
                         }
-                        if (formatDateStr(specificDate) === '2026-04-03') {
-                            // Piątek (03.04) jest pochłonięty przez szeroki baner dodany w czwartek, nie dodajemy nawet pustego slotu
-                            return;
-                        }
+                        if (dateStr === '2026-04-03') return;
 
-                        // Tworzy puste kontener (dziurę) dla innych, standardowo anulowanych dni
                         const emptySlot = document.createElement('div');
                         emptySlot.className = 'hidden lg:block'; 
                         container.appendChild(emptySlot);
                         return; 
                     }
 
-                    const dayData = data[dayInfo.id];
-                    if (!dayData) {
+                    const renderedData = getScheduleForDate(specificDate);
+                    if (!renderedData || renderedData.length === 0) {
                         const emptySlot = document.createElement('div');
                         emptySlot.className = 'hidden lg:block'; 
                         container.appendChild(emptySlot);
                         return;
-                    }
-                    
-                    let renderedData = dayData;
-
-                    // --- WYJĄTKI OKAZJONALNE ---
-
-                    
-                    // 26 Lutego 2026 (Kram)
-                    if (formatDateStr(specificDate) === '2026-02-26' && dayInfo.id === 'czwartek') {
-                        renderedData = renderedData.map(item => {
-                            if (item.time === '19:00') { return { time: "19:00", title: "Kram", presenter: "Dawid Gruszka" }; }
-                            return item;
-                        });
-                    }
-
-                    // 5 Marca 2026 (Dzień Otwarty)
-                    if (formatDateStr(specificDate) === '2026-03-05' && dayInfo.id === 'czwartek') {
-                        renderedData = [
-                            { time: "17:00", title: "Wejście na Antenę", presenter: "" },
-                            { time: "17:05", title: "Przesłuchano", presenter: "Isia Bond i Laura Potaczek" },
-                            { time: "17:35", title: "Naczynia Połączone", presenter: "Jasiu Wątroba" },
-                            { time: "18:15", title: "Głos Azji", presenter: "Weronika Kosobudzka" },
-                            { time: "19:15", title: "Wzgórza Opowieści", presenter: "Wojtek Paszko" },
-                            { time: "20:15", title: "Shuffle", presenter: "Dawid Gruszka i Zuza Biernacka" },
-                            { time: "21:15", title: "(Nie)dobre, bo polskie", presenter: "Dawid Gruszka i Lauri Potocki" },
-                            { time: "22:15", title: "Zejście z Anteny", presenter: "" }
-                        ];
-                    }
-
-                    // 6 Marca 2026 (Blaszak zamiast (Nie)dobre, bo polskie + Końcówka Języka i przesunięta reszta)
-                    if (formatDateStr(specificDate) === '2026-03-06' && dayInfo.id === 'piatek') {
-                        renderedData = [
-                            { time: "17:00", title: "Wejście na Antenę", presenter: "" },
-                            { time: "17:05", title: "Blaszak", presenter: "Lauri Potocki" },
-                            { time: "18:05", title: "Końcówka Języka", presenter: "Jan Wróbel" },
-                            { time: "19:05", title: "Talkable", presenter: "Daisy" },
-                            { time: "20:05", title: "Is this love at first read?", presenter: "Jack" },
-                            { time: "21:05", title: "Zejście z Anteny", presenter: "" }
-                        ];
-                    }
-
-                    // 13 Marca 2026 (Końcówka Języka zamiast (Nie)dobre, bo polskie + dodany Jack, brak Talkable)
-                    if (formatDateStr(specificDate) === '2026-03-13' && dayInfo.id === 'piatek') {
-                        renderedData = [
-                            { time: "17:00", title: "Wejście na Antenę", presenter: "" },
-                            { time: "17:05", title: "Końcówka Języka", presenter: "Jan Wróbel" },
-                            { time: "18:10", title: "Is this love at first read?", presenter: "Jack" },
-                            { time: "19:10", title: "Zejście z Anteny", presenter: "" }
-                        ];
-                    }
-
-                    // 20 Marca 2026 (Tylko (Nie)dobre, bo polskie)
-                    if (formatDateStr(specificDate) === '2026-03-20' && dayInfo.id === 'piatek') {
-                        renderedData = [
-                            { time: "17:00", title: "Wejście na Antenę", presenter: "" },
-                            { time: "17:05", title: "(Nie)dobre, bo polskie", presenter: "Lauri Potocki i Dawid Gruszka" },
-                            { time: "18:10", title: "Zejście z Anteny", presenter: "" }
-                        ];
-                    }
-
-                    // 26 Marca 2026 (Tylko Remek, bez Wojtka)
-                    if (formatDateStr(specificDate) === '2026-03-26' && dayInfo.id === 'czwartek') {
-                        renderedData = [
-                            { time: "18:55", title: "Wejście na Antenę", presenter: "" },
-                            { time: "19:00", title: "W co dzisiaj pogramy?", presenter: "Remek Sitnik" },
-                            { time: "19:45", title: "Zejście z Anteny", presenter: "" }
-                        ];
-                    }
-
-                    // 27 Marca 2026 (Końcówka Języka, Talkable)
-                    if (formatDateStr(specificDate) === '2026-03-27' && dayInfo.id === 'piatek') {
-                        renderedData = [
-                            { time: "18:00", title: "Wejście na Antenę", presenter: "" },
-                            { time: "18:05", title: "Końcówka Języka", presenter: "Jan Wróbel" },
-                            { time: "19:05", title: "Talkable", presenter: "Daisy" },
-                            { time: "20:05", title: "Zejście z Anteny", presenter: "" }
-                        ];
-                    }
-                    
-                    // 8 Kwietnia 2026 (My name is Bond zamiast Queer Corner)
-                    if (formatDateStr(specificDate) === '2026-04-08' && dayInfo.id === 'sroda') {
-                        renderedData = renderedData.map(item => {
-                            if (item.time === '18:05') { 
-                                return { time: "18:05", title: "My name is Bond", presenter: "Isia Bond" }; 
-                            }
-                            return item;
-                        });
                     }
                     
                     const styling = styleDictionary[dayInfo.color];
@@ -1050,9 +1068,11 @@
                     `;
 
                     renderedData.forEach(item => {
+                        const elementId = `schedule-item-${dateStr}-${item.time.replace(':','')}`;
                         const presenterHtml = item.presenter ? `<p class="text-sm text-gray-400 mt-1">${item.presenter}</p>` : '';
+                        
                         html += `
-                            <div class="glass-panel p-4 rounded-xl border-l-4 ${styling.borderL} ${styling.borderHover} transition-colors duration-300 group">
+                            <div id="${elementId}" class="relative glass-panel p-4 rounded-xl border-l-4 ${styling.borderL} ${styling.borderHover} transition-colors duration-300 group">
                                 <span class="${styling.text} font-bold text-sm font-mono tracking-wide mb-1 block">${item.time}</span>
                                 <h4 class="text-lg font-bold text-white group-hover:${styling.text} transition">${item.title}</h4>
                                 ${presenterHtml}
@@ -1065,12 +1085,11 @@
                     container.appendChild(col);
                 });
 
-                // Re-inicjalizacja ikon
                 lucide.createIcons();
+                updateLiveStatus(); // Zastosuj modyfikacje DOM dla "Teraz gramy" po załadowaniu html'a z ramówką
             }
         });
 
-        // Ogólne małe funkcje
         function scrollCreators(direction) {
             const list = document.getElementById('creators-list');
             const scrollAmount = 150;
@@ -1078,14 +1097,13 @@
             else { list.scrollBy({ top: scrollAmount, behavior: 'smooth' }); }
         }
         
-        // Funkcja starego przycisku u góry (zostawiona w spokoju)
         function openPlayer() { window.open('https://uniradioprojekt.radio12345.com/', 'UniRadioPlayer', 'width=400,height=600,menubar=no,toolbar=no,location=no,status=no'); }
 
-        // --- NOWY SYSTEM ZINTEGROWANEGO ODTWARZACZA (Dla paska na dole) ---
+        // --- OBSŁUGA ODTWARZACZA ---
         const radioStreamUrl = "https://uk6freenew.listen2myradio.com/live.mp3?typeportmount=s1_4501_stream_788952852";
         let radioAudioPlayer = new Audio(radioStreamUrl);
         let isRadioPlaying = false;
-        let isStreamUnlocked = false; // Pamięta, czy strumień został już odblokowany
+        let isStreamUnlocked = false; 
         let previousVolume = 0.5;
         radioAudioPlayer.volume = previousVolume;
 
@@ -1095,17 +1113,14 @@
             const playBtn = document.getElementById('bottom-play-btn');
 
             if (isRadioPlaying) {
-                // Zatrzymaj
                 radioAudioPlayer.pause();
                 radioAudioPlayer.src = "";
                 
-                // Zmiana ikon na Play
                 playWrapper.classList.remove('hidden');
                 pauseWrapper.classList.add('hidden');
                 isRadioPlaying = false;
             } else {
                 if (!isStreamUnlocked) {
-                    // PIERWSZE URUCHOMIENIE
                     const unlockWindow = window.open('https://uniradioprojekt.radio12345.com/', 'UnlockPlayer', 'width=10,height=10,left=9999,top=9999');
                     
                     playBtn.style.opacity = '0.5';
@@ -1115,15 +1130,13 @@
                         if (unlockWindow && !unlockWindow.closed) {
                             unlockWindow.close();
                         }
-                        
                         startRadioPlayback();
                         isStreamUnlocked = true; 
                         
                         playBtn.style.opacity = '1';
                         playBtn.style.pointerEvents = 'auto';
-                    }, 3000);
+                    }, 1000);
                 } else {
-                    // KOLEJNE URUCHOMIENIE - start natychmiastowy
                     startRadioPlayback();
                 }
             }
@@ -1157,7 +1170,6 @@
             }
         }
 
-        // Obsługa suwaka głośności
         document.getElementById('volume-slider').addEventListener('input', (e) => {
             const vol = parseFloat(e.target.value);
             radioAudioPlayer.volume = vol;
@@ -1168,7 +1180,6 @@
             updateVolumeIcon(vol);
         });
 
-        // Funkcja wyciszania
         function toggleMute() {
             const slider = document.getElementById('volume-slider');
             
@@ -1184,7 +1195,6 @@
             updateVolumeIcon(radioAudioPlayer.volume);
         }
         
-        // Funkcja do obsługi menu mobilnego
         function toggleMobileMenu() {
             const menu = document.getElementById('mobile-menu');
             menu.classList.toggle('hidden');
