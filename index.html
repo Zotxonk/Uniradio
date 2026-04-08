@@ -708,12 +708,18 @@
             if (dateStr === '2026-04-08' && dayId === 'sroda') {
                 renderedData = renderedData
                     .map(item => {
-                        if (item.time === '18:05') { return { time: "18:05", title: "My name is Bond", presenter: "Isia Bond" }; }
+                        // Zmiana audycji na Isię
+                        if (item.time === '18:05') { 
+                            return { time: "18:05", title: "My name is Bond", presenter: "Isia Bond" }; 
+                        }
+                        // Przesunięcie końca ramówki
+                        if (item.title === 'Zejście z Anteny') {
+                            return { time: "19:05", title: "Zejście z Anteny", presenter: "" };
+                        }
                         return item;
                     })
-                    .filter(item => item.title !== "Blaszak"); // Jednorazowe usunięcie Blaszaka
+                    .filter(item => item.title !== "Blaszak"); // Wyrzucenie Blaszaka
             }
-            
             
             return renderedData;
         }
