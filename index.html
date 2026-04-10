@@ -196,7 +196,7 @@
                     Niezależny projekt radiowy przy Wydziale Dziennikarstwa UWr. Tu studenci poznają tajniki pracy radiowej od kuchni, tworząc autorskie audycje i realizując dźwięk z pasją od 2002 roku.
                 </p>
                 <div class="flex gap-4 pt-2">
-                    <button onclick="openPlayer()" class="bg-radio-accent hover:bg-violet-700 text-white w-full sm:w-auto px-12 md:px-24 py-4 md:py-5 rounded-full font-bold flex items-center justify-center gap-2 transition shadow-lg shadow-violet-900/50 text-lg md:text-xl hover:scale-105 active:scale-95">
+                    <button onclick="toggleBottomPlayer()" class="bg-radio-accent hover:bg-violet-700 text-white w-full sm:w-auto px-12 md:px-24 py-4 md:py-5 rounded-full font-bold flex items-center justify-center gap-2 transition shadow-lg shadow-violet-900/50 text-lg md:text-xl hover:scale-105 active:scale-95">
                         <i data-lucide="play" class="fill-current w-6 h-6 md:w-7 md:h-7"></i> Słuchaj Teraz
                     </button>
                 </div>
@@ -462,13 +462,13 @@
         </div>
     </div>
 
+    <!-- Pasek Playera z dodanym w prawej części linkiem awaryjnym (Plan B) -->
     <div class="fixed bottom-0 left-0 w-full bg-slate-900/95 backdrop-blur-lg border-t border-slate-700 z-50 py-3" id="player-bar">
         <div class="container mx-auto px-6 flex items-center justify-between">
             <div class="flex items-center gap-4 flex-1 min-w-0">
                 <div class="hidden sm:block w-12 h-12 bg-slate-800 rounded-lg overflow-hidden shrink-0 relative">
                     <img src="462547296_1491965518304482_2108257348268410961_n.jpg" class="w-full h-full object-cover opacity-80" alt="Okładka transmisji">
                 </div>
-                <!-- Dynamicznie aktualizowana nazwa audycji i twórcy -->
                 <div class="flex flex-col justify-center overflow-hidden min-w-0">
                     <h4 class="font-bold text-sm truncate text-white" id="player-show-title">Transmisja na żywo</h4>
                     <div id="player-show-presenter" class="text-xs text-gray-400 truncate mt-0.5">Uniradio Projekt</div>
@@ -482,7 +482,7 @@
                 </button>
             </div>
             
-            <div class="flex-1 flex justify-end items-center gap-2 sm:gap-3 pr-2">
+            <div class="flex-1 flex justify-end items-center gap-2 sm:gap-3 pr-2 md:pr-4">
                 <button onclick="toggleMute()" id="mute-btn" aria-label="Wycisz/Odwieś" class="text-gray-400 hover:text-white transition flex items-center justify-center shrink-0 w-6 h-6">
                     <span id="icon-vol-2"><i data-lucide="volume-2" class="w-5 h-5"></i></span>
                     <span id="icon-vol-1" class="hidden"><i data-lucide="volume-1" class="w-5 h-5"></i></span>
@@ -492,6 +492,11 @@
                        class="w-20 sm:w-28 md:w-36 h-1.5 bg-slate-700 rounded-lg appearance-none cursor-pointer transition-all">
             </div>
         </div>
+        
+        <!-- Link Zewnętrznego Playera wyciśnięty totalnie w prawy dolny róg -->
+        <a href="https://uniradioprojekt.radio12345.com/" target="_blank" rel="noopener noreferrer" style="position: absolute; right: 5px; bottom: 2px; font-size: 10px; line-height: 1; color: #64748b; text-decoration: none; opacity: 0.6; transition: all 0.2s; z-index: 60;" onmouseover="this.style.opacity='1'; this.style.color='#8b5cf6';" onmouseout="this.style.opacity='0.6'; this.style.color='#64748b';">
+            Źródło www
+        </a>
     </div>
 
     <script>
@@ -1106,6 +1111,7 @@
             else { list.scrollBy({ top: scrollAmount, behavior: 'smooth' }); }
         }
         
+        // Funkcja otwarcia w osobnym okienku (poprzednia metoda, zachowana w razie potrzeby)
         function openPlayer() { window.open('https://uniradioprojekt.radio12345.com/', 'UniRadioPlayer', 'width=400,height=600,menubar=no,toolbar=no,location=no,status=no'); }
 
         // --- OBSŁUGA ODTWARZACZA ---
@@ -1132,8 +1138,10 @@
                 if (!isStreamUnlocked) {
                     const unlockWindow = window.open('https://uniradioprojekt.radio12345.com/', 'UnlockPlayer', 'width=10,height=10,left=9999,top=9999');
                     
-                    playBtn.style.opacity = '0.5';
-                    playBtn.style.pointerEvents = 'none'; 
+                    if(playBtn) {
+                        playBtn.style.opacity = '0.5';
+                        playBtn.style.pointerEvents = 'none'; 
+                    }
                     
                     setTimeout(() => {
                         if (unlockWindow && !unlockWindow.closed) {
@@ -1142,8 +1150,10 @@
                         startRadioPlayback();
                         isStreamUnlocked = true; 
                         
-                        playBtn.style.opacity = '1';
-                        playBtn.style.pointerEvents = 'auto';
+                        if(playBtn) {
+                            playBtn.style.opacity = '1';
+                            playBtn.style.pointerEvents = 'auto';
+                        }
                     }, 1000);
                 } else {
                     startRadioPlayback();
