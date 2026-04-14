@@ -314,7 +314,7 @@
                             </div>
                             <div class="glass-panel p-3 flex gap-4 rounded-xl items-center hover:bg-slate-800/50 transition">
                                 <div class="w-12 h-12 shrink-0 rounded-lg bg-cyan-500/20 flex items-center justify-center text-cyan-300 font-bold text-xl border border-cyan-500/30">K</div>
-                                <div class="min-w-0 flex-1"><h4 class="font-bold truncate">Klaudia Latańska</h4><p class="text-xs text-radio-neon truncate">"Miszmasz"</p></div>
+                                <div class="min-w-0 flex-1"><h4 class="font-bold truncate">Klaudia Latańska</h4><p class="text-xs text-radio-neon truncate">"Miszmasz", "Czas na romans"</p></div>
                             </div>
                             <div class="glass-panel p-3 flex gap-4 rounded-xl items-center hover:bg-slate-800/50 transition">
                                 <div class="w-12 h-12 shrink-0 rounded-lg bg-rose-500/20 flex items-center justify-center text-rose-300 font-bold text-xl border border-rose-500/30">J</div>
@@ -362,7 +362,7 @@
                             </div>
                             <div class="glass-panel p-3 flex gap-4 rounded-xl items-center hover:bg-slate-800/50 transition">
                                 <div class="w-12 h-12 shrink-0 rounded-lg bg-indigo-500/20 flex items-center justify-center text-indigo-300 font-bold text-xl border border-indigo-500/30">M</div>
-                                <div class="min-w-0 flex-1"><h4 class="font-bold truncate">Marlena Gąsiorowska</h4><p class="text-xs text-radio-neon truncate">"Miszmasz"</p></div>
+                                <div class="min-w-0 flex-1"><h4 class="font-bold truncate">Marlena Gąsiorowska</h4><p class="text-xs text-radio-neon truncate">"Miszmasz", "Czas na romans"</p></div>
                             </div>
                             <div class="glass-panel p-3 flex gap-4 rounded-xl items-center hover:bg-slate-800/50 transition">
                                 <div class="w-12 h-12 shrink-0 rounded-lg bg-orange-500/20 flex items-center justify-center text-orange-300 font-bold text-xl border border-orange-500/30">R</div>
@@ -375,6 +375,10 @@
                             <div class="glass-panel p-3 flex gap-4 rounded-xl items-center hover:bg-slate-800/50 transition">
                                 <div class="w-12 h-12 shrink-0 rounded-lg bg-fuchsia-500/20 flex items-center justify-center text-fuchsia-300 font-bold text-xl border border-fuchsia-500/30">I</div>
                                 <div class="min-w-0 flex-1"><h4 class="font-bold truncate">Iga Małkus</h4><p class="text-xs text-radio-neon truncate">"Bolid FM"</p></div>
+                            </div>
+                            <div class="glass-panel p-3 flex gap-4 rounded-xl items-center hover:bg-slate-800/50 transition">
+                                <div class="w-12 h-12 shrink-0 rounded-lg bg-violet-500/20 flex items-center justify-center text-violet-300 font-bold text-xl border border-violet-500/30">K</div>
+                                <div class="min-w-0 flex-1"><h4 class="font-bold truncate">Kacper Augustyniak</h4><p class="text-xs text-radio-neon truncate">"Kakofonia"</p></div>
                             </div>
                         </div>
 
@@ -724,6 +728,35 @@
                         return item;
                     })
                     .filter(item => item.title !== "Blaszak"); // Wyrzucenie Blaszaka
+            }
+
+            // --- NOWA, TYMCZASOWA RAMÓWKA NA BIEŻĄCY TYDZIEŃ ---
+            // Środa: 15.04.2026
+            if (dateStr === '2026-04-15' && dayId === 'sroda') {
+                renderedData = [
+                    { time: "18:15", title: "Wejście na Antenę", presenter: "" },
+                    { time: "18:20", title: "Kakofonia", presenter: "Kacper Augustyniak" },
+                    { time: "19:20", title: "Blaszak", presenter: "Lauri Potocki" },
+                    { time: "20:20", title: "Zejście z Anteny", presenter: "" }
+                ];
+            }
+            // Czwartek: 16.04.2026
+            if (dateStr === '2026-04-16' && dayId === 'czwartek') {
+                renderedData = [
+                    { time: "17:40", title: "Wejście na Antenę", presenter: "" },
+                    { time: "17:45", title: "Wzgórza opowieści", presenter: "Wojtek Paszko" },
+                    { time: "18:45", title: "Czas na romans", presenter: "Klaudia Latańska i Marlena Gąsiorowska" },
+                    { time: "19:30", title: "Zejście z Anteny", presenter: "" }
+                ];
+            }
+            // Piątek: 17.04.2026
+            if (dateStr === '2026-04-17' && dayId === 'piatek') {
+                renderedData = [
+                    { time: "17:55", title: "Wejście na Antenę", presenter: "" },
+                    { time: "18:00", title: "(Nie)dobre, bo polskie", presenter: "Lauri Potocki i Dawid Gruszka" },
+                    { time: "19:00", title: "Talkable", presenter: "Daisy" },
+                    { time: "20:00", title: "Zejście z Anteny", presenter: "" }
+                ];
             }
             
             return renderedData;
@@ -1085,10 +1118,11 @@
                         const elementId = `schedule-item-${dateStr}-${item.time.replace(':','')}`;
                         const presenterHtml = item.presenter ? `<p class="text-sm text-gray-400 mt-1">${item.presenter}</p>` : '';
                         
+                        // Zmieniono h4, usunięto stąd "group-hover:${styling.text}", aby tytuł pozostawał biały i zachowywał spójność.
                         html += `
                             <div id="${elementId}" class="relative glass-panel p-4 rounded-xl border-l-4 ${styling.borderL} ${styling.borderHover} transition-colors duration-300 group">
                                 <span class="${styling.text} font-bold text-sm font-mono tracking-wide mb-1 block">${item.time}</span>
-                                <h4 class="text-lg font-bold text-white group-hover:${styling.text} transition">${item.title}</h4>
+                                <h4 class="text-lg font-bold text-white transition">${item.title}</h4>
                                 ${presenterHtml}
                             </div>
                         `;
