@@ -1,1262 +1,564 @@
 <!DOCTYPE html>
-<html lang="pl" class="overflow-x-hidden">
+<html lang="pl" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Corner Suite | Komfortowe Pokoje i Apartamenty</title>
     
-    <title>Uniradio - Gramy Słowem | Studencki Projekt Radiowy Wrocław</title>
-    <meta name="description" content="Uniradio to niezależny, studencki projekt radiowy przy Wydziale Dziennikarstwa i Komunikacji Społecznej UWr. Słuchaj na żywo, sprawdzaj ramówkę i dołącz do nas!">
-    <meta name="keywords" content="uniradio, radio studenckie, uwr, uniwersytet wrocławski, radio internetowe wrocław, dziennikarstwo uwr, radio, uni radio, audycje studenckie, instytut dziennikarstwa radio">
-    <meta name="author" content="Uniradio Wrocław">
-    <meta name="robots" content="index, follow">
-    <link rel="canonical" href="https://uniradioprojekt.pl/">
-
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://uniradioprojekt.pl/">
-    <meta property="og:title" content="Uniradio - Gramy Słowem | Studencki Projekt Radiowy Wrocław">
-    <meta property="og:description" content="Niezależne internetowy projekt radiowy studentów Dziennikarstwa UWr. Słuchaj naszych autorskich audycji na żywo!">
-    <meta property="og:image" content="https://uniradioprojekt.pl/main-photo.webp">
-    <meta property="og:locale" content="pl_PL">
-
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Uniradio - Gramy Słowem">
-    <meta name="twitter:description" content="Niezależne internetowy projekt radiowy studentów Dziennikarstwa UWr. Tworzymy z pasją od 2002 roku.">
-    <meta name="twitter:image" content="https://uniradioprojekt.pl/main-photo.webp">
-
-    <link rel="icon" type="image/png" sizes="32x32" href="logotyp.png">
-    <link rel="icon" type="image/png" sizes="192x192" href="logotyp.png">
-    <link rel="shortcut icon" type="image/webp" href="logotyp.png">
-    <link rel="apple-touch-icon" href="logotyp.png">
+    <!-- Tailwind CSS (via CDN for fast prototyping/single file) -->
+    <script src="https://cdn.tailwindcss.com"></script>
     
-    <script src="https://unpkg.com/lucide@latest" defer></script>
-    
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap" media="print" onload="this.media='all'">
-    <noscript>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap">
-    </noscript>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
     
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "RadioStation",
-      "name": "Uniradio",
-      "alternateName": "Uniradio Wrocław",
-      "url": "https://uniradioprojekt.pl",
-      "logo": "https://uniradioprojekt.pl/logotyp.png",
-      "description": "Niezależny internetowy projekt radiowy przy Wydziale Dziennikarstwa i Komunikacji Społecznej Uniwersytetu Wrocławskiego.",
-      "foundingDate": "2002",
-      "address": {
-        "@type": "PostalAddress",
-        "streetAddress": "Fryderyka Joliot-Curie 15, sala 102",
-        "addressLocality": "Wrocław",
-        "postalCode": "50-383",
-        "addressCountry": "PL"
-      },
-      "parentOrganization": {
-        "@type": "CollegeOrUniversity",
-        "name": "Uniwersytet Wrocławski"
-      },
-      "sameAs": [
-        "https://www.instagram.com/uniradio.projekt"
-      ]
-    }
+    <!-- Phosphor Icons (Lightweight modern icons) -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <!-- Tailwind Configuration -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Lato', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    },
+                    colors: {
+                        brand: {
+                            light: '#f5f5f4', // stone-100
+                            DEFAULT: '#b45309', // amber-700 (Złoty/miedziany akcent)
+                            dark: '#1c1917', // stone-900
+                            text: '#44403c', // stone-700
+                        }
+                    }
+                }
+            }
+        }
     </script>
 
-    <link rel="stylesheet" href="css/uniradio.min.css">
-    
     <style>
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #1e293b; }
-        ::-webkit-scrollbar-thumb { background: #475569; border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: #64748b; }
-        
-        html { scroll-behavior: smooth; }
-        
-        .glass-panel {
-            background: rgba(30, 41, 59, 0.7);
+        /* Custom styles that are harder to do with pure utility classes */
+        .glass-nav {
+            background: rgba(255, 255, 255, 0);
+            backdrop-filter: blur(0px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0);
+        }
+        .glass-nav-scrolled {
+            background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        }
+        
+        /* Mobile menu transition */
+        #mobile-menu {
+            transition: max-height 0.3s ease-in-out, opacity 0.3s ease-in-out;
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+        }
+        #mobile-menu.open {
+            max-height: 400px;
+            opacity: 1;
         }
 
-        /* Suwak Głośności */
-        input[type=range]::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            appearance: none;
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background: #fff;
-            cursor: pointer;
-            transition: transform 0.1s;
+        /* Video overlay gradient */
+        .hero-overlay {
+            background: linear-gradient(to bottom, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.6) 100%);
         }
-        input[type=range]::-webkit-slider-thumb:hover {
-            transform: scale(1.2);
+
+        /* Image hover zoom effect */
+        .img-zoom-container {
+            overflow: hidden;
         }
-        input[type=range]::-moz-range-thumb {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background: #fff;
-            cursor: pointer;
-            border: none;
-            transition: transform 0.1s;
+        .img-zoom-container img {
+            transition: transform 0.7s ease;
         }
-        input[type=range]::-moz-range-thumb:hover {
-            transform: scale(1.2);
+        .img-zoom-container:hover img {
+            transform: scale(1.05);
         }
     </style>
 </head>
-<body class="bg-radio-dark text-white font-sans antialiased overflow-x-hidden w-full pb-24">
+<body class="font-sans text-brand-text bg-brand-light antialiased selection:bg-brand selection:text-white relative">
 
-    <nav class="fixed w-full z-50 transition-all duration-300" id="navbar">
-        <div class="container mx-auto px-6 py-4 flex justify-between items-center glass-panel rounded-b-2xl mt-0 relative z-50">
-            <a href="#home" class="flex items-center gap-3 hover:opacity-90 transition group">
-                <img src="logo-uniradio.webp" 
-                     alt="UniRadio Logo" 
-                     class="h-12 w-auto object-contain"
-                     onerror="this.style.display='none'; document.getElementById('fallback-logo').classList.remove('hidden'); document.getElementById('fallback-logo').classList.add('flex');">
-                
-                <div id="fallback-logo" class="hidden items-center gap-3">
-                    <div class="relative w-10 h-10 flex items-center justify-center">
-                        <svg viewBox="0 0 100 100" class="absolute inset-0 w-full h-full text-radio-accent group-hover:scale-110 transition duration-300">
-                            <circle cx="50" cy="50" r="7" fill="#38bdf8" />
-                            <path d="M38 38 A 18 18 0 0 0 38 62" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" />
-                            <path d="M28 28 A 32 32 0 0 0 28 72" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" />
-                            <path d="M62 38 A 18 18 0 0 1 62 62" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" />
-                            <path d="M72 28 A 32 32 0 0 1 72 72" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" />
-                        </svg>
-                    </div>
-                    <div class="flex flex-col leading-none">
-                        <span class="text-2xl font-black tracking-tighter uppercase">Uni<span class="text-radio-accent">Radio</span></span>
-                        <span class="text-[8px] uppercase tracking-[0.2em] font-bold text-gray-400">Uniwersytet Wrocławski</span>
-                    </div>
+    <!-- Navigation -->
+    <nav id="navbar" class="fixed w-full z-50 transition-all duration-300 glass-nav py-4">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center">
+                <!-- Logo -->
+                <div class="flex-shrink-0 flex items-center">
+                    <a href="#" class="font-serif text-2xl font-bold tracking-wider text-white transition-colors duration-300 drop-shadow-md" id="nav-logo">
+                        Corner<span class="font-light italic">Suite</span>
+                    </a>
                 </div>
-            </a>
-            
-            <div class="hidden md:flex items-center space-x-8 font-medium">
-                <a href="#home" class="hover:text-radio-accent transition">Start</a>
-                <a href="#schedule" class="hover:text-radio-accent transition">Ramówka</a>
-                <a href="#team" class="hover:text-radio-accent transition">Zespół</a>
-                <a href="#contact" class="hover:text-radio-accent transition">Kontakt</a>
 
-                <div class="h-6 w-px bg-white/20"></div>
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex space-x-8 items-center">
+                    <a href="#o-nas" class="text-white hover:text-brand transition-colors text-sm uppercase tracking-widest nav-link">O nas</a>
+                    <a href="#pokoje" class="text-white hover:text-brand transition-colors text-sm uppercase tracking-widest nav-link">Pokoje</a>
+                    <a href="#kontakt" class="text-white hover:text-brand transition-colors text-sm uppercase tracking-widest nav-link">Kontakt</a>
+                </div>
 
-                <a href="podcasty" class="hover:text-radio-accent transition">Podcasty</a>
-                <a href="artykuly" class="hover:text-radio-accent transition">Artykuły</a>
-            </div>
-
-            <div class="flex items-center gap-4">
-                <a href="https://www.instagram.com/uniradio.projekt" target="_blank" aria-label="Odwiedź nasz profil na Instagramie"
-                   class="flex items-center gap-2 bg-gradient-to-tr from-radio-accent/20 to-radio-pink/20 hover:from-radio-accent hover:to-radio-pink text-white px-4 py-2 rounded-full transition-all duration-300 border border-white/10 group shadow-lg shadow-radio-accent/10">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5 group-hover:scale-110 transition"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
-                    <span class="text-xs font-bold hidden lg:inline">Instagram</span>
-                </a>
-
-                <button aria-label="Przełącz menu mobilne" class="md:hidden text-gray-300 hover:text-white transition shrink-0" onclick="toggleMobileMenu()">
-                    <i data-lucide="menu" class="w-8 h-8"></i>
-                </button>
+                <!-- Mobile menu button -->
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-btn" class="text-white focus:outline-none nav-link">
+                        <i class="ph ph-list text-3xl"></i>
+                    </button>
+                </div>
             </div>
         </div>
 
-        <div id="mobile-menu" class="hidden md:hidden absolute top-full left-0 w-full px-4 -mt-2 pb-4">
-            <div class="glass-panel rounded-2xl p-6 flex flex-col space-y-4 shadow-2xl animate-in slide-in-from-top-4 duration-200">
-                <a href="#home" class="text-lg font-medium hover:text-radio-accent transition border-b border-white/5 pb-2" onclick="toggleMobileMenu()">Start</a>
-                <a href="#schedule" class="text-lg font-medium hover:text-radio-accent transition border-b border-white/5 pb-2" onclick="toggleMobileMenu()">Ramówka</a>
-                <a href="#team" class="text-lg font-medium hover:text-radio-accent transition border-b border-white/5 pb-2" onclick="toggleMobileMenu()">Zespół</a>
-                <a href="#contact" class="text-lg font-medium hover:text-radio-accent transition border-b border-white/5 pb-2" onclick="toggleMobileMenu()">Kontakt</a>
-                
-                <div class="py-2"></div>
-                
-                <a href="podcasty" class="text-lg font-bold text-radio-neon hover:text-white transition flex items-center gap-2" onclick="toggleMobileMenu()">
-                    <i data-lucide="headphones" class="w-4 h-4"></i> Podcasty
-                </a>
-                <a href="artykuly" class="text-lg font-bold text-radio-pink hover:text-white transition flex items-center gap-2" onclick="toggleMobileMenu()">
-                    <i data-lucide="file-text" class="w-4 h-4"></i> Artykuły
-                </a>
+        <!-- Mobile Menu Dropdown -->
+        <div id="mobile-menu" class="md:hidden bg-white w-full absolute top-full left-0 shadow-lg border-t border-gray-100">
+            <div class="px-4 pt-2 pb-6 space-y-2 flex flex-col items-center">
+                <a href="#o-nas" class="mobile-link block px-3 py-3 text-base uppercase tracking-widest text-brand-dark hover:text-brand">O nas</a>
+                <a href="#pokoje" class="mobile-link block px-3 py-3 text-base uppercase tracking-widest text-brand-dark hover:text-brand">Pokoje</a>
+                <a href="#kontakt" class="mobile-link block px-3 py-3 text-base uppercase tracking-widest text-brand-dark hover:text-brand">Kontakt</a>
             </div>
         </div>
     </nav>
 
-    <main>
-    <section id="home" class="relative min-h-screen flex items-center pt-20 pb-32 overflow-hidden scroll-mt-24 w-full">
-        <div class="absolute top-0 left-0 w-64 h-64 md:w-96 md:h-96 bg-radio-accent/20 rounded-full blur-[80px] md:blur-[100px] -translate-x-1/2 -translate-y-1/2"></div>
-        <div class="absolute bottom-0 right-0 w-[300px] h-[300px] md:w-[500px] md:h-[500px] bg-radio-neon/10 rounded-full blur-[80px] md:blur-[120px] translate-x-1/3 translate-y-1/3"></div>
+    <!-- Hero Section with Image Background -->
+    <header class="relative h-[100dvh] flex items-center justify-center overflow-hidden">
+        <!-- Background Image (Wnętrze stylowe, ale przytulne) -->
+        <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1618773928121-c32242e63f39?q=80&w=1920&auto=format&fit=crop')] bg-cover bg-center -z-20 transform scale-105 animate-[pulse_20s_ease-in-out_infinite_alternate]"></div>
+        
+        <!-- Overlay -->
+        <div class="absolute inset-0 hero-overlay z-0"></div>
 
-        <div class="container mx-auto px-6 grid md:grid-cols-2 gap-8 md:gap-12 items-center relative z-10 w-full">
-            <div class="space-y-4 md:space-y-5">
-                <h1 class="text-5xl md:text-7xl font-extrabold leading-tight break-words">
-                    UNIRADIO <br>
-                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-radio-accent to-radio-neon">GRAMY SŁOWEM</span>
-                </h1>
-                <p class="text-gray-400 text-lg max-w-lg text-left md:text-justify">
-                    Niezależny projekt radiowy przy Wydziale Dziennikarstwa UWr. Tu studenci poznają tajniki pracy radiowej od kuchni, tworząc autorskie audycje i realizując dźwięk z pasją od 2002 roku.
-                </p>
-                <div class="flex gap-4 pt-2">
-                    <button onclick="toggleBottomPlayer()" class="bg-radio-accent hover:bg-violet-700 text-white w-full sm:w-auto px-12 md:px-24 py-4 md:py-5 rounded-full font-bold flex items-center justify-center gap-2 transition shadow-lg shadow-violet-900/50 text-lg md:text-xl hover:scale-105 active:scale-95">
-                        <i data-lucide="play" class="fill-current w-6 h-6 md:w-7 md:h-7"></i> Słuchaj Teraz
-                    </button>
+        <!-- Hero Content -->
+        <div class="relative z-10 text-center px-4 max-w-4xl mx-auto flex flex-col items-center">
+            <p class="text-white/80 uppercase tracking-[0.3em] text-sm md:text-base mb-4 opacity-0 animate-fade-in-up" style="animation-delay: 0.2s; animation-fill-mode: forwards;">Twój komfortowy azyl</p>
+            <h1 class="font-serif text-5xl md:text-7xl lg:text-8xl text-white mb-6 drop-shadow-lg opacity-0 animate-fade-in-up" style="animation-delay: 0.4s; animation-fill-mode: forwards;">
+                Komfort i styl, <br><span class="italic font-light">które docenisz</span>
+            </h1>
+            <p class="text-white/90 text-lg md:text-xl font-light mb-10 max-w-2xl opacity-0 animate-fade-in-up" style="animation-delay: 0.6s; animation-fill-mode: forwards;">
+                Szukasz miejsca, które łączy domowe ciepło z dbałością o detale? Corner Suite to nowoczesne, przytulne wnętrza stworzone z myślą o Twoim relaksie.
+            </p>
+            <a href="#pokoje" class="opacity-0 animate-fade-in-up inline-block bg-brand hover:bg-amber-800 text-white px-8 py-4 text-sm md:text-base uppercase tracking-widest transition-all duration-300 hover:-translate-y-1" style="animation-delay: 0.8s; animation-fill-mode: forwards;">
+                Zobacz nasze pokoje
+            </a>
+        </div>
+
+        <!-- Scroll Down Indicator -->
+        <a href="#o-nas" class="absolute bottom-10 left-1/2 transform -translate-x-1/2 text-white animate-bounce z-10">
+            <i class="ph ph-caret-down text-3xl opacity-70"></i>
+        </a>
+    </header>
+
+    <!-- O nas (About) Section -->
+    <section id="o-nas" class="py-16 md:py-24 px-4 bg-white scroll-mt-20">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center gap-12 lg:gap-20">
+            <!-- Image side -->
+            <div class="w-full md:w-1/2 relative">
+                <div class="aspect-[4/5] md:aspect-[3/4] overflow-hidden rounded-sm shadow-2xl relative z-10">
+                    <img src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?q=80&w=1000&auto=format&fit=crop" alt="Wnętrze Corner Suite" class="w-full h-full object-cover">
                 </div>
+                <!-- Decorative background block -->
+                <div class="absolute -bottom-6 -left-6 w-2/3 h-2/3 bg-brand-light z-0 hidden md:block"></div>
             </div>
             
-            <div class="relative hidden md:block group">
-                <div class="absolute inset-0 bg-radio-accent/20 rounded-2xl blur-xl group-hover:bg-radio-accent/30 transition duration-500"></div>
-                <img src="main-photo.webp" alt="Studio radiowe UniRadio" class="relative z-10 rounded-2xl shadow-2xl border border-slate-700 transform rotate-3 group-hover:rotate-0 transition duration-500 w-full h-[450px] object-cover grayscale group-hover:grayscale-0">
-            </div>
-        </div>
-    </section>
-
-    <section id="schedule" class="py-12 bg-slate-900/50 scroll-mt-24">
-        <div class="container mx-auto px-6">
-            <h2 class="text-3xl font-bold mb-10 flex items-center gap-3">
-                <i data-lucide="calendar" class="text-radio-accent"></i> Ramówka
-            </h2>
-
-            <div class="grid lg:grid-cols-4 gap-8">
-                <div class="lg:col-span-1">
-                    <div class="glass-panel p-6 rounded-2xl border border-slate-700/50 sticky top-28 shadow-xl">
-                        <div class="flex justify-between items-center mb-6">
-                            <button id="prev-month" aria-label="Poprzedni miesiąc" class="p-2 bg-slate-800 hover:bg-slate-700 rounded-lg transition text-gray-300 hover:text-white border border-slate-700"><i data-lucide="chevron-left" class="w-4 h-4"></i></button>
-                            <h3 id="calendar-month-year" class="font-bold text-sm uppercase tracking-wider text-white"></h3>
-                            <button id="next-month" aria-label="Następny miesiąc" class="p-2 bg-slate-800 hover:bg-slate-700 rounded-lg transition text-gray-300 hover:text-white border border-slate-700"><i data-lucide="chevron-right" class="w-4 h-4"></i></button>
-                        </div>
-                        
-                        <div class="grid grid-cols-7 gap-1 text-center text-[10px] font-bold text-gray-400 mb-2">
-                            <div>PN</div><div>WT</div><div>ŚR</div><div>CZ</div><div>PT</div><div>SB</div><div>ND</div>
-                        </div>
-                        
-                        <div id="calendar-grid" class="flex flex-col gap-1 text-center text-sm font-medium">
-                            </div>
-                        
-                        <div class="mt-8 space-y-3">
-                            <div class="text-xs text-gray-400 flex items-center gap-3">
-                                <span class="w-3 h-3 rounded bg-slate-900 border border-slate-700"></span> 
-                                <span>Brak audycji</span>
-                            </div>
-                            <div class="text-xs text-gray-400 flex items-center gap-3">
-                                <span class="w-3 h-3 rounded bg-slate-800 border border-slate-600 shadow-[inset_0_0_5px_rgba(56,189,248,0.2)]"></span> 
-                                <span class="text-radio-neon">Dni nadawcze</span>
-                            </div>
-                            <div class="text-xs text-gray-400 flex items-center gap-3">
-                                <span class="w-3 h-3 rounded ring-1 ring-radio-pink/80 bg-slate-900 flex items-center justify-center">
-                                     <div class="w-1 h-1 rounded-full bg-radio-pink"></div>
-                                </span> 
-                                <span class="text-radio-pink font-bold">Dzisiaj</span>
-                            </div>
-                        </div>
+            <!-- Text side -->
+            <div class="w-full md:w-1/2">
+                <span class="text-brand font-semibold tracking-widest uppercase text-sm mb-2 block">O nas</span>
+                <h2 class="font-serif text-4xl md:text-5xl text-brand-dark mb-6">Witaj w Corner Suite</h2>
+                <p class="text-brand-text/80 mb-6 font-light leading-relaxed text-lg">
+                    Corner Suite to obiekt łączący nowoczesny design z przytulną, domową atmosferą. Został stworzony dla gości, którzy cenią sobie estetykę, funkcjonalność i spokojny wypoczynek.
+                </p>
+                <p class="text-brand-text/80 mb-10 font-light leading-relaxed">
+                    Dbamy o to, aby każdy z naszych pokoi oferował optymalne warunki do pracy i relaksu. Jasne barwy, wygodne łóżka i dbałość o czystość to nasze priorytety. U nas zatrzymasz się z przyjemnością, nie martwiąc się o ukryte koszty.
+                </p>
+                <div class="grid grid-cols-2 gap-6 border-t border-gray-200 pt-8">
+                    <div>
+                        <p class="text-3xl font-serif text-brand mb-1">15</p>
+                        <p class="text-sm uppercase tracking-wider font-semibold text-brand-dark">Stylowych Pokoi</p>
                     </div>
-                </div>
-
-                <div class="lg:col-span-3">
-                    <div class="mb-8 border-b border-slate-700/50 pb-4">
-                        <h3 id="schedule-variant-title" class="text-3xl font-bold">
-                            </h3>
-                    </div>
-                    
-                    <div id="schedule-panels" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                        </div>
-                    
-                    <div class="mt-12 text-center bg-slate-800/30 p-6 rounded-2xl border border-slate-700/50 hover:bg-slate-800/50 transition duration-300">
-                        <p class="text-gray-400 text-sm">Chcesz poprowadzić własną audycję? <a href="#contact" class="text-radio-accent hover:text-radio-pink transition font-bold text-lg ml-2">Zgłoś się do nas!</a></p>
+                    <div>
+                        <p class="text-3xl font-serif text-brand mb-1"><i class="ph ph-map-pin"></i></p>
+                        <p class="text-sm uppercase tracking-wider font-semibold text-brand-dark">Świetna Lokalizacja</p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="team" class="py-12 relative border-t border-slate-800/50 scroll-mt-24">
-        <div class="container mx-auto px-6">
-            <div class="text-center mb-10">
-                <h2 class="text-3xl md:text-5xl font-bold mb-4">Poznaj nasz <span class="text-radio-neon">Zespół</span></h2>
+    <!-- Pokoje (Rooms) Section -->
+    <section id="pokoje" class="py-16 md:py-24 bg-brand-light px-4 scroll-mt-20">
+        <div class="max-w-7xl mx-auto text-center mb-16">
+            <span class="text-brand font-semibold tracking-widest uppercase text-sm mb-2 block">Noclegi</span>
+            <h2 class="font-serif text-4xl md:text-5xl text-brand-dark mb-4">Pokoje i Kwatery</h2>
+            <p class="max-w-2xl mx-auto text-brand-text/80 font-light">Wybierz przestrzeń idealnie dopasowaną do Twoich potrzeb. Skontaktuj się z nami, aby potwierdzić dostępność.</p>
+        </div>
+
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Room 1 -->
+            <div class="bg-white group rounded-sm overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300">
+                <div class="aspect-[4/3] img-zoom-container relative">
+                    <img src="https://images.unsplash.com/photo-1598928506311-c55ded91a20c?q=80&w=800&auto=format&fit=crop" alt="Pokój Standard" class="w-full h-full object-cover">
+                    <div class="absolute top-4 right-4 bg-white/90 backdrop-blur-sm px-3 py-1 text-sm font-semibold text-brand-dark rounded-sm">od 160 PLN / noc</div>
+                </div>
+                <div class="p-8">
+                    <h3 class="font-serif text-2xl text-brand-dark mb-2 group-hover:text-brand transition-colors">Pokój Standard</h3>
+                    <p class="text-brand-text/70 font-light text-sm mb-6 line-clamp-2">Kompaktowy, stylowo urządzony pokój stworzony z myślą o krótszych pobytach. Wyposażony w wygodne podwójne łóżko.</p>
+                    
+                    <div class="flex items-center gap-4 text-brand-dark/60 mb-8 border-b border-gray-100 pb-6">
+                        <div class="flex items-center gap-1" title="Dla 1-2 osób"><i class="ph ph-user"></i> <span class="text-xs">1-2 os.</span></div>
+                        <div class="flex items-center gap-1" title="Podwójne łóżko"><i class="ph ph-bed"></i> <span class="text-xs">Podwójne</span></div>
+                        <div class="flex items-center gap-1" title="Wi-Fi"><i class="ph ph-wifi-high"></i> <span class="text-xs">Wi-Fi</span></div>
+                    </div>
+                    
+                    <a href="#kontakt" class="block text-center uppercase tracking-widest text-sm font-semibold text-brand-dark hover:text-brand transition-colors w-full border border-gray-200 py-3 hover:border-brand">Rezerwacja</a>
+                </div>
             </div>
 
-            <div class="grid md:grid-cols-2 gap-12">
-                <div>
-                    <h3 class="text-xl font-bold mb-6 flex items-center gap-2">
-                        <i data-lucide="sliders" class="text-radio-pink"></i> Realizacja
-                    </h3>
-                    <div class="grid grid-cols-2 gap-4">
-                        <div class="glass-panel p-4 rounded-xl text-center hover:bg-white/5 transition">
-                            <div class="w-16 h-16 mx-auto rounded-full bg-emerald-500/20 flex items-center justify-center text-emerald-300 font-bold text-2xl border border-emerald-500/30 mb-2">S</div>
-                            <h4 class="font-bold text-sm">Szymon Surowiec</h4>
+            <!-- Room 2 -->
+            <div class="bg-white group rounded-sm overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300">
+                <div class="aspect-[4/3] img-zoom-container relative">
+                    <img src="https://images.unsplash.com/photo-1560185127-6ed189bf02f4?q=80&w=800&auto=format&fit=crop" alt="Pokój Komfort" class="w-full h-full object-cover">
+                    <div class="absolute top-4 right-4 bg-white/90 backdrop-blur-sm px-3 py-1 text-sm font-semibold text-brand-dark rounded-sm">od 220 PLN / noc</div>
+                </div>
+                <div class="p-8">
+                    <h3 class="font-serif text-2xl text-brand-dark mb-2 group-hover:text-brand transition-colors">Pokój Komfort</h3>
+                    <p class="text-brand-text/70 font-light text-sm mb-6 line-clamp-2">Przestronny pokój z kącikiem wypoczynkowym. Idealny na romantyczny weekend lub wyjazd służbowy.</p>
+                    
+                    <div class="flex items-center gap-4 text-brand-dark/60 mb-8 border-b border-gray-100 pb-6">
+                        <div class="flex items-center gap-1" title="Dla 2 osób"><i class="ph ph-users"></i> <span class="text-xs">2 os.</span></div>
+                        <div class="flex items-center gap-1" title="Prywatna Łazienka"><i class="ph ph-shower"></i> <span class="text-xs">Łazienka</span></div>
+                        <div class="flex items-center gap-1" title="Klimatyzacja"><i class="ph ph-wind"></i> <span class="text-xs">Klima</span></div>
+                    </div>
+                    
+                    <a href="#kontakt" class="block text-center uppercase tracking-widest text-sm font-semibold text-brand-dark hover:text-brand transition-colors w-full border border-gray-200 py-3 hover:border-brand">Rezerwacja</a>
+                </div>
+            </div>
+
+            <!-- Room 3 -->
+            <div class="bg-white group rounded-sm overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300">
+                <div class="aspect-[4/3] img-zoom-container relative">
+                    <img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?q=80&w=800&auto=format&fit=crop" alt="Studio Rodzinne" class="w-full h-full object-cover">
+                    <div class="absolute top-4 right-4 bg-white/90 backdrop-blur-sm px-3 py-1 text-sm font-semibold text-brand-dark rounded-sm">od 320 PLN / noc</div>
+                </div>
+                <div class="p-8">
+                    <h3 class="font-serif text-2xl text-brand-dark mb-2 group-hover:text-brand transition-colors">Studio Rodzinne</h3>
+                    <p class="text-brand-text/70 font-light text-sm mb-6 line-clamp-2">Jasne i duże studio, oferujące dodatkową przestrzeń oraz niewielki aneks kuchenny do podstawowych posiłków.</p>
+                    
+                    <div class="flex items-center gap-4 text-brand-dark/60 mb-8 border-b border-gray-100 pb-6">
+                        <div class="flex items-center gap-1" title="Dla 3-4 osób"><i class="ph ph-users"></i> <span class="text-xs">3-4 os.</span></div>
+                        <div class="flex items-center gap-1" title="Prywatna Łazienka"><i class="ph ph-shower"></i> <span class="text-xs">Łazienka</span></div>
+                        <div class="flex items-center gap-1" title="Aneks"><i class="ph ph-cooking-pot"></i> <span class="text-xs">Aneks</span></div>
+                    </div>
+                    
+                    <a href="#kontakt" class="block text-center uppercase tracking-widest text-sm font-semibold text-brand-dark hover:text-brand transition-colors w-full border border-gray-200 py-3 hover:border-brand">Rezerwacja</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Udogodnienia (Amenities) Section -->
+    <section id="udogodnienia" class="py-16 md:py-24 px-4 bg-brand-dark text-white scroll-mt-20">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <span class="text-brand font-semibold tracking-widest uppercase text-sm mb-2 block">Dla Twojej wygody</span>
+                <h2 class="font-serif text-4xl md:text-5xl mb-4">Nasze udogodnienia</h2>
+                <p class="max-w-2xl mx-auto text-gray-400 font-light">Dbamy o to, byś miał pod ręką wszystko, co ułatwi Ci wypoczynek i sprawi, że poczujesz się jak w domu.</p>
+            </div>
+
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12 text-center">
+                <div class="flex flex-col items-center group">
+                    <div class="w-20 h-20 rounded-full border border-gray-700 flex items-center justify-center mb-6 group-hover:border-brand group-hover:bg-brand/10 transition-colors duration-300">
+                        <i class="ph ph-wifi-high text-4xl text-brand"></i>
+                    </div>
+                    <h3 class="font-serif text-xl mb-2">Szybkie Wi-Fi</h3>
+                    <p class="text-gray-400 text-sm font-light">Niezawodny internet dostępny w każdym pokoju.</p>
+                </div>
+                
+                <div class="flex flex-col items-center group">
+                    <div class="w-20 h-20 rounded-full border border-gray-700 flex items-center justify-center mb-6 group-hover:border-brand group-hover:bg-brand/10 transition-colors duration-300">
+                        <i class="ph ph-car-profile text-4xl text-brand"></i>
+                    </div>
+                    <h3 class="font-serif text-xl mb-2">Parking</h3>
+                    <p class="text-gray-400 text-sm font-light">Miejsca postojowe zlokalizowane tuż pod obiektem.</p>
+                </div>
+
+                <div class="flex flex-col items-center group">
+                    <div class="w-20 h-20 rounded-full border border-gray-700 flex items-center justify-center mb-6 group-hover:border-brand group-hover:bg-brand/10 transition-colors duration-300">
+                        <i class="ph ph-coffee text-4xl text-brand"></i>
+                    </div>
+                    <h3 class="font-serif text-xl mb-2">Kącik Kawowy</h3>
+                    <p class="text-gray-400 text-sm font-light">Kawa, herbata i ciche miejsce do porannego relaksu.</p>
+                </div>
+
+                <div class="flex flex-col items-center group">
+                    <div class="w-20 h-20 rounded-full border border-gray-700 flex items-center justify-center mb-6 group-hover:border-brand group-hover:bg-brand/10 transition-colors duration-300">
+                        <i class="ph ph-television text-4xl text-brand"></i>
+                    </div>
+                    <h3 class="font-serif text-xl mb-2">TV i Rozrywka</h3>
+                    <p class="text-gray-400 text-sm font-light">Płaskie telewizory Smart TV z dostępem do aplikacji.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Galeria (Gallery) - Simple Grid -->
+    <section class="py-2 bg-white">
+        <div class="flex flex-wrap md:flex-nowrap w-full">
+            <div class="w-1/2 md:w-1/4 h-64 img-zoom-container">
+                <img src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?q=80&w=600&auto=format&fit=crop" class="w-full h-full object-cover" alt="Gallery">
+            </div>
+            <!-- Drugie zdjęcie zostało naprawione/podmienione na działające -->
+            <div class="w-1/2 md:w-1/4 h-64 img-zoom-container">
+                <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=600&auto=format&fit=crop" class="w-full h-full object-cover" alt="Gallery">
+            </div>
+            <div class="w-1/2 md:w-1/4 h-64 img-zoom-container">
+                <img src="https://images.unsplash.com/photo-1559841644-08984562005a?q=80&w=600&auto=format&fit=crop" class="w-full h-full object-cover" alt="Gallery">
+            </div>
+            <div class="w-1/2 md:w-1/4 h-64 img-zoom-container relative group cursor-pointer">
+                <img src="https://images.unsplash.com/photo-1608198399988-341f712c3711?q=80&w=600&auto=format&fit=crop" class="w-full h-full object-cover" alt="Gallery">
+                <div class="absolute inset-0 bg-brand-dark/60 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <span class="text-white font-serif text-xl flex items-center gap-2"><i class="ph ph-instagram-logo"></i> Zobacz więcej</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Kontakt (Contact) Section -->
+    <section id="kontakt" class="py-16 md:py-24 px-4 bg-brand-light scroll-mt-20">
+        <div class="max-w-7xl mx-auto">
+            <div class="bg-white rounded-sm shadow-xl overflow-hidden flex flex-col lg:flex-row">
+                
+                <!-- Contact Info -->
+                <div class="w-full lg:w-5/12 bg-brand-dark text-white p-10 md:p-16 flex flex-col justify-between">
+                    <div>
+                        <h2 class="font-serif text-3xl md:text-4xl mb-8">Skontaktuj się z nami</h2>
+                        <p class="text-gray-400 font-light mb-10">
+                            Aby zarezerwować pokój, zadzwoń do nas lub wyślij wiadomość. Z przyjemnością odpowiemy na Twoje pytania.
+                        </p>
+                        
+                        <div class="space-y-6">
+                            <div class="flex items-start gap-4">
+                                <i class="ph ph-map-pin text-2xl text-brand mt-1"></i>
+                                <div>
+                                    <h4 class="font-semibold tracking-wider text-sm uppercase mb-1">Adres</h4>
+                                    <p class="text-gray-300 font-light text-sm">ul. Spokojna 15<br>11-700 Twoje Miasto<br>Polska</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start gap-4">
+                                <i class="ph ph-phone text-2xl text-brand mt-1"></i>
+                                <div>
+                                    <h4 class="font-semibold tracking-wider text-sm uppercase mb-1">Telefon</h4>
+                                    <p class="text-gray-300 font-light text-sm">+48 123 456 789<br>Czekamy na kontakt</p>
+                                </div>
+                            </div>
+
+                            <div class="flex items-start gap-4">
+                                <i class="ph ph-envelope-simple text-2xl text-brand mt-1"></i>
+                                <div>
+                                    <h4 class="font-semibold tracking-wider text-sm uppercase mb-1">E-mail</h4>
+                                    <p class="text-gray-300 font-light text-sm">rezerwacje@cornersuite.pl</p>
+                                </div>
+                            </div>
                         </div>
-                        <div class="glass-panel p-4 rounded-xl text-center hover:bg-white/5 transition">
-                            <div class="w-16 h-16 mx-auto rounded-full bg-blue-500/20 flex items-center justify-center text-blue-300 font-bold text-2xl border border-blue-500/30 mb-2">O</div>
-                            <h4 class="font-bold text-sm">Oliwia Leszczyńska</h4>
-                        </div>
-                        <div class="glass-panel p-4 rounded-xl text-center hover:bg-white/5 transition">
-                            <div class="w-16 h-16 mx-auto rounded-full bg-pink-500/20 flex items-center justify-center text-pink-300 font-bold text-2xl border border-pink-500/30 mb-2">J</div>
-                            <h4 class="font-bold text-sm">Jagoda Lipska</h4>
-                        </div>
-                        <div class="glass-panel p-4 rounded-xl text-center hover:bg-white/5 transition">
-                            <div class="w-16 h-16 mx-auto rounded-full bg-purple-500/20 flex items-center justify-center text-purple-300 font-bold text-2xl border border-purple-500/30 mb-2">Z</div>
-                            <h4 class="font-bold text-sm">Zuza Polkowska</h4>
-                        </div>
+                    </div>
+                    
+                    <div class="mt-12 pt-8 border-t border-gray-700 flex gap-4">
+                        <a href="#" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-brand transition-colors"><i class="ph ph-facebook-logo text-xl"></i></a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-brand transition-colors"><i class="ph ph-instagram-logo text-xl"></i></a>
                     </div>
                 </div>
 
-                <div>
-                    <h3 class="text-xl font-bold mb-6 flex items-center gap-2">
-                        <i data-lucide="mic" class="text-radio-neon"></i> Twórcy
-                    </h3>
-                    <div class="relative bg-slate-800/30 rounded-xl p-2 border border-slate-700/50">
-                        <button onclick="scrollCreators('up')" aria-label="Przewiń listę twórców w górę" class="w-full py-2 flex items-center justify-center hover:bg-white/5 text-gray-400 hover:text-white transition rounded-t-lg mb-2">
-                            <i data-lucide="chevron-up" class="w-5 h-5"></i>
+                <!-- Contact Form -->
+                <div class="w-full lg:w-7/12 p-10 md:p-16">
+                    <h3 class="font-serif text-2xl text-brand-dark mb-8">Wyślij wiadomość</h3>
+                    <form id="contactForm" onsubmit="event.preventDefault(); alert('Dziękujemy za wiadomość. Skontaktujemy się z Tobą wkrótce!');" class="space-y-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label for="name" class="block text-xs font-semibold uppercase tracking-wider text-gray-500 mb-2">Imię i nazwisko</label>
+                                <input type="text" id="name" required class="w-full border-b border-gray-300 py-2 focus:outline-none focus:border-brand transition-colors bg-transparent placeholder-gray-300 text-brand-dark" placeholder="Jan Kowalski">
+                            </div>
+                            <div>
+                                <label for="email" class="block text-xs font-semibold uppercase tracking-wider text-gray-500 mb-2">Adres E-mail</label>
+                                <input type="email" id="email" required class="w-full border-b border-gray-300 py-2 focus:outline-none focus:border-brand transition-colors bg-transparent placeholder-gray-300 text-brand-dark" placeholder="jan@example.com">
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <label for="subject" class="block text-xs font-semibold uppercase tracking-wider text-gray-500 mb-2">Temat</label>
+                            <input type="text" id="subject" class="w-full border-b border-gray-300 py-2 focus:outline-none focus:border-brand transition-colors bg-transparent placeholder-gray-300 text-brand-dark" placeholder="Np. Pytanie o wolny pokój dwuosobowy">
+                        </div>
+
+                        <div>
+                            <label for="message" class="block text-xs font-semibold uppercase tracking-wider text-gray-500 mb-2">Wiadomość</label>
+                            <textarea id="message" rows="4" required class="w-full border-b border-gray-300 py-2 focus:outline-none focus:border-brand transition-colors bg-transparent placeholder-gray-300 text-brand-dark resize-none" placeholder="Twoja wiadomość..."></textarea>
+                        </div>
+                        
+                        <button type="submit" class="bg-brand-dark text-white px-8 py-4 text-sm uppercase tracking-widest font-semibold hover:bg-brand transition-colors">
+                            Wyślij zapytanie
                         </button>
-
-                        <div id="creators-list" class="space-y-4 h-[400px] overflow-y-auto scroll-smooth pr-2" style="scrollbar-width: none; -ms-overflow-style: none;">
-                            <div class="glass-panel p-3 flex gap-4 rounded-xl items-center hover:bg-slate-800/50 transition">
-                                <div class="w-12 h-12 shrink-0 rounded-lg bg-purple-500/20 flex items-center justify-center text-purple-300 font-bold text-xl border border-purple-500/30">L</div>
-                                <div class="min-w-0 flex-1"><h4 class="font-bold truncate">Lauri Potocki</h4><p class="text-xs text-radio-neon truncate">"Blaszak", "(Nie)dobre, bo polskie"</p></div>
-                            </div>
-                            <div class="glass-panel p-3 flex gap-4 rounded-xl items-center hover:bg-slate-800/50 transition">
-                                <div class="w-12 h-12 shrink-0 rounded-lg bg-cyan-500/20 flex items-center justify-center text-cyan-300 font-bold text-xl border border-cyan-500/30">K</div>
-                                <div class="min-w-0 flex-1"><h4 class="font-bold truncate">Klaudia Latańska</h4><p class="text-xs text-radio-neon truncate">"Miszmasz", "Czas na romans"</p></div>
-                            </div>
-                            <div class="glass-panel p-3 flex gap-4 rounded-xl items-center hover:bg-slate-800/50 transition">
-                                <div class="w-12 h-12 shrink-0 rounded-lg bg-rose-500/20 flex items-center justify-center text-rose-300 font-bold text-xl border border-rose-500/30">J</div>
-                                <div class="min-w-0 flex-1"><h4 class="font-bold truncate">Jack</h4><p class="text-xs text-radio-neon truncate">"Is this love at first read?"</p></div>
-                            </div>
-                            <div class="glass-panel p-3 flex gap-4 rounded-xl items-center hover:bg-slate-800/50 transition">
-                                <div class="w-12 h-12 shrink-0 rounded-lg bg-blue-500/20 flex items-center justify-center text-blue-300 font-bold text-xl border border-blue-500/30">W</div>
-                                <div class="min-w-0 flex-1"><h4 class="font-bold truncate">Weronika Kosobudzka</h4><p class="text-xs text-radio-neon truncate">"Głos Azji"</p></div>
-                            </div>
-                            <div class="glass-panel p-3 flex gap-4 rounded-xl items-center hover:bg-slate-800/50 transition">
-                                <div class="w-12 h-12 shrink-0 rounded-lg bg-teal-500/20 flex items-center justify-center text-teal-300 font-bold text-xl border border-teal-500/30">D</div>
-                                <div class="min-w-0 flex-1"><h4 class="font-bold truncate">Dawid Gruszka</h4><p class="text-xs text-radio-neon truncate">"(Nie)dobre, bo polskie", "Kram", "Shuffle"</p></div>
-                            </div>
-                            <div class="glass-panel p-3 flex gap-4 rounded-xl items-center hover:bg-slate-800/50 transition">
-                                <div class="w-12 h-12 shrink-0 rounded-lg bg-amber-500/20 flex items-center justify-center text-amber-300 font-bold text-xl border border-amber-500/30">W</div>
-                                <div class="min-w-0 flex-1"><h4 class="font-bold truncate">Wojtek Paszko</h4><p class="text-xs text-radio-neon truncate">"Wzgórza Opowieści", "Tajemnice Historii"</p></div>
-                            </div>
-                            <div class="glass-panel p-3 flex gap-4 rounded-xl items-center hover:bg-slate-800/50 transition">
-                                <div class="w-12 h-12 shrink-0 rounded-lg bg-rose-500/20 flex items-center justify-center text-rose-300 font-bold text-xl border border-rose-500/30">O</div>
-                                <div class="min-w-0 flex-1"><h4 class="font-bold truncate">Ola Kuchnowska</h4><p class="text-xs text-radio-neon truncate">"Queer Corner"</p></div>
-                            </div>
-                            <div class="glass-panel p-3 flex gap-4 rounded-xl items-center hover:bg-slate-800/50 transition">
-                                <div class="w-12 h-12 shrink-0 rounded-lg bg-emerald-500/20 flex items-center justify-center text-emerald-300 font-bold text-xl border border-emerald-500/30">I</div>
-                                <div class="min-w-0 flex-1"><h4 class="font-bold truncate">Isia Bond</h4><p class="text-xs text-radio-neon truncate">"My name is Bond", "Mów Dalej"</p></div>
-                            </div>
-                            <div class="glass-panel p-3 flex gap-4 rounded-xl items-center hover:bg-slate-800/50 transition">
-                                <div class="w-12 h-12 shrink-0 rounded-lg bg-emerald-500/20 flex items-center justify-center text-emerald-300 font-bold text-xl border border-emerald-500/30">L</div>
-                                <div class="min-w-0 flex-1"><h4 class="font-bold truncate">Laura Potaczek</h4><p class="text-xs text-radio-neon truncate">"Przesłuchano"</p></div>
-                            </div>
-                            <div class="glass-panel p-3 flex gap-4 rounded-xl items-center hover:bg-slate-800/50 transition">
-                                <div class="w-12 h-12 shrink-0 rounded-lg bg-blue-500/20 flex items-center justify-center text-blue-300 font-bold text-xl border border-blue-500/30">J</div>
-                                <div class="min-w-0 flex-1"><h4 class="font-bold truncate">Jasiu Wątroba</h4><p class="text-xs text-radio-neon truncate">"Naczynia Połączone"</p></div>
-                            </div>
-                            <div class="glass-panel p-3 flex gap-4 rounded-xl items-center hover:bg-slate-800/50 transition">
-                                <div class="w-12 h-12 shrink-0 rounded-lg bg-lime-500/20 flex items-center justify-center text-lime-300 font-bold text-xl border border-lime-500/30">J</div>
-                                <div class="min-w-0 flex-1"><h4 class="font-bold truncate">Jan Wróbel</h4><p class="text-xs text-radio-neon truncate">"Końcówka Języka"</p></div>
-                            </div>
-                            <div class="glass-panel p-3 flex gap-4 rounded-xl items-center hover:bg-slate-800/50 transition">
-                                <div class="w-12 h-12 shrink-0 rounded-lg bg-pink-500/20 flex items-center justify-center text-pink-300 font-bold text-xl border border-pink-500/30">Z</div>
-                                <div class="min-w-0 flex-1"><h4 class="font-bold truncate">Zuza Biernacka</h4><p class="text-xs text-radio-neon truncate">"Shuffle"</p></div>
-                            </div>
-                            <div class="glass-panel p-3 flex gap-4 rounded-xl items-center hover:bg-slate-800/50 transition">
-                                <div class="w-12 h-12 shrink-0 rounded-lg bg-red-500/20 flex items-center justify-center text-red-300 font-bold text-xl border border-red-500/30">D</div>
-                                <div class="min-w-0 flex-1"><h4 class="font-bold truncate">Daisy</h4><p class="text-xs text-radio-neon truncate">"Talkable"</p></div>
-                            </div>
-                            <div class="glass-panel p-3 flex gap-4 rounded-xl items-center hover:bg-slate-800/50 transition">
-                                <div class="w-12 h-12 shrink-0 rounded-lg bg-indigo-500/20 flex items-center justify-center text-indigo-300 font-bold text-xl border border-indigo-500/30">M</div>
-                                <div class="min-w-0 flex-1"><h4 class="font-bold truncate">Marlena Gąsiorowska</h4><p class="text-xs text-radio-neon truncate">"Miszmasz", "Czas na romans"</p></div>
-                            </div>
-                            <div class="glass-panel p-3 flex gap-4 rounded-xl items-center hover:bg-slate-800/50 transition">
-                                <div class="w-12 h-12 shrink-0 rounded-lg bg-orange-500/20 flex items-center justify-center text-orange-300 font-bold text-xl border border-orange-500/30">R</div>
-                                <div class="min-w-0 flex-1"><h4 class="font-bold truncate">Remek Sitnik</h4><p class="text-xs text-radio-neon truncate">"W co dzisiaj pogramy?"</p></div>
-                            </div>
-                            <div class="glass-panel p-3 flex gap-4 rounded-xl items-center hover:bg-slate-800/50 transition">
-                                <div class="w-12 h-12 shrink-0 rounded-lg bg-sky-500/20 flex items-center justify-center text-sky-300 font-bold text-xl border border-sky-500/30">W</div>
-                                <div class="min-w-0 flex-1"><h4 class="font-bold truncate">Wiktor Brylonek</h4><p class="text-xs text-radio-neon truncate">"Bolid FM"</p></div>
-                            </div>
-                            <div class="glass-panel p-3 flex gap-4 rounded-xl items-center hover:bg-slate-800/50 transition">
-                                <div class="w-12 h-12 shrink-0 rounded-lg bg-fuchsia-500/20 flex items-center justify-center text-fuchsia-300 font-bold text-xl border border-fuchsia-500/30">I</div>
-                                <div class="min-w-0 flex-1"><h4 class="font-bold truncate">Iga Małkus</h4><p class="text-xs text-radio-neon truncate">"Bolid FM"</p></div>
-                            </div>
-                            <div class="glass-panel p-3 flex gap-4 rounded-xl items-center hover:bg-slate-800/50 transition">
-                                <div class="w-12 h-12 shrink-0 rounded-lg bg-violet-500/20 flex items-center justify-center text-violet-300 font-bold text-xl border border-violet-500/30">K</div>
-                                <div class="min-w-0 flex-1"><h4 class="font-bold truncate">Kacper Augustyniak</h4><p class="text-xs text-radio-neon truncate">"Kakofonia"</p></div>
-                            </div>
-                        </div>
-
-                        <button onclick="scrollCreators('down')" aria-label="Przewiń listę twórców w dół" class="w-full py-2 flex items-center justify-center hover:bg-white/5 text-gray-400 hover:text-white transition rounded-b-lg mt-2">
-                            <i data-lucide="chevron-down" class="w-5 h-5"></i>
-                        </button>
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="contact" class="py-12 relative overflow-hidden bg-gradient-to-b from-radio-dark to-slate-950 scroll-mt-24">
-        <div class="container mx-auto px-6 relative z-10">
-            <div class="text-center mb-12">
-                <h2 class="text-3xl md:text-5xl font-bold mb-6">O nas i <span class="text-radio-neon">Rekrutacja</span></h2>
-            </div>
-
-            <div class="max-w-4xl mx-auto glass-panel p-8 md:p-12 rounded-3xl mb-12 border border-slate-700/50">
-                <div class="space-y-6 text-gray-300 leading-relaxed text-lg text-left md:text-justify">
-                    <p>
-                        <span class="text-radio-accent font-bold text-xl">Uniradio</span> to niezależne, nieustannie rozwijające się radio internetowe wydziału dziennikarstwa i komunikacji społecznej UWr. Projekt studencki zainicjowano w ówczesnej Katedrze Dziennikarstwa w 2002 roku, a obecnie działa pod okiem <span class="text-white font-semibold">dr. Łukasza Śmigla</span>.
-                    </p>
-                    <p>
-                        W obrębie projektu studenci mogą poznawać tajniki pracy radiowców „od kuchni” — uczyć się przygotowywania autorskich audycji, realizowania dźwięku oraz odpowiadania za promocję projektu. Zdobyte doświadczenie niejednokrotnie pozwoliło absolwentom kontynuować pasję w profesjonalnych instytucjach medialnych, takich jak <span class="text-radio-neon">Radio Wrocław</span> czy <span class="text-radio-neon">Radio RAM</span>.
-                    </p>
-                    <p>
-                        Audycje nadawane są z <span class="text-white font-semibold">sali radiowej 102</span> w budynku Instytutu Dziennikarstwa przy ulicy Joliot-Curie, a materiały rozpowszechniane online.
-                    </p>
-                    <p>
-                        Ramówka ustalana jest na początku każdego semestru, koncentrując się na kreatywności oraz wkładzie własnym uczestników projektu, umożliwiając jednocześnie naukę poprzez eksperymenty z formą. <span class="text-radio-pink font-semibold">Realizacja dźwięku</span> skupia się na kontroli aspektów technicznych emitowanego materiału, czego studenci mogą nauczyć się między innymi na specjalnych szkoleniach organizowanych przez <span class="text-white font-semibold">dr. Jakuba Wilka</span>. Tworzenie materiałów promocyjnych obejmuje robienie zdjęć, grafik, postów na media społecznościowe oraz nadzór strony internetowej projektu.
-                    </p>
-                    
-                    <div class="border-t border-slate-700 pt-6 mt-8">
-                        <p class="font-bold text-white text-xl mb-4 italic text-center md:text-left">Zapraszamy wszystkich chętnych do współpracy — niezależnie od wiedzy i umiejętności.</p>
-                        <div class="flex flex-col md:flex-row items-center gap-4 w-full">
-                            <div class="flex items-center justify-center md:justify-start gap-2 sm:gap-3 bg-slate-800/50 p-3 sm:p-4 rounded-xl border border-slate-700 w-full md:w-auto overflow-hidden">
-                                <i data-lucide="mail" class="text-radio-accent w-5 h-5 sm:w-6 sm:h-6 shrink-0"></i>
-                                <a href="mailto:projektuniradio@gmail.com" class="text-[13px] min-[360px]:text-sm sm:text-base md:text-xl font-bold text-white hover:text-radio-accent transition decoration-radio-accent hover:underline underline-offset-4 whitespace-nowrap tracking-tight sm:tracking-normal">projektuniradio@gmail.com</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="max-w-5xl mx-auto text-center">
-                <h3 class="text-2xl font-bold mb-4">Tutaj znajdziesz nasze studio</h3>
-                <p class="text-gray-400 mb-8">Fryderyka Joliot-Curie 15, Wrocław, sala 102.</p>
-                <div class="glass-panel p-2 rounded-2xl overflow-hidden h-[400px] md:h-[500px] border border-slate-700/50 relative">
-                    <div id="map-placeholder" class="absolute inset-0 flex flex-col items-center justify-center bg-slate-800/95 z-10 p-6 transition-opacity duration-500 rounded-xl">
-                        <i data-lucide="map-pin" class="w-12 h-12 text-gray-500 mb-4 animate-bounce"></i>
-                        <h4 class="text-xl font-bold text-white mb-2">Mapa zablokowana ze względu na prywatność</h4>
-                        <p class="text-gray-400 mb-6 max-w-md text-sm">Aby wyświetlić interaktywną mapę, potrzebujemy Twojej zgody na wczytanie plików cookie firmy Google.</p>
-                        <button onclick="acceptCookies()" class="bg-radio-accent hover:bg-violet-600 text-white px-6 py-3 rounded-full font-bold transition-all hover:scale-105 active:scale-95 shadow-lg shadow-violet-900/50 text-sm">Zaakceptuj Cookies i Pokaż Mapę</button>
-                    </div>
-                    <iframe id="google-map-iframe" title="Mapa z lokalizacją studia Uniradio" data-src="https://maps.google.com/maps?q=51.11103944446098,17.053642186250958&hl=pl&z=18&output=embed" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" class="grayscale opacity-80 hover:grayscale-0 hover:opacity-100 transition duration-700"></iframe>
-                </div>
-            </div>
-        </div>
-    </section>
-    </main>
-
-    <footer class="bg-slate-950 pt-10 pb-28 md:pb-24">
-        <div class="container mx-auto px-6 flex flex-col items-center text-center">
-            <div class="flex items-center gap-2 mb-1">
-                <i data-lucide="radio" class="text-radio-accent w-4 h-4"></i>
-                <span class="text-base font-bold">UniRadio</span>
-            </div>
-            <p class="text-gray-600 text-[10px] max-w-sm uppercase tracking-widest">Gramy słowem</p>
-            <div class="mt-4 flex flex-col items-center gap-1 text-xs text-gray-500 font-normal">
-                <a href="galeria" class="hover:text-white transition-colors duration-300">Galeria</a>
-                <a href="polityka-prywatnosci" class="hover:text-white transition-colors duration-300">Polityka Prywatności</a>
+    <!-- Footer -->
+    <footer class="bg-brand-dark border-t border-gray-800 text-gray-400 py-8 text-center px-4">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
+            <p class="text-sm font-light">&copy; 2026 Corner Suite. Wszelkie prawa zastrzeżone.</p>
+            <div class="flex gap-6 text-sm font-light">
+                <a href="#" class="hover:text-white transition-colors">Polityka Prywatności</a>
+                <a href="#" class="hover:text-white transition-colors">Regulamin</a>
             </div>
         </div>
     </footer>
 
-    <div id="cookie-banner" class="fixed bottom-0 left-0 w-full bg-slate-900/95 backdrop-blur-xl border-t border-slate-700 z-[70] py-6 px-4 md:px-8 transform translate-y-full transition-transform duration-700 flex flex-col md:flex-row items-center justify-between gap-6 shadow-[0_-10px_40px_rgba(0,0,0,0.5)]">
-        <div class="text-sm text-gray-300 text-left md:max-w-4xl">
-            <p class="font-bold text-white text-base mb-1">Cenimy Twoją prywatność 🍪</p>
-            Używamy plików cookie oraz podobnych technologii (m.in. Google Analytics i Google Maps) do analizy ruchu, poprawy bezpieczeństwa i zapewnienia pełnej funkcjonalności strony. Zanim te skrypty zostaną załadowane, potrzebujemy Twojej zgody. Więcej szczegółów znajdziesz w naszej <a href="polityka-prywatnosci" class="text-radio-neon hover:text-radio-pink transition-colors underline underline-offset-2">Polityce Prywatności</a>.
+    <!-- Cookie Banner -->
+    <div id="cookie-banner" class="fixed bottom-4 left-4 md:bottom-6 md:left-6 z-[100] bg-white shadow-2xl rounded-sm p-5 max-w-sm border border-gray-100 transform translate-y-full opacity-0 transition-all duration-500 hidden">
+        <div class="flex items-start justify-between mb-2">
+            <h4 class="font-serif text-brand-dark text-lg">Ciasteczka 🍪</h4>
+            <button id="cookie-close" class="text-gray-400 hover:text-brand-dark transition-colors focus:outline-none">
+                <i class="ph ph-x"></i>
+            </button>
         </div>
-        <div class="flex flex-col sm:flex-row items-center gap-3 shrink-0 w-full md:w-auto">
-            <button onclick="declineCookies()" class="w-full sm:w-auto px-6 py-3 rounded-xl border border-slate-600 text-gray-300 hover:bg-slate-800 transition font-medium text-sm">Odrzuć analitykę</button>
-            <button onclick="acceptCookies()" class="w-full sm:w-auto px-6 py-3 rounded-xl bg-radio-accent hover:bg-violet-600 text-white transition font-bold text-sm shadow-lg shadow-violet-900/50 hover:scale-105 active:scale-95">Akceptuję wszystkie</button>
-        </div>
+        <p class="text-xs text-brand-text/80 mb-4 font-light leading-relaxed">
+            Nasza strona używa plików cookies, aby zapewnić Ci najwyższą jakość przeglądania i analizować ruch na stronie. Dalsze korzystanie ze strony oznacza Twoją zgodę na ich użycie.
+        </p>
+        <button id="cookie-accept" class="bg-brand text-white text-xs uppercase tracking-widest font-semibold px-4 py-2.5 rounded-sm hover:bg-amber-800 transition-colors w-full focus:outline-none">
+            Rozumiem i Akceptuję
+        </button>
     </div>
 
-    <!-- Pasek Playera z dodanym w prawej części linkiem awaryjnym (Plan B) -->
-    <div class="fixed bottom-0 left-0 w-full bg-slate-900/95 backdrop-blur-lg border-t border-slate-700 z-50 py-3" id="player-bar">
-        <div class="container mx-auto px-6 flex items-center justify-between">
-            <div class="flex items-center gap-4 flex-1 min-w-0">
-                <div class="hidden sm:block w-12 h-12 bg-slate-800 rounded-lg overflow-hidden shrink-0 relative">
-                    <img src="462547296_1491965518304482_2108257348268410961_n.jpg" class="w-full h-full object-cover opacity-80" alt="Okładka transmisji">
-                </div>
-                <div class="flex flex-col justify-center overflow-hidden min-w-0">
-                    <h4 class="font-bold text-sm truncate text-white" id="player-show-title">Transmisja na żywo</h4>
-                    <div id="player-show-presenter" class="text-xs text-gray-400 truncate mt-0.5">Uniradio Projekt</div>
-                </div>
-            </div>
-            
-            <div class="flex items-center justify-center shrink-0 px-2">
-                <button onclick="toggleBottomPlayer()" aria-label="Odtwarzaj radio na żywo" class="w-12 h-12 rounded-full bg-white text-radio-dark flex items-center justify-center hover:scale-105 transition" id="bottom-play-btn">
-                    <span id="icon-play-wrapper" class="flex items-center justify-center"><i data-lucide="play" class="w-6 h-6 fill-current translate-x-[1px]"></i></span>
-                    <span id="icon-pause-wrapper" class="flex items-center justify-center hidden"><i data-lucide="pause" class="w-6 h-6 fill-current"></i></span>
-                </button>
-            </div>
-            
-            <div class="flex-1 flex justify-end items-center gap-2 sm:gap-3 pr-2 md:pr-4">
-                <button onclick="toggleMute()" id="mute-btn" aria-label="Wycisz/Odwieś" class="text-gray-400 hover:text-white transition flex items-center justify-center shrink-0 w-6 h-6">
-                    <span id="icon-vol-2"><i data-lucide="volume-2" class="w-5 h-5"></i></span>
-                    <span id="icon-vol-1" class="hidden"><i data-lucide="volume-1" class="w-5 h-5"></i></span>
-                    <span id="icon-vol-x" class="hidden"><i data-lucide="volume-x" class="w-5 h-5"></i></span>
-                </button>
-                <input type="range" id="volume-slider" min="0" max="1" step="0.01" value="0.5" aria-label="Głośność"
-                       class="w-20 sm:w-28 md:w-36 h-1.5 bg-slate-700 rounded-lg appearance-none cursor-pointer transition-all">
-            </div>
-        </div>
-        
-        <!-- Link Zewnętrznego Playera wyciśnięty totalnie w prawy dolny róg -->
-        <a href="https://uniradioprojekt.radio12345.com/" target="_blank" rel="noopener noreferrer" style="position: absolute; right: 5px; bottom: 2px; font-size: 10px; line-height: 1; color: #64748b; text-decoration: none; opacity: 0.6; transition: all 0.2s; z-index: 60;" onmouseover="this.style.opacity='1'; this.style.color='#8b5cf6';" onmouseout="this.style.opacity='0.6'; this.style.color='#64748b';">
-            Źródło www
-        </a>
-    </div>
-
+    <!-- JavaScript for Interactions -->
     <script>
-        // --- SYSTEM COOKIES & RODO ---
-        const GA_TRACKING_ID = 'G-RX84HKZJEC';
-
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-
-        gtag('consent', 'default', {
-            'analytics_storage': 'denied',
-            'ad_storage': 'denied',
-            'ad_user_data': 'denied',
-            'ad_personalization': 'denied'
-        });
-
-        setTimeout(() => {
-            const script = document.createElement('script');
-            script.src = `https://www.googletagmanager.com/gtag/js?id=${GA_TRACKING_ID}`;
-            script.async = true;
-            document.head.appendChild(script);
-        }, 3500); 
-
-        gtag('js', new Date());
-        gtag('config', GA_TRACKING_ID);
-        
-        function enableServices() {
-            const mapIframe = document.getElementById('google-map-iframe');
-            const mapPlaceholder = document.getElementById('map-placeholder');
-            
-            if (mapIframe && mapIframe.getAttribute('data-src')) {
-                mapIframe.src = mapIframe.getAttribute('data-src');
-                mapIframe.removeAttribute('data-src');
-            }
-            if (mapPlaceholder) {
-                mapPlaceholder.style.opacity = '0';
-                setTimeout(() => mapPlaceholder.style.display = 'none', 500); 
-            }
-
-            gtag('consent', 'update', {
-                'analytics_storage': 'granted',
-                'ad_storage': 'granted',
-                'ad_user_data': 'granted',
-                'ad_personalization': 'granted'
-            });
-        }
-
-        window.acceptCookies = function() {
-            localStorage.setItem('cookieConsent', 'granted');
-            const banner = document.getElementById('cookie-banner');
-            if (banner) banner.classList.add('translate-y-full');
-            enableServices();
-        };
-
-        window.declineCookies = function() {
-            localStorage.setItem('cookieConsent', 'denied');
-            const banner = document.getElementById('cookie-banner');
-            if (banner) banner.classList.add('translate-y-full');
-        };
-
-        // --- BAZA DANYCH RAMÓWKI ---
-        const scheduleData = {
-            wariant1: {
-                name: "Wariant 1",
-                sroda: [
-                    { time: "18:00", title: "Wejście na Antenę", presenter: "" },
-                    { time: "18:05", title: "Głos Azji", presenter: "Weronika Kosobudzka" },
-                    { time: "19:05", title: "Blaszak", presenter: "Lauri Potocki" },
-                    { time: "20:05", title: "Zejście z Anteny", presenter: "" }
-                ],
-                czwartek: [
-                    { time: "17:10", title: "Wejście na Antenę", presenter: "" },
-                    { time: "17:15", title: "My name is Bond", presenter: "Isia Bond" },
-                    { time: "18:00", title: "Wzgórza Opowieści", presenter: "Wojtek Paszko" },
-                    { time: "19:00", title: "Miszmasz", presenter: "Klaudia Latańska i Marlena Gąsiorowska" },
-                    { time: "19:45", title: "Zejście z Anteny", presenter: "" }
-                ],
-                piatek: [
-                    { time: "17:00", title: "Wejście na Antenę", presenter: "" },
-                    { time: "17:05", title: "(Nie)dobre, bo polskie", presenter: "Lauri Potocki i Dawid Gruszka" },
-                    { time: "18:10", title: "Talkable", presenter: "Daisy" },
-                    { time: "19:10", title: "Is this love at first read?", presenter: "Jack" },
-                    { time: "20:10", title: "Zejście z Anteny", presenter: "" }
-                ]
-            },
-            wariant2: {
-                name: "Wariant 2",
-                sroda: [
-                    { time: "18:00", title: "Wejście na Antenę", presenter: "" },
-                    { time: "18:05", title: "Queer Corner", presenter: "Ola Kuchnowska" },
-                    { time: "19:05", title: "Blaszak", presenter: "Lauri Potocki" },
-                    { time: "20:05", title: "Zejście z Anteny", presenter: "" }
-                ],
-                czwartek: [
-                    { time: "18:10", title: "Wejście na Antenę", presenter: "" },
-                    { time: "18:15", title: "Tajemnice Historii", presenter: "Wojtek Paszko" },
-                    { time: "19:00", title: "W co dzisiaj pogramy?", presenter: "Remek Sitnik" },
-                    { time: "19:45", title: "Zejście z Anteny", presenter: "" }
-                ],
-                piatek: [
-                    { time: "17:00", title: "Wejście na Antenę", presenter: "" },
-                    { time: "17:05", title: "Końcówka Języka", presenter: "Jan Wróbel" },
-                    { time: "18:10", title: "Talkable", presenter: "Daisy" },
-                    { time: "19:10", title: "Zejście z Anteny", presenter: "" }
-                ]
-            }
-        };
-
-        const minAllowedDate = new Date(2026, 1, 25); 
-        const cancelledDates = [
-            '2026-02-27', '2026-03-04', '2026-03-25', '2026-04-02', '2026-04-03'
-        ];
-
-        // --- POMOCNICZE FUNKCJE CZASOWE ---
-        function formatDateStr(dateObj) {
-            return `${dateObj.getFullYear()}-${String(dateObj.getMonth()+1).padStart(2,'0')}-${String(dateObj.getDate()).padStart(2,'0')}`;
-        }
-
-        // Zwraca obecny czas strefy polskiej dla precyzyjnego podświetlania na żywo
-        function getNow() {
-            return new Date(new Date().toLocaleString("en-US", {timeZone: "Europe/Warsaw"}));
-        }
-
-        function getWeekVariant(date) {
-            const target = new Date(date.valueOf());
-            const dayNr = (target.getDay() + 6) % 7; 
-            target.setDate(target.getDate() - dayNr + 3); 
-            const firstThursday = target.valueOf();
-            target.setMonth(0, 1);
-            if (target.getDay() !== 4) {
-                target.setMonth(0, 1 + ((4 - target.getDay()) + 7) % 7);
-            }
-            const weekNumber = 1 + Math.ceil((firstThursday - target) / 604800000);
-            return (weekNumber % 2 === 0) ? 'wariant1' : 'wariant2';
-        }
-
-        // --- LOGIKA POBIERANIA I MODYFIKOWANIA RAMÓWKI ---
-        function getScheduleForDate(dateObj) {
-            const dateStr = formatDateStr(dateObj);
-            if (cancelledDates.includes(dateStr)) return null;
-
-            const day = dateObj.getDay();
-            let dayId = '';
-            if (day === 3) dayId = 'sroda';
-            else if (day === 4) dayId = 'czwartek';
-            else if (day === 5) dayId = 'piatek';
-            else return null;
-
-            const variantKey = getWeekVariant(dateObj);
-            const baseData = scheduleData[variantKey][dayId];
-            if (!baseData) return null;
-
-            let renderedData = JSON.parse(JSON.stringify(baseData));
-
-            // Zastosowanie wyjątków
-            if (dateStr === '2026-02-26' && dayId === 'czwartek') {
-                renderedData = renderedData.map(item => {
-                    if (item.time === '19:00') { return { time: "19:00", title: "Kram", presenter: "Dawid Gruszka" }; }
-                    return item;
-                });
-            }
-            if (dateStr === '2026-03-05' && dayId === 'czwartek') {
-                renderedData = [
-                    { time: "17:00", title: "Wejście na Antenę", presenter: "" },
-                    { time: "17:05", title: "Przesłuchano", presenter: "Isia Bond i Laura Potaczek" },
-                    { time: "17:35", title: "Naczynia Połączone", presenter: "Jasiu Wątroba" },
-                    { time: "18:15", title: "Głos Azji", presenter: "Weronika Kosobudzka" },
-                    { time: "19:15", title: "Wzgórza Opowieści", presenter: "Wojtek Paszko" },
-                    { time: "20:15", title: "Shuffle", presenter: "Dawid Gruszka i Zuza Biernacka" },
-                    { time: "21:15", title: "(Nie)dobre, bo polskie", presenter: "Dawid Gruszka i Lauri Potocki" },
-                    { time: "22:15", title: "Zejście z Anteny", presenter: "" }
-                ];
-            }
-            if (dateStr === '2026-03-06' && dayId === 'piatek') {
-                renderedData = [
-                    { time: "17:00", title: "Wejście na Antenę", presenter: "" },
-                    { time: "17:05", title: "Blaszak", presenter: "Lauri Potocki" },
-                    { time: "18:05", title: "Końcówka Języka", presenter: "Jan Wróbel" },
-                    { time: "19:05", title: "Talkable", presenter: "Daisy" },
-                    { time: "20:05", title: "Is this love at first read?", presenter: "Jack" },
-                    { time: "21:05", title: "Zejście z Anteny", presenter: "" }
-                ];
-            }
-            if (dateStr === '2026-03-13' && dayId === 'piatek') {
-                renderedData = [
-                    { time: "17:00", title: "Wejście na Antenę", presenter: "" },
-                    { time: "17:05", title: "Końcówka Języka", presenter: "Jan Wróbel" },
-                    { time: "18:10", title: "Is this love at first read?", presenter: "Jack" },
-                    { time: "19:10", title: "Zejście z Anteny", presenter: "" }
-                ];
-            }
-            if (dateStr === '2026-03-20' && dayId === 'piatek') {
-                renderedData = [
-                    { time: "17:00", title: "Wejście na Antenę", presenter: "" },
-                    { time: "17:05", title: "(Nie)dobre, bo polskie", presenter: "Lauri Potocki i Dawid Gruszka" },
-                    { time: "18:10", title: "Zejście z Anteny", presenter: "" }
-                ];
-            }
-            if (dateStr === '2026-03-26' && dayId === 'czwartek') {
-                renderedData = [
-                    { time: "18:55", title: "Wejście na Antenę", presenter: "" },
-                    { time: "19:00", title: "W co dzisiaj pogramy?", presenter: "Remek Sitnik" },
-                    { time: "19:45", title: "Zejście z Anteny", presenter: "" }
-                ];
-            }
-            if (dateStr === '2026-03-27' && dayId === 'piatek') {
-                renderedData = [
-                    { time: "18:00", title: "Wejście na Antenę", presenter: "" },
-                    { time: "18:05", title: "Końcówka Języka", presenter: "Jan Wróbel" },
-                    { time: "19:05", title: "Talkable", presenter: "Daisy" },
-                    { time: "20:05", title: "Zejście z Anteny", presenter: "" }
-                ];
-            }
-            if (dateStr === '2026-04-08' && dayId === 'sroda') {
-                renderedData = renderedData
-                    .map(item => {
-                        // Zmiana audycji na Isię
-                        if (item.time === '18:05') { 
-                            return { time: "18:05", title: "My name is Bond", presenter: "Isia Bond" }; 
-                        }
-                        // Przesunięcie końca ramówki
-                        if (item.title === 'Zejście z Anteny') {
-                            return { time: "19:05", title: "Zejście z Anteny", presenter: "" };
-                        }
-                        return item;
-                    })
-                    .filter(item => item.title !== "Blaszak"); // Wyrzucenie Blaszaka
-            }
-
-            // --- NOWA, TYMCZASOWA RAMÓWKA NA BIEŻĄCY TYDZIEŃ ---
-            // Środa: 15.04.2026
-            if (dateStr === '2026-04-15' && dayId === 'sroda') {
-                renderedData = [
-                    { time: "18:15", title: "Wejście na Antenę", presenter: "" },
-                    { time: "18:20", title: "Kakofonia", presenter: "Kacper Augustyniak" },
-                    { time: "19:20", title: "Blaszak", presenter: "Lauri Potocki" },
-                    { time: "20:20", title: "Zejście z Anteny", presenter: "" }
-                ];
-            }
-            // Czwartek: 16.04.2026
-            if (dateStr === '2026-04-16' && dayId === 'czwartek') {
-                renderedData = [
-                    { time: "17:40", title: "Wejście na Antenę", presenter: "" },
-                    { time: "17:45", title: "Wzgórza opowieści", presenter: "Wojtek Paszko" },
-                    { time: "18:45", title: "Czas na romans", presenter: "Klaudia Latańska i Marlena Gąsiorowska" },
-                    { time: "19:30", title: "Zejście z Anteny", presenter: "" }
-                ];
-            }
-            // Piątek: 17.04.2026
-            if (dateStr === '2026-04-17' && dayId === 'piatek') {
-                renderedData = [
-                    { time: "17:25", title: "Wejście na Antenę", presenter: "" },
-                    { time: "17:30", title: "(Nie)dobre, bo polskie", presenter: "Lauri Potocki i Dawid Gruszka" },
-                    { time: "18:30", title: "Talkable", presenter: "Daisy" },
-                    { time: "19:00", title: "Zejście z Anteny", presenter: "" }
-                ];
-            }
-            
-            return renderedData;
-        }
-
-        // --- SPRAWDZANIE CO TERAZ LECI ---
-        function getCurrentShowInfo() {
-            const now = getNow();
-            const schedule = getScheduleForDate(now);
-            if (!schedule) return null;
-
-            const currentMinutes = now.getHours() * 60 + now.getMinutes();
-
-            for (let i = 0; i < schedule.length; i++) {
-                const item = schedule[i];
-                const [hours, mins] = item.time.split(':').map(Number);
-                const itemMinutes = hours * 60 + mins;
-
-                let nextItemMinutes = 24 * 60; // Domyślnie do północy
-                if (schedule[i+1]) {
-                    const [nHours, nMins] = schedule[i+1].time.split(':').map(Number);
-                    nextItemMinutes = nHours * 60 + nMins;
-                }
-
-                if (currentMinutes >= itemMinutes && currentMinutes < nextItemMinutes) {
-                    if (item.title.toLowerCase().includes("zejście")) return null; // Koniec ramówki na ten dzień
-                    return { ...item, dateStr: formatDateStr(now) };
-                }
-            }
-            return null;
-        }
-
-        // Funkcja do oznaczania i zmiany DOM pod "Na żywo"
-        function updateLiveStatus() {
-            const currentShow = getCurrentShowInfo();
-
-            // 1. Zmiana paska odtwarzacza
-            const titleEl = document.getElementById('player-show-title');
-            const presenterEl = document.getElementById('player-show-presenter');
-
-            if (titleEl && presenterEl) {
-                if (currentShow) {
-                    titleEl.textContent = currentShow.title;
-                    if (currentShow.title === "Wejście na Antenę") {
-                        presenterEl.innerHTML = `<span class="flex items-center gap-1.5 text-radio-neon font-bold"><span class="w-2 h-2 rounded-full bg-radio-neon animate-pulse shadow-[0_0_8px_#38bdf8]"></span> Zaraz zaczynamy...</span>`;
-                    } else {
-                        const presText = currentShow.presenter ? ` • ${currentShow.presenter}` : '';
-                        presenterEl.innerHTML = `<span class="flex items-center gap-1.5 text-radio-neon font-bold"><span class="w-2 h-2 rounded-full bg-radio-neon animate-pulse shadow-[0_0_8px_#38bdf8]"></span> ${presText}</span>`;
-                    }
-                } else {
-                    titleEl.textContent = "Transmisja na żywo";
-                    presenterEl.textContent = "Uniradio Projekt";
-                }
-            }
-
-            // 2. Usunięcie starych podświetleń z ramówki
-            document.querySelectorAll('.schedule-item-live-badge').forEach(el => el.remove());
-            document.querySelectorAll('.schedule-item-active').forEach(el => {
-                el.classList.remove('ring-2', 'ring-radio-neon', 'shadow-[0_0_15px_rgba(56,189,248,0.3)]', 'bg-slate-800/80', 'schedule-item-active');
-            });
-
-            // 3. Dodanie podświetlenia dla obecnego show (jeśli kalendarz wyświetla ten tydzień)
-            if (currentShow) {
-                const targetId = `schedule-item-${currentShow.dateStr}-${currentShow.time.replace(':','')}`;
-                const targetEl = document.getElementById(targetId);
-                
-                if (targetEl) {
-                    targetEl.classList.add('ring-2', 'ring-radio-neon', 'shadow-[0_0_15px_rgba(56,189,248,0.3)]', 'bg-slate-800/80', 'schedule-item-active');
-                    if (!targetEl.querySelector('.schedule-item-live-badge')) {
-                        const badge = document.createElement('span');
-                        badge.className = 'schedule-item-live-badge absolute top-4 right-4 flex items-center gap-1.5 text-[10px] sm:text-xs font-bold text-radio-neon animate-pulse uppercase tracking-wider';
-                        badge.innerHTML = `<span class="w-2 h-2 rounded-full bg-radio-neon shadow-[0_0_8px_#38bdf8]"></span> TERAZ GRAMY`;
-                        targetEl.appendChild(badge);
-                    }
-                }
-            }
-        }
-
         document.addEventListener('DOMContentLoaded', () => {
-            const consent = localStorage.getItem('cookieConsent');
-            if (consent === 'granted') {
-                enableServices(); 
-            } else if (consent === null) {
-                setTimeout(() => {
-                    const banner = document.getElementById('cookie-banner');
-                    if (banner) banner.classList.remove('translate-y-full');
-                }, 800);
-            }
-
-            lucide.createIcons();
-
-            let currentDate = getNow(); 
-            currentDate.setDate(1); 
-            let selectedDate = getClosestBroadcastDate(getNow()); 
-
-            renderCalendar();
-            renderSchedule();
-
-            // Oś czasu: uaktualnij status co minutę by reagować na wejście audycji na żywo
-            setInterval(updateLiveStatus, 60000);
-
-            function getClosestBroadcastDate(date) {
-                let current = new Date(date);
-                current.setHours(0,0,0,0);
-                
-                if (current < minAllowedDate) {
-                    current = new Date(minAllowedDate);
-                    current.setHours(0,0,0,0);
-                }
-
-                for(let i = 0; i < 7; i++) {
-                    const testDate = new Date(current);
-                    testDate.setDate(current.getDate() + i);
-                    const day = testDate.getDay();
-                    const dateStr = formatDateStr(testDate);
-                    
-                    if (day >= 3 && day <= 5 && !cancelledDates.includes(dateStr)) {
-                        return testDate;
-                    }
-                }
-                return current;
-            }
-
-            document.getElementById('prev-month').addEventListener('click', () => {
-                currentDate.setDate(1); 
-                currentDate.setMonth(currentDate.getMonth() - 1);
-                renderCalendar();
-            });
-            document.getElementById('next-month').addEventListener('click', () => {
-                currentDate.setDate(1); 
-                currentDate.setMonth(currentDate.getMonth() + 1);
-                renderCalendar();
-            });
-
-            function renderCalendar() {
-                const grid = document.getElementById('calendar-grid');
-                const monthYearLabel = document.getElementById('calendar-month-year');
-                grid.innerHTML = '';
-                grid.className = 'flex flex-col gap-1 text-center text-sm font-medium';
-
-                const year = currentDate.getFullYear();
-                const month = currentDate.getMonth();
-
-                const monthNames = ['Styczeń', 'Luty', 'Marzec', 'Kwiecień', 'Maj', 'Czerwiec', 'Lipiec', 'Sierpień', 'Wrzesień', 'Październik', 'Listopad', 'Grudzień'];
-                monthYearLabel.textContent = `${monthNames[month]} ${year}`;
-
-                const firstDay = new Date(year, month, 1).getDay();
-                const daysInMonth = new Date(year, month + 1, 0).getDate();
-                let startDay = firstDay === 0 ? 6 : firstDay - 1;
-
-                let currentWeekRow = createWeekRow();
-                let weekHasAllowedDays = false;
-                const realToday = getNow();
-
-                for (let i = 0; i < startDay; i++) {
-                    currentWeekRow.appendChild(createCalendarCell('', false, false, false));
-                }
-
-                for (let i = 1; i <= daysInMonth; i++) {
-                    const dateObj = new Date(year, month, i);
-                    const dayOfWeek = dateObj.getDay();
-                    const dateStr = formatDateStr(dateObj);
-
-                    let isBroadcastDay = (dayOfWeek >= 3 && dayOfWeek <= 5); 
-                    
-                    if (cancelledDates.includes(dateStr)) {
-                        isBroadcastDay = false;
-                    }
-
-                    if (dateObj >= minAllowedDate) {
-                        weekHasAllowedDays = true;
-                    } else {
-                        isBroadcastDay = false;
-                    }
-
-                    const isSelectedWeek = isSameWeek(dateObj, selectedDate);
-                    const isToday = dateObj.getFullYear() === realToday.getFullYear() &&
-                                    dateObj.getMonth() === realToday.getMonth() &&
-                                    dateObj.getDate() === realToday.getDate();
-
-                    const cell = createCalendarCell(i, isBroadcastDay, isSelectedWeek, isToday, dateObj);
-                    currentWeekRow.appendChild(cell);
-
-                    if (dayOfWeek === 0 || i === daysInMonth) {
-                        if (i === daysInMonth && dayOfWeek !== 0) {
-                            let endDay = dayOfWeek === 0 ? 6 : dayOfWeek - 1;
-                            for (let j = endDay + 1; j < 7; j++) {
-                                currentWeekRow.appendChild(createCalendarCell('', false, false, false));
-                            }
-                        }
-
-                        if (weekHasAllowedDays) {
-                            if (isSameWeek(new Date(year, month, i), selectedDate)) {
-                                currentWeekRow.classList.add('bg-slate-800/80', 'ring-1', 'ring-radio-accent/50');
-                            }
-    
-                            let repDate = new Date(year, month, i); 
-                            currentWeekRow.onclick = () => {
-                                selectedDate = repDate;
-                                renderCalendar();
-                                renderSchedule();
-                            };
-                            currentWeekRow.classList.add('group/week', 'cursor-pointer', 'hover:bg-slate-800');
-                        } else {
-                            currentWeekRow.classList.remove('group/week', 'cursor-pointer', 'hover:bg-slate-800');
-                            currentWeekRow.classList.add('cursor-not-allowed', 'pointer-events-none');
-                        }
-
-                        grid.appendChild(currentWeekRow);
-                        
-                        if (i !== daysInMonth) {
-                            currentWeekRow = createWeekRow();
-                            weekHasAllowedDays = false; 
-                        }
-                    }
-                }
-            }
-
-            function createWeekRow() {
-                const div = document.createElement('div');
-                div.className = 'grid grid-cols-7 gap-1 rounded-lg transition-colors p-1 -mx-1';
-                return div;
-            }
-
-            function isSameWeek(date1, date2) {
-                if (!date1 || !date2) return false;
-                const d1 = new Date(date1);
-                const d2 = new Date(date2);
-                
-                d1.setHours(0,0,0,0);
-                const diff1 = d1.getDay() === 0 ? 6 : d1.getDay() - 1;
-                d1.setDate(d1.getDate() - diff1); 
-                
-                d2.setHours(0,0,0,0);
-                const diff2 = d2.getDay() === 0 ? 6 : d2.getDay() - 1;
-                d2.setDate(d2.getDate() - diff2); 
-                
-                return d1.getTime() === d2.getTime();
-            }
-
-            function createCalendarCell(dayNum, isBroadcast, isSelectedWeek, isToday, dateObj) {
-                const div = document.createElement('div');
-                div.className = 'py-2 rounded-md transition-all flex flex-col items-center justify-center relative ';
-
-                if (!dayNum) {
-                    div.className += 'text-transparent ';
-                    return div;
-                }
-
-                let innerSpan = `<span class="relative z-10">${dayNum}</span>`;
-
-                if (isSelectedWeek) {
-                    if (isBroadcast) {
-                        div.className += 'bg-radio-accent text-white font-bold shadow-md scale-105 z-10 ';
-                    } else {
-                        div.className += 'text-white/80 font-medium ';
-                    }
-                } else if (isBroadcast) {
-                    div.className += 'bg-slate-800 text-radio-neon font-bold border border-slate-600 group-hover/week:bg-slate-700 group-hover/week:border-radio-neon/30 ';
-                } else {
-                    div.className += 'bg-slate-900/40 text-slate-500 group-hover/week:text-slate-300 ';
-                }
-
-                if (isToday) {
-                    div.className += ' ring-2 ring-radio-pink/80 z-20 shadow-[0_0_10px_rgba(244,114,182,0.3)] ';
-                    innerSpan += `<div class="absolute bottom-1 w-1 h-1 rounded-full bg-radio-pink shadow-[0_0_5px_#f472b6]"></div>`;
-                }
-
-                div.innerHTML = innerSpan;
-                return div;
-            }
-
-            function renderSchedule() {
-                const container = document.getElementById('schedule-panels');
-                container.innerHTML = ''; 
-
-                const scheduleTitle = document.getElementById('schedule-variant-title');
-                scheduleTitle.innerHTML = `<span class="text-white">Ramówka</span>`;
-
-                const layoutDays = [
-                    { id: 'sroda', name: 'Środa', color: 'radio-neon', icon: 'mic-2' },
-                    { id: 'czwartek', name: 'Czwartek', color: 'radio-pink', icon: 'music' },
-                    { id: 'piatek', name: 'Piątek', color: 'radio-accent', icon: 'radio' }
-                ];
-
-                const styleDictionary = {
-                    'radio-neon': { text: 'text-radio-neon', bg: 'bg-radio-neon', borderHover: 'hover:border-radio-neon', borderL: 'border-radio-neon/50' },
-                    'radio-pink': { text: 'text-radio-pink', bg: 'bg-radio-pink', borderHover: 'hover:border-radio-pink', borderL: 'border-radio-pink/50' },
-                    'radio-accent': { text: 'text-radio-accent', bg: 'bg-radio-accent', borderHover: 'hover:border-radio-accent', borderL: 'border-radio-accent/50' }
-                };
-
-                layoutDays.forEach(dayInfo => {
-                    const specificDate = new Date(selectedDate);
-                    specificDate.setHours(0,0,0,0);
-                    const day = specificDate.getDay() === 0 ? 7 : specificDate.getDay(); 
-                    const dayOffsets = { 'sroda': 3, 'czwartek': 4, 'piatek': 5 };
-                    const offset = dayOffsets[dayInfo.id] - day;
-                    specificDate.setDate(specificDate.getDate() + offset);
-                    
-                    const dateStr = formatDateStr(specificDate);
-
-                    if (cancelledDates.includes(dateStr)) {
-                        if (dateStr === '2026-04-02') {
-                            const bannerSlot = document.createElement('div');
-                            bannerSlot.className = 'md:col-span-1 lg:col-span-2 flex mt-14';
-                            bannerSlot.innerHTML = `
-                                <div class="glass-panel p-4 rounded-xl border-l-4 border-radio-pink bg-gradient-to-br from-violet-900/60 via-slate-900/40 to-blue-900/60 flex flex-col items-center justify-center text-center w-full relative overflow-hidden group shadow-[0_0_20px_rgba(244,114,182,0.15)]">
-                                    <div class="absolute -top-10 -right-10 w-24 h-24 bg-radio-neon/20 rounded-full blur-2xl"></div>
-                                    <div class="absolute -bottom-10 -left-10 w-24 h-24 bg-radio-pink/20 rounded-full blur-2xl"></div>
-                                    
-                                    <div class="flex flex-col items-center mb-1 relative z-10">
-                                        <span class="text-5xl mb-[-8px]">🐰</span>
-                                        <div class="flex gap-10">
-                                            <span class="text-5xl">🐣</span>
-                                            <span class="text-5xl">🌷</span>
-                                        </div>
-                                    </div>
-
-                                    <h3 class="text-3xl font-black mb-1 text-white drop-shadow-[0_0_8px_rgba(56,189,248,0.6)] relative z-10">Wesołych Świąt!</h3>
-                                    <p class="text-gray-200 text-s md:text-sm max-w-md mx-auto relative z-10 leading-snug">
-                                        Życzymy wszystkim słuchaczom oraz członkom uniradia spokojnych, <span class="text-radio-pink font-bold">uni</span>radosnych Świąt Wielkanocnych i mokrego Dyngusa!
-                                    </p>
-                                    
-                                    <div class="mt-2 flex items-center gap-2 text-[16px] font-bold text-radio-neon relative z-10">
-                                        <i data-lucide="radio" class="w-3 h-3"></i> Słyszymy się po świętach!
-                                    </div>
-                                </div>
-                            `;
-                            container.appendChild(bannerSlot);
-                            return;
-                        }
-                        if (dateStr === '2026-04-03') return;
-
-                        const emptySlot = document.createElement('div');
-                        emptySlot.className = 'hidden lg:block'; 
-                        container.appendChild(emptySlot);
-                        return; 
-                    }
-
-                    const renderedData = getScheduleForDate(specificDate);
-                    if (!renderedData || renderedData.length === 0) {
-                        const emptySlot = document.createElement('div');
-                        emptySlot.className = 'hidden lg:block'; 
-                        container.appendChild(emptySlot);
-                        return;
-                    }
-                    
-                    const styling = styleDictionary[dayInfo.color];
-                    const col = document.createElement('div');
-                    
-                    let html = `
-                        <h3 class="text-2xl font-bold mb-6 flex items-center gap-3 ${styling.text}">
-                            <span class="w-2 h-8 ${styling.bg} rounded-full"></span> ${dayInfo.name}
-                        </h3>
-                        <div class="space-y-4">
-                    `;
-
-                    renderedData.forEach(item => {
-                        const elementId = `schedule-item-${dateStr}-${item.time.replace(':','')}`;
-                        const presenterHtml = item.presenter ? `<p class="text-sm text-gray-400 mt-1">${item.presenter}</p>` : '';
-                        
-                        // Zmieniono h4, usunięto stąd "group-hover:${styling.text}", aby tytuł pozostawał biały i zachowywał spójność.
-                        html += `
-                            <div id="${elementId}" class="relative glass-panel p-4 rounded-xl border-l-4 ${styling.borderL} ${styling.borderHover} transition-colors duration-300 group">
-                                <span class="${styling.text} font-bold text-sm font-mono tracking-wide mb-1 block">${item.time}</span>
-                                <h4 class="text-lg font-bold text-white transition">${item.title}</h4>
-                                ${presenterHtml}
-                            </div>
-                        `;
-                    });
-
-                    html += `</div>`;
-                    col.innerHTML = html;
-                    container.appendChild(col);
-                });
-
-                lucide.createIcons();
-                updateLiveStatus(); // Zastosuj modyfikacje DOM dla "Teraz gramy" po załadowaniu html'a z ramówką
-            }
-        });
-
-        function scrollCreators(direction) {
-            const list = document.getElementById('creators-list');
-            const scrollAmount = 150;
-            if (direction === 'up') { list.scrollBy({ top: -scrollAmount, behavior: 'smooth' }); }
-            else { list.scrollBy({ top: scrollAmount, behavior: 'smooth' }); }
-        }
-        
-        // Funkcja otwarcia w osobnym okienku (poprzednia metoda, zachowana w razie potrzeby)
-        function openPlayer() { window.open('https://uniradioprojekt.radio12345.com/', 'UniRadioPlayer', 'width=400,height=600,menubar=no,toolbar=no,location=no,status=no'); }
-
-        // --- OBSŁUGA ODTWARZACZA ---
-        const radioStreamUrl = "https://uk6freenew.listen2myradio.com/live.mp3?typeportmount=s1_4501_stream_788952852";
-        let radioAudioPlayer = new Audio(radioStreamUrl);
-        let isRadioPlaying = false;
-        let isStreamUnlocked = false; 
-        let previousVolume = 0.5;
-        radioAudioPlayer.volume = previousVolume;
-
-        function toggleBottomPlayer() {
-            const playWrapper = document.getElementById('icon-play-wrapper');
-            const pauseWrapper = document.getElementById('icon-pause-wrapper');
-            const playBtn = document.getElementById('bottom-play-btn');
-
-            if (isRadioPlaying) {
-                radioAudioPlayer.pause();
-                radioAudioPlayer.src = "";
-                
-                playWrapper.classList.remove('hidden');
-                pauseWrapper.classList.add('hidden');
-                isRadioPlaying = false;
-            } else {
-                if (!isStreamUnlocked) {
-                    const unlockWindow = window.open('https://uniradioprojekt.radio12345.com/', 'UnlockPlayer', 'width=10,height=10,left=9999,top=9999');
-                    
-                    if(playBtn) {
-                        playBtn.style.opacity = '0.5';
-                        playBtn.style.pointerEvents = 'none'; 
-                    }
-                    
-                    setTimeout(() => {
-                        if (unlockWindow && !unlockWindow.closed) {
-                            unlockWindow.close();
-                        }
-                        startRadioPlayback();
-                        isStreamUnlocked = true; 
-                        
-                        if(playBtn) {
-                            playBtn.style.opacity = '1';
-                            playBtn.style.pointerEvents = 'auto';
-                        }
-                    }, 1000);
-                } else {
-                    startRadioPlayback();
-                }
-            }
-        }
-
-        function startRadioPlayback() {
-            const playWrapper = document.getElementById('icon-play-wrapper');
-            const pauseWrapper = document.getElementById('icon-pause-wrapper');
-            
-            radioAudioPlayer.src = radioStreamUrl;
-            radioAudioPlayer.play().catch(error => {
-                console.error("Błąd podczas odtwarzania radia:", error);
-            });
-            
-            playWrapper.classList.add('hidden');
-            pauseWrapper.classList.remove('hidden');
-            isRadioPlaying = true;
-        }
-
-        function updateVolumeIcon(val) {
-            document.getElementById('icon-vol-2').classList.add('hidden');
-            document.getElementById('icon-vol-1').classList.add('hidden');
-            document.getElementById('icon-vol-x').classList.add('hidden');
-
-            if (val === 0) {
-                document.getElementById('icon-vol-x').classList.remove('hidden');
-            } else if (val < 0.5) {
-                document.getElementById('icon-vol-1').classList.remove('hidden');
-            } else {
-                document.getElementById('icon-vol-2').classList.remove('hidden');
-            }
-        }
-
-        document.getElementById('volume-slider').addEventListener('input', (e) => {
-            const vol = parseFloat(e.target.value);
-            radioAudioPlayer.volume = vol;
-            
-            if (vol > 0) {
-                previousVolume = vol; 
-            }
-            updateVolumeIcon(vol);
-        });
-
-        function toggleMute() {
-            const slider = document.getElementById('volume-slider');
-            
-            if (radioAudioPlayer.volume > 0) {
-                previousVolume = radioAudioPlayer.volume; 
-                radioAudioPlayer.volume = 0;
-                slider.value = 0;
-            } else {
-                radioAudioPlayer.volume = previousVolume > 0 ? previousVolume : 0.5;
-                slider.value = radioAudioPlayer.volume;
-            }
-            
-            updateVolumeIcon(radioAudioPlayer.volume);
-        }
-        
-        function toggleMobileMenu() {
-            const menu = document.getElementById('mobile-menu');
-            menu.classList.toggle('hidden');
-        }
-
-        window.addEventListener('scroll', () => {
             const navbar = document.getElementById('navbar');
-            if (window.scrollY > 50) { navbar.classList.add('bg-slate-900/90', 'shadow-lg'); }
-            else { navbar.classList.remove('bg-slate-900/90', 'shadow-lg'); }
+            const logo = document.getElementById('nav-logo');
+            const navLinks = document.querySelectorAll('.nav-link:not(button)');
+            const mobileBtn = document.getElementById('mobile-menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const mobileLinks = document.querySelectorAll('.mobile-link');
+
+            // Handle Scroll for Navbar styling
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) {
+                    navbar.classList.add('glass-nav-scrolled');
+                    navbar.classList.remove('glass-nav', 'py-4');
+                    navbar.classList.add('py-2');
+                    
+                    // Change text color to dark when scrolled over white background
+                    logo.classList.remove('text-white');
+                    logo.classList.add('text-brand-dark');
+                    
+                    navLinks.forEach(link => {
+                        link.classList.remove('text-white');
+                        link.classList.add('text-brand-dark');
+                    });
+                    mobileBtn.classList.remove('text-white');
+                    mobileBtn.classList.add('text-brand-dark');
+
+                } else {
+                    navbar.classList.remove('glass-nav-scrolled', 'py-2');
+                    navbar.classList.add('glass-nav', 'py-4');
+                    
+                    // Revert text to white when at the top (over video)
+                    logo.classList.remove('text-brand-dark');
+                    logo.classList.add('text-white');
+                    
+                    navLinks.forEach(link => {
+                        link.classList.remove('text-brand-dark');
+                        link.classList.add('text-white');
+                    });
+                    mobileBtn.classList.remove('text-brand-dark');
+                    mobileBtn.classList.add('text-white');
+                }
+            });
+
+            // Handle Mobile Menu Toggle
+            mobileBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('open');
+                const icon = mobileBtn.querySelector('i');
+                if(mobileMenu.classList.contains('open')) {
+                    icon.classList.remove('ph-list');
+                    icon.classList.add('ph-x');
+                    // Force background color on navbar when menu is open on top
+                    if(window.scrollY <= 50) {
+                        navbar.classList.add('bg-white');
+                        logo.classList.remove('text-white');
+                        logo.classList.add('text-brand-dark');
+                        mobileBtn.classList.remove('text-white');
+                        mobileBtn.classList.add('text-brand-dark');
+                    }
+                } else {
+                    icon.classList.remove('ph-x');
+                    icon.classList.add('ph-list');
+                    if(window.scrollY <= 50) {
+                        navbar.classList.remove('bg-white');
+                        logo.classList.add('text-white');
+                        logo.classList.remove('text-brand-dark');
+                        mobileBtn.classList.add('text-white');
+                        mobileBtn.classList.remove('text-brand-dark');
+                    }
+                }
+            });
+
+            // Close mobile menu on link click
+            mobileLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.remove('open');
+                    const icon = mobileBtn.querySelector('i');
+                    icon.classList.remove('ph-x');
+                    icon.classList.add('ph-list');
+                });
+            });
+
+            // --- Cookie Banner Logic ---
+            const cookieBanner = document.getElementById('cookie-banner');
+            const cookieAcceptBtn = document.getElementById('cookie-accept');
+            const cookieCloseBtn = document.getElementById('cookie-close');
+
+            const hideBanner = () => {
+                cookieBanner.classList.add('translate-y-full', 'opacity-0');
+                setTimeout(() => {
+                    cookieBanner.classList.add('hidden');
+                }, 500); // Wait for transition to complete
+            };
+
+            // Check if user already accepted cookies
+            if (!localStorage.getItem('cookiesAccepted')) {
+                // Show banner after a short delay for better UX
+                setTimeout(() => {
+                    cookieBanner.classList.remove('hidden');
+                    // Slight timeout to allow the 'hidden' class removal to render before starting animation
+                    setTimeout(() => {
+                        cookieBanner.classList.remove('translate-y-full', 'opacity-0');
+                    }, 50);
+                }, 1500);
+            }
+
+            cookieAcceptBtn.addEventListener('click', () => {
+                localStorage.setItem('cookiesAccepted', 'true');
+                hideBanner();
+            });
+
+            cookieCloseBtn.addEventListener('click', () => {
+                // Hiding without accepting (it will show again on next refresh unless we set the item)
+                // For a more persistent hide without accepting: localStorage.setItem('cookiesAccepted', 'dismissed');
+                hideBanner();
+            });
+
+            // Simple reveal animation on load
+            const styles = `
+                @keyframes fadeInUp {
+                    from { opacity: 0; transform: translateY(20px); }
+                    to { opacity: 1; transform: translateY(0); }
+                }
+                .animate-fade-in-up {
+                    animation: fadeInUp 0.8s ease-out forwards;
+                }
+            `;
+            const styleSheet = document.createElement("style");
+            styleSheet.innerText = styles;
+            document.head.appendChild(styleSheet);
         });
     </script>
 </body>
