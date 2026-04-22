@@ -760,6 +760,15 @@
             }
 
             // --- NOWE ZMIANY NA TEN TYDZIEŃ (23-24 KWIETNIA 2026) ---
+            // Środa: 22.04.2026 (Wydłużony Blaszak na 1,5h)
+            if (dateStr === '2026-04-22' && dayId === 'sroda') {
+                renderedData = renderedData.map(item => {
+                    if (item.title === 'Zejście z Anteny') {
+                        return { time: "20:35", title: "Zejście z Anteny", presenter: "" };
+                    }
+                    return item;
+                });
+            }
             // Czwartek: 23.04.2026
             if (dateStr === '2026-04-23' && dayId === 'czwartek') {
                 renderedData = [
