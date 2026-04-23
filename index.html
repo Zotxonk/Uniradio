@@ -18,8 +18,15 @@
     <meta property="og:image" content="https://uniradioprojekt.pl/main-photo.webp">
     <meta property="og:locale" content="pl_PL">
 
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Uniradio - Gramy Słowem">
+    <meta name="twitter:description" content="Niezależne internetowy projekt radiowy studentów Dziennikarstwa UWr. Tworzymy z pasją od 2002 roku.">
+    <meta name="twitter:image" content="https://uniradioprojekt.pl/main-photo.webp">
+
     <link rel="icon" type="image/png" sizes="32x32" href="logotyp.png">
     <link rel="icon" type="image/png" sizes="192x192" href="logotyp.png">
+    <link rel="shortcut icon" type="image/webp" href="logotyp.png">
+    <link rel="apple-touch-icon" href="logotyp.png">
     
     <script src="https://unpkg.com/lucide@latest" defer></script>
     
@@ -27,86 +34,60 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap" media="print" onload="this.media='all'">
+    <noscript>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap">
+    </noscript>
     
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "RadioStation",
+      "name": "Uniradio",
+      "alternateName": "Uniradio Wrocław",
+      "url": "https://uniradioprojekt.pl",
+      "logo": "https://uniradioprojekt.pl/logotyp.png",
+      "description": "Niezależny internetowy projekt radiowy przy Wydziale Dziennikarstwa i Komunikacji Społecznej Uniwersytetu Wrocławskiego.",
+      "foundingDate": "2002",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Fryderyka Joliot-Curie 15, sala 102",
+        "addressLocality": "Wrocław",
+        "postalCode": "50-383",
+        "addressCountry": "PL"
+      },
+      "parentOrganization": {
+        "@type": "CollegeOrUniversity",
+        "name": "Uniwersytet Wrocławski"
+      },
+      "sameAs": [
+        "https://www.instagram.com/uniradio.projekt"
+      ]
+    }
+    </script>
+
     <link rel="stylesheet" href="css/uniradio.min.css">
     
     <style>
         /* Custom Scrollbar */
         ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #0f172a; }
-        ::-webkit-scrollbar-thumb { background: #38bdf8; border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: #8b5cf6; }
+        ::-webkit-scrollbar-track { background: #1e293b; }
+        ::-webkit-scrollbar-thumb { background: #475569; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #64748b; }
         
         html { scroll-behavior: smooth; }
         
-        /* NOWE: Tło w kształcie technicznej siatki */
-        .bg-grid-pattern {
-            background-size: 40px 40px;
-            background-image: 
-                linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-                linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-        }
-
         .glass-panel {
-            background: rgba(15, 23, 42, 0.6);
-            backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        /* NOWE: Brutalistyczny efekt outline na tekście */
-        .text-stroke {
-            -webkit-text-stroke: 2px rgba(255, 255, 255, 0.2);
-            color: transparent;
-        }
-
-        /* NOWE: Animacja Equalizera */
-        .eq-bar {
-            width: 4px;
-            background-color: white;
-            border-radius: 2px;
-            animation: eq 1s ease-in-out infinite alternate;
-            display: inline-block;
-            margin: 0 1px;
-        }
-        .eq-bar:nth-child(1) { animation-duration: 0.6s; height: 10px; }
-        .eq-bar:nth-child(2) { animation-duration: 0.8s; height: 18px; }
-        .eq-bar:nth-child(3) { animation-duration: 0.7s; height: 12px; }
-        .eq-bar:nth-child(4) { animation-duration: 0.5s; height: 20px; }
-        .eq-bar:nth-child(5) { animation-duration: 0.9s; height: 14px; }
-        
-        @keyframes eq {
-            0% { transform: scaleY(0.3); }
-            100% { transform: scaleY(1); }
-        }
-
-        /* NOWE: Płynnie przewijający się pasek informacyjny (Marquee) */
-        .marquee-container {
-            overflow: hidden;
-            white-space: nowrap;
-            width: 105%;
-            background: #8b5cf6;
-            padding: 15px 0;
-            transform: rotate(-2deg) translateX(-2%);
-            position: relative;
-            z-index: 20;
-            box-shadow: 0 10px 30px rgba(139, 92, 246, 0.3);
-            border-top: 2px solid #a78bfa;
-            border-bottom: 2px solid #a78bfa;
-        }
-        .marquee-content {
-            display: inline-block;
-            animation: marquee 25s linear infinite;
-            font-weight: 900;
-            font-size: 1.25rem;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            color: white;
-        }
-        .marquee-content span { margin: 0 2rem; opacity: 0.9;}
-        @keyframes marquee {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); } /* Przesuwa o połowę, by płynnie zapętlić podwójny tekst */
+        .bg-grid-pattern {
+            background-image: 
+                linear-gradient(to right, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+            background-size: 40px 40px;
+            background-attachment: fixed;
         }
 
         /* Suwak Głośności */
@@ -116,13 +97,24 @@
             width: 12px;
             height: 12px;
             border-radius: 50%;
-            background: #38bdf8;
+            background: #fff;
             cursor: pointer;
-            transition: transform 0.1s, box-shadow 0.1s;
+            transition: transform 0.1s;
         }
         input[type=range]::-webkit-slider-thumb:hover {
-            transform: scale(1.3);
-            box-shadow: 0 0 10px #38bdf8;
+            transform: scale(1.2);
+        }
+        input[type=range]::-moz-range-thumb {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #fff;
+            cursor: pointer;
+            border: none;
+            transition: transform 0.1s;
+        }
+        input[type=range]::-moz-range-thumb:hover {
+            transform: scale(1.2);
         }
     </style>
 </head>
@@ -131,8 +123,11 @@
     <nav class="fixed w-full z-50 transition-all duration-300" id="navbar">
         <div class="container mx-auto px-6 py-4 flex justify-between items-center glass-panel rounded-b-2xl mt-0 relative z-50">
             <a href="#home" class="flex items-center gap-3 hover:opacity-90 transition group">
-                <img src="logo-uniradio.webp" alt="UniRadio Logo" class="h-12 w-auto object-contain"
+                <img src="logo-uniradio.webp" 
+                     alt="UniRadio Logo" 
+                     class="h-12 w-auto object-contain"
                      onerror="this.style.display='none'; document.getElementById('fallback-logo').classList.remove('hidden'); document.getElementById('fallback-logo').classList.add('flex');">
+                
                 <div id="fallback-logo" class="hidden items-center gap-3">
                     <div class="relative w-10 h-10 flex items-center justify-center">
                         <svg viewBox="0 0 100 100" class="absolute inset-0 w-full h-full text-radio-accent group-hover:scale-110 transition duration-300">
@@ -150,190 +145,252 @@
                 </div>
             </a>
             
-            <div class="hidden md:flex items-center space-x-8 font-bold leading-none uppercase text-sm tracking-wide">
+            <div class="hidden md:flex items-center space-x-8 font-medium leading-none">
                 <a href="#home" class="hover:text-radio-accent transition flex items-center">Start</a>
                 <a href="#schedule" class="hover:text-radio-accent transition flex items-center">Ramówka</a>
                 <a href="#team" class="hover:text-radio-accent transition flex items-center">Zespół</a>
                 <a href="#contact" class="hover:text-radio-accent transition flex items-center">Kontakt</a>
+
+                <div class="h-6 w-px bg-white/20"></div>
+
+                <a href="podcasty" class="hover:text-radio-accent transition flex items-center">Podcasty</a>
+                <a href="artykuly" class="hover:text-radio-accent transition flex items-center">Artykuły</a>
             </div>
 
             <div class="flex items-center gap-4">
-                <a href="https://www.instagram.com/uniradio.projekt" target="_blank"
-                   class="flex items-center gap-2 bg-gradient-to-tr from-radio-accent/40 to-radio-pink/40 hover:from-radio-accent hover:to-radio-pink text-white px-4 py-2 rounded-full transition-all duration-300 border border-white/20 group shadow-[0_0_15px_rgba(139,92,246,0.5)] hover:shadow-[0_0_25px_rgba(244,114,182,0.6)]">
+                <a href="https://www.instagram.com/uniradio.projekt" target="_blank" aria-label="Odwiedź nasz profil na Instagramie"
+                   class="flex items-center gap-2 bg-gradient-to-tr from-radio-accent/20 to-radio-pink/20 hover:from-radio-accent hover:to-radio-pink text-white px-4 py-2 rounded-full transition-all duration-300 border border-white/10 group shadow-lg shadow-radio-accent/10">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5 group-hover:scale-110 transition"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
+                    <span class="text-xs font-bold hidden lg:inline">Instagram</span>
                 </a>
+
                 <button aria-label="Przełącz menu mobilne" class="md:hidden text-gray-300 hover:text-white transition shrink-0" onclick="toggleMobileMenu()">
                     <i data-lucide="menu" class="w-8 h-8"></i>
                 </button>
             </div>
         </div>
-        
+
         <div id="mobile-menu" class="hidden md:hidden absolute top-full left-0 w-full px-4 -mt-2 pb-4">
-            <div class="glass-panel rounded-2xl p-6 flex flex-col space-y-4 shadow-2xl">
-                <a href="#home" class="text-lg font-bold uppercase hover:text-radio-accent transition border-b border-white/5 pb-2" onclick="toggleMobileMenu()">Start</a>
-                <a href="#schedule" class="text-lg font-bold uppercase hover:text-radio-accent transition border-b border-white/5 pb-2" onclick="toggleMobileMenu()">Ramówka</a>
-                <a href="#team" class="text-lg font-bold uppercase hover:text-radio-accent transition border-b border-white/5 pb-2" onclick="toggleMobileMenu()">Zespół</a>
-                <a href="#contact" class="text-lg font-bold uppercase hover:text-radio-accent transition border-b border-white/5 pb-2" onclick="toggleMobileMenu()">Kontakt</a>
+            <div class="glass-panel rounded-2xl p-6 flex flex-col space-y-4 shadow-2xl animate-in slide-in-from-top-4 duration-200">
+                <a href="#home" class="text-lg font-medium hover:text-radio-accent transition border-b border-white/5 pb-2" onclick="toggleMobileMenu()">Start</a>
+                <a href="#schedule" class="text-lg font-medium hover:text-radio-accent transition border-b border-white/5 pb-2" onclick="toggleMobileMenu()">Ramówka</a>
+                <a href="#team" class="text-lg font-medium hover:text-radio-accent transition border-b border-white/5 pb-2" onclick="toggleMobileMenu()">Zespół</a>
+                <a href="#contact" class="text-lg font-medium hover:text-radio-accent transition border-b border-white/5 pb-2" onclick="toggleMobileMenu()">Kontakt</a>
+                
+                <div class="py-2"></div>
+                
+                <a href="podcasty" class="text-lg font-bold text-radio-neon hover:text-white transition flex items-center gap-2" onclick="toggleMobileMenu()">
+                    <i data-lucide="headphones" class="w-4 h-4"></i> Podcasty
+                </a>
+                <a href="artykuly" class="text-lg font-bold text-radio-pink hover:text-white transition flex items-center gap-2" onclick="toggleMobileMenu()">
+                    <i data-lucide="file-text" class="w-4 h-4"></i> Artykuły
+                </a>
             </div>
         </div>
     </nav>
 
     <main>
-    <section id="home" class="relative min-h-screen flex flex-col justify-center pt-24 pb-16 overflow-hidden scroll-mt-24 w-full">
-        <div class="absolute top-1/4 left-1/4 w-72 h-72 bg-radio-neon/30 rounded-full blur-[120px]"></div>
-        <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-radio-pink/20 rounded-full blur-[150px]"></div>
+    <section id="home" class="relative min-h-screen flex items-center pt-20 pb-32 overflow-hidden scroll-mt-24 w-full">
+        <div class="absolute top-0 left-0 w-64 h-64 md:w-96 md:h-96 bg-radio-accent/20 rounded-full blur-[80px] md:blur-[100px] -translate-x-1/2 -translate-y-1/2"></div>
+        <div class="absolute bottom-0 right-0 w-[300px] h-[300px] md:w-[500px] md:h-[500px] bg-radio-neon/10 rounded-full blur-[80px] md:blur-[120px] translate-x-1/3 translate-y-1/3"></div>
 
-        <div class="container mx-auto px-6 grid md:grid-cols-2 gap-8 items-center relative z-10 w-full flex-grow">
-            <div class="space-y-6">
-                <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-red-500/50 bg-red-500/10 text-red-400 text-sm font-bold tracking-widest uppercase shadow-[0_0_15px_rgba(239,68,68,0.3)]">
-                    <span class="w-2.5 h-2.5 rounded-full bg-red-500 animate-pulse"></span>
-                    Studio Wrocław
-                </div>
-                
-                <h1 class="text-6xl md:text-8xl font-black leading-none uppercase tracking-tighter relative">
-                    <span class="absolute -top-1 -left-1 text-stroke opacity-50 z-0 select-none">UNIRADIO</span>
-                    <span class="relative z-10 text-transparent bg-clip-text bg-gradient-to-br from-white via-gray-200 to-gray-500">UNIRADIO</span>
-                    <br>
-                    <span class="text-5xl md:text-7xl text-transparent bg-clip-text bg-gradient-to-r from-radio-neon to-radio-pink">GRAMY SŁOWEM</span>
+        <div class="container mx-auto px-6 grid md:grid-cols-2 gap-8 md:gap-12 items-center relative z-10 w-full">
+            <div class="space-y-4 md:space-y-5">
+                <h1 class="text-5xl md:text-7xl font-extrabold leading-tight break-words">
+                    UNIRADIO <br>
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-radio-accent to-radio-neon">GRAMY SŁOWEM</span>
                 </h1>
-                
-                <p class="text-gray-300 text-lg md:text-xl font-medium max-w-lg leading-relaxed border-l-4 border-radio-accent pl-4">
-                    Niezależny projekt radiowy. Tworzymy audycje z zajawką, realizujemy dźwięk i nadajemy na żywo prosto z wydziału.
+                <p class="text-gray-400 text-lg max-w-lg text-left md:text-justify">
+                    Niezależny projekt radiowy przy Wydziale Dziennikarstwa UWr. Tu studenci poznają tajniki pracy radiowej od kuchni, tworząc autorskie audycje i realizując dźwięk z pasją od 2002 roku.
                 </p>
-                
-                <div class="pt-4">
-                    <a href="https://uniradioprojekt.radio12345.com/" target="_blank" rel="noopener noreferrer" class="group relative inline-flex items-center justify-center gap-4 bg-white text-black px-10 py-5 rounded-full font-black uppercase tracking-widest transition-all duration-300 hover:bg-radio-neon hover:text-white hover:scale-105 hover:shadow-[0_0_40px_rgba(56,189,248,0.6)]">
-                        <span>Słuchaj Teraz</span>
-                        <div class="flex items-end h-5 gap-0.5 opacity-80 group-hover:opacity-100">
-                            <span class="eq-bar group-hover:bg-white"></span>
-                            <span class="eq-bar group-hover:bg-white"></span>
-                            <span class="eq-bar group-hover:bg-white"></span>
-                            <span class="eq-bar group-hover:bg-white"></span>
-                            <span class="eq-bar group-hover:bg-white"></span>
-                        </div>
+                <div class="flex gap-4 pt-2">
+                    <a href="https://uniradioprojekt.radio12345.com/" target="_blank" rel="noopener noreferrer" class="bg-radio-accent hover:bg-violet-700 text-white w-full sm:w-auto px-12 md:px-24 py-4 md:py-5 rounded-full font-bold flex items-center justify-center gap-2 transition shadow-lg shadow-violet-900/50 text-lg md:text-xl hover:scale-105 active:scale-95">
+                        <i data-lucide="play" class="fill-current w-6 h-6 md:w-7 md:h-7"></i> Słuchaj Teraz
                     </a>
                 </div>
             </div>
             
-            <div class="relative hidden md:block">
-                <div class="absolute inset-0 bg-gradient-to-tr from-radio-accent to-radio-neon rounded-2xl blur-2xl opacity-40 mix-blend-screen"></div>
-                <img src="main-photo.webp" alt="Studio radiowe" class="relative z-10 rounded-2xl border-2 border-white/10 transform rotate-2 hover:rotate-0 hover:scale-105 transition-all duration-500 w-full h-[500px] object-cover grayscale hover:grayscale-0 shadow-2xl">
-            </div>
-        </div>
-
-        <div class="marquee-container mt-16 md:mt-24">
-            <div class="marquee-content">
-                <span>📻 NA ŻYWO Z WROCŁAWIA</span>
-                <span>•</span>
-                <span>STUDENCKI PROJEKT RADIOWY</span>
-                <span>•</span>
-                <span>GRAMY SŁOWEM OD 2002</span>
-                <span>•</span>
-                <span>DOŁĄCZ DO ZESPOŁU</span>
-                <span>•</span>
-                <span>📻 NA ŻYWO Z WROCŁAWIA</span>
-                <span>•</span>
-                <span>STUDENCKI PROJEKT RADIOWY</span>
-                <span>•</span>
-                <span>GRAMY SŁOWEM OD 2002</span>
-                <span>•</span>
-                <span>DOŁĄCZ DO ZESPOŁU</span>
+            <div class="relative hidden md:block group">
+                <div class="absolute inset-0 bg-radio-accent/20 rounded-2xl blur-xl group-hover:bg-radio-accent/30 transition duration-500"></div>
+                <img src="main-photo.webp" alt="Studio radiowe UniRadio" class="relative z-10 rounded-2xl shadow-2xl border border-slate-700 transform rotate-3 group-hover:rotate-0 transition duration-500 w-full h-[450px] object-cover grayscale group-hover:grayscale-0">
             </div>
         </div>
     </section>
 
-    <section id="schedule" class="py-24 relative scroll-mt-24">
+    <section id="schedule" class="py-12 bg-slate-900/50 scroll-mt-24">
         <div class="container mx-auto px-6">
-            <div class="flex items-center gap-4 mb-12">
-                <div class="w-12 h-12 bg-radio-accent/20 rounded-xl flex items-center justify-center border border-radio-accent/50">
-                    <i data-lucide="calendar" class="text-radio-accent w-6 h-6"></i>
-                </div>
-                <h2 class="text-4xl font-black uppercase tracking-tight">Ramówka</h2>
-            </div>
+            <h2 class="text-3xl font-bold mb-10 flex items-center gap-3">
+                <i data-lucide="calendar" class="text-radio-accent"></i> Ramówka
+            </h2>
 
             <div class="grid lg:grid-cols-4 gap-8">
                 <div class="lg:col-span-1">
-                    <div class="glass-panel p-6 rounded-2xl sticky top-28">
+                    <div class="glass-panel p-6 rounded-2xl border border-slate-700/50 sticky top-28 shadow-xl">
                         <div class="flex justify-between items-center mb-6">
-                            <button id="prev-month" class="p-2 bg-slate-800 hover:bg-radio-neon hover:text-black rounded-lg transition text-gray-300 border border-slate-700"><i data-lucide="chevron-left" class="w-4 h-4"></i></button>
-                            <h3 id="calendar-month-year" class="font-black text-sm uppercase tracking-wider text-white"></h3>
-                            <button id="next-month" class="p-2 bg-slate-800 hover:bg-radio-neon hover:text-black rounded-lg transition text-gray-300 border border-slate-700"><i data-lucide="chevron-right" class="w-4 h-4"></i></button>
+                            <button id="prev-month" aria-label="Poprzedni miesiąc" class="p-2 bg-slate-800 hover:bg-slate-700 rounded-lg transition text-gray-300 hover:text-white border border-slate-700"><i data-lucide="chevron-left" class="w-4 h-4"></i></button>
+                            <h3 id="calendar-month-year" class="font-bold text-sm uppercase tracking-wider text-white"></h3>
+                            <button id="next-month" aria-label="Następny miesiąc" class="p-2 bg-slate-800 hover:bg-slate-700 rounded-lg transition text-gray-300 hover:text-white border border-slate-700"><i data-lucide="chevron-right" class="w-4 h-4"></i></button>
                         </div>
                         
-                        <div class="grid grid-cols-7 gap-1 text-center text-[10px] font-bold text-gray-500 mb-2">
+                        <div class="grid grid-cols-7 gap-1 text-center text-[10px] font-bold text-gray-400 mb-2">
                             <div>PN</div><div>WT</div><div>ŚR</div><div>CZ</div><div>PT</div><div>SB</div><div>ND</div>
                         </div>
-                        <div id="calendar-grid" class="flex flex-col gap-1 text-center text-sm font-medium"></div>
+                        
+                        <div id="calendar-grid" class="flex flex-col gap-1 text-center text-sm font-medium">
+                            </div>
+                        
+                        <div class="mt-8 space-y-3">
+                            <div class="text-xs text-gray-400 flex items-center gap-3">
+                                <span class="w-3 h-3 rounded bg-slate-900 border border-slate-700"></span> 
+                                <span>Brak audycji</span>
+                            </div>
+                            <div class="text-xs text-gray-400 flex items-center gap-3">
+                                <span class="w-3 h-3 rounded bg-slate-800 border border-slate-600 shadow-[inset_0_0_5px_rgba(56,189,248,0.2)]"></span> 
+                                <span class="text-radio-neon">Dni nadawcze</span>
+                            </div>
+                            <div class="text-xs text-gray-400 flex items-center gap-3">
+                                <span class="w-3 h-3 rounded ring-1 ring-radio-pink/80 bg-slate-900 flex items-center justify-center">
+                                     <div class="w-1 h-1 rounded-full bg-radio-pink"></div>
+                                </span> 
+                                <span class="text-radio-pink font-bold">Dzisiaj</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
                 <div class="lg:col-span-3">
-                    <div class="mb-8 border-b border-white/10 pb-4">
-                        <h3 id="schedule-variant-title" class="text-2xl font-bold uppercase tracking-widest text-gray-400"></h3>
+                    <div class="mb-8 border-b border-slate-700/50 pb-4">
+                        <h3 id="schedule-variant-title" class="text-3xl font-bold">
+                            </h3>
                     </div>
                     
-                    <div id="schedule-panels" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8"></div>
+                    <div id="schedule-panels" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        </div>
+                    
+                    <div class="mt-12 text-center bg-slate-800/30 p-6 rounded-2xl border border-slate-700/50 hover:bg-slate-800/50 transition duration-300">
+                        <p class="text-gray-400 text-sm">Chcesz poprowadzić własną audycję? <a href="#contact" class="text-radio-accent hover:text-radio-pink transition font-bold text-lg ml-2">Zgłoś się do nas!</a></p>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="team" class="py-24 relative border-t border-white/10 scroll-mt-24">
+    <section id="team" class="py-12 relative border-t border-slate-800/50 scroll-mt-24">
         <div class="container mx-auto px-6">
-            <h2 class="text-4xl md:text-5xl font-black mb-16 text-center uppercase">Poznaj <span class="text-transparent bg-clip-text bg-gradient-to-r from-radio-neon to-radio-accent">Zespół</span></h2>
+            <div class="text-center mb-10">
+                <h2 class="text-3xl md:text-5xl font-bold mb-4">Poznaj nasz <span class="text-radio-neon">Zespół</span></h2>
+            </div>
 
-            <div class="grid md:grid-cols-2 gap-16">
+            <div class="grid md:grid-cols-2 gap-12">
                 <div>
-                    <h3 class="text-2xl font-black uppercase mb-8 flex items-center gap-3">
-                        <span class="w-8 h-8 rounded-full bg-radio-pink/20 flex items-center justify-center border border-radio-pink/50"><i data-lucide="sliders" class="text-radio-pink w-4 h-4"></i></span> 
-                        Realizacja
+                    <h3 class="text-xl font-bold mb-6 flex items-center gap-2">
+                        <i data-lucide="sliders" class="text-radio-pink"></i> Realizacja
                     </h3>
                     <div class="grid grid-cols-2 gap-4">
-                        <div class="glass-panel p-6 rounded-2xl text-center group hover:-translate-y-1 transition-transform">
-                            <div class="w-20 h-20 mx-auto rounded-full bg-slate-800 flex items-center justify-center text-white font-black text-3xl border-2 border-white/10 mb-4 group-hover:border-radio-neon transition-colors">S</div>
-                            <h4 class="font-bold text-base">Szymon Surowiec</h4>
+                        <div class="glass-panel p-4 rounded-xl text-center hover:bg-white/5 transition">
+                            <div class="w-16 h-16 mx-auto rounded-full bg-emerald-500/20 flex items-center justify-center text-emerald-300 font-bold text-2xl border border-emerald-500/30 mb-2">S</div>
+                            <h4 class="font-bold text-sm">Szymon Surowiec</h4>
                         </div>
-                        <div class="glass-panel p-6 rounded-2xl text-center group hover:-translate-y-1 transition-transform">
-                            <div class="w-20 h-20 mx-auto rounded-full bg-slate-800 flex items-center justify-center text-white font-black text-3xl border-2 border-white/10 mb-4 group-hover:border-radio-pink transition-colors">O</div>
-                            <h4 class="font-bold text-base">Oliwia Leszczyńska</h4>
+                        <div class="glass-panel p-4 rounded-xl text-center hover:bg-white/5 transition">
+                            <div class="w-16 h-16 mx-auto rounded-full bg-blue-500/20 flex items-center justify-center text-blue-300 font-bold text-2xl border border-blue-500/30 mb-2">O</div>
+                            <h4 class="font-bold text-sm">Oliwia Leszczyńska</h4>
                         </div>
-                        <div class="glass-panel p-6 rounded-2xl text-center group hover:-translate-y-1 transition-transform">
-                            <div class="w-20 h-20 mx-auto rounded-full bg-slate-800 flex items-center justify-center text-white font-black text-3xl border-2 border-white/10 mb-4 group-hover:border-radio-accent transition-colors">J</div>
-                            <h4 class="font-bold text-base">Jagoda Lipska</h4>
+                        <div class="glass-panel p-4 rounded-xl text-center hover:bg-white/5 transition">
+                            <div class="w-16 h-16 mx-auto rounded-full bg-pink-500/20 flex items-center justify-center text-pink-300 font-bold text-2xl border border-pink-500/30 mb-2">J</div>
+                            <h4 class="font-bold text-sm">Jagoda Lipska</h4>
                         </div>
-                        <div class="glass-panel p-6 rounded-2xl text-center group hover:-translate-y-1 transition-transform">
-                            <div class="w-20 h-20 mx-auto rounded-full bg-slate-800 flex items-center justify-center text-white font-black text-3xl border-2 border-white/10 mb-4 group-hover:border-red-400 transition-colors">Z</div>
-                            <h4 class="font-bold text-base">Zuza Polkowska</h4>
+                        <div class="glass-panel p-4 rounded-xl text-center hover:bg-white/5 transition">
+                            <div class="w-16 h-16 mx-auto rounded-full bg-purple-500/20 flex items-center justify-center text-purple-300 font-bold text-2xl border border-purple-500/30 mb-2">Z</div>
+                            <h4 class="font-bold text-sm">Zuza Polkowska</h4>
                         </div>
                     </div>
                 </div>
 
                 <div>
-                    <h3 class="text-2xl font-black uppercase mb-8 flex items-center gap-3">
-                        <span class="w-8 h-8 rounded-full bg-radio-neon/20 flex items-center justify-center border border-radio-neon/50"><i data-lucide="mic" class="text-radio-neon w-4 h-4"></i></span> 
-                        Głosy
+                    <h3 class="text-xl font-bold mb-6 flex items-center gap-2">
+                        <i data-lucide="mic" class="text-radio-neon"></i> Twórcy
                     </h3>
-                    <div class="relative glass-panel rounded-2xl p-2 border border-white/10 overflow-hidden">
-                        <button onclick="scrollCreators('up')" class="w-full py-3 flex items-center justify-center hover:bg-white/5 text-gray-400 hover:text-white transition rounded-t-xl z-10 relative">
+                    <div class="relative bg-slate-800/30 rounded-xl p-2 border border-slate-700/50">
+                        <button onclick="scrollCreators('up')" aria-label="Przewiń listę twórców w górę" class="w-full py-2 flex items-center justify-center hover:bg-white/5 text-gray-400 hover:text-white transition rounded-t-lg mb-2">
                             <i data-lucide="chevron-up" class="w-5 h-5"></i>
                         </button>
 
-                        <div id="creators-list" class="space-y-2 h-[350px] overflow-y-auto scroll-smooth px-2" style="scrollbar-width: none;">
-                            <div class="p-3 flex gap-4 rounded-xl items-center hover:bg-white/5 transition cursor-pointer border-b border-white/5">
-                                <div class="w-12 h-12 shrink-0 rounded-xl bg-slate-800 flex items-center justify-center text-white font-black text-xl border border-white/10">L</div>
-                                <div class="min-w-0 flex-1"><h4 class="font-black uppercase text-sm truncate">Lauri Potocki</h4><p class="text-xs text-radio-neon truncate font-medium">"Blaszak", "(Nie)dobre, bo polskie"</p></div>
+                        <div id="creators-list" class="space-y-4 h-[400px] overflow-y-auto scroll-smooth pr-2" style="scrollbar-width: none; -ms-overflow-style: none;">
+                            <div class="glass-panel p-3 flex gap-4 rounded-xl items-center hover:bg-slate-800/50 transition">
+                                <div class="w-12 h-12 shrink-0 rounded-lg bg-purple-500/20 flex items-center justify-center text-purple-300 font-bold text-xl border border-purple-500/30">L</div>
+                                <div class="min-w-0 flex-1"><h4 class="font-bold truncate">Lauri Potocki</h4><p class="text-xs text-radio-neon truncate">"Blaszak", "(Nie)dobre, bo polskie"</p></div>
                             </div>
-                            <div class="p-3 flex gap-4 rounded-xl items-center hover:bg-white/5 transition cursor-pointer border-b border-white/5">
-                                <div class="w-12 h-12 shrink-0 rounded-xl bg-slate-800 flex items-center justify-center text-white font-black text-xl border border-white/10">K</div>
-                                <div class="min-w-0 flex-1"><h4 class="font-black uppercase text-sm truncate">Klaudia Latańska</h4><p class="text-xs text-radio-neon truncate font-medium">"Czas na romans"</p></div>
+                            <div class="glass-panel p-3 flex gap-4 rounded-xl items-center hover:bg-slate-800/50 transition">
+                                <div class="w-12 h-12 shrink-0 rounded-lg bg-cyan-500/20 flex items-center justify-center text-cyan-300 font-bold text-xl border border-cyan-500/30">K</div>
+                                <div class="min-w-0 flex-1"><h4 class="font-bold truncate">Klaudia Latańska</h4><p class="text-xs text-radio-neon truncate">"Czas na romans"</p></div>
                             </div>
-                            <div class="p-3 flex gap-4 rounded-xl items-center hover:bg-white/5 transition cursor-pointer border-b border-white/5">
-                                <div class="w-12 h-12 shrink-0 rounded-xl bg-slate-800 flex items-center justify-center text-white font-black text-xl border border-white/10">J</div>
-                                <div class="min-w-0 flex-1"><h4 class="font-black uppercase text-sm truncate">Jack</h4><p class="text-xs text-radio-neon truncate font-medium">"Is this love at first read?"</p></div>
+                            <div class="glass-panel p-3 flex gap-4 rounded-xl items-center hover:bg-slate-800/50 transition">
+                                <div class="w-12 h-12 shrink-0 rounded-lg bg-rose-500/20 flex items-center justify-center text-rose-300 font-bold text-xl border border-rose-500/30">J</div>
+                                <div class="min-w-0 flex-1"><h4 class="font-bold truncate">Jack</h4><p class="text-xs text-radio-neon truncate">"Is this love at first read?"</p></div>
                             </div>
+                            <div class="glass-panel p-3 flex gap-4 rounded-xl items-center hover:bg-slate-800/50 transition">
+                                <div class="w-12 h-12 shrink-0 rounded-lg bg-blue-500/20 flex items-center justify-center text-blue-300 font-bold text-xl border border-blue-500/30">W</div>
+                                <div class="min-w-0 flex-1"><h4 class="font-bold truncate">Weronika Kosobudzka</h4><p class="text-xs text-radio-neon truncate">"Głos Azji"</p></div>
                             </div>
+                            <div class="glass-panel p-3 flex gap-4 rounded-xl items-center hover:bg-slate-800/50 transition">
+                                <div class="w-12 h-12 shrink-0 rounded-lg bg-teal-500/20 flex items-center justify-center text-teal-300 font-bold text-xl border border-teal-500/30">D</div>
+                                <div class="min-w-0 flex-1"><h4 class="font-bold truncate">Dawid Gruszka</h4><p class="text-xs text-radio-neon truncate">"(Nie)dobre, bo polskie", "Kram", "Shuffle"</p></div>
+                            </div>
+                            <div class="glass-panel p-3 flex gap-4 rounded-xl items-center hover:bg-slate-800/50 transition">
+                                <div class="w-12 h-12 shrink-0 rounded-lg bg-amber-500/20 flex items-center justify-center text-amber-300 font-bold text-xl border border-amber-500/30">W</div>
+                                <div class="min-w-0 flex-1"><h4 class="font-bold truncate">Wojtek Paszko</h4><p class="text-xs text-radio-neon truncate">"Wzgórza Opowieści", "Tajemnice Historii"</p></div>
+                            </div>
+                            <div class="glass-panel p-3 flex gap-4 rounded-xl items-center hover:bg-slate-800/50 transition">
+                                <div class="w-12 h-12 shrink-0 rounded-lg bg-rose-500/20 flex items-center justify-center text-rose-300 font-bold text-xl border border-rose-500/30">O</div>
+                                <div class="min-w-0 flex-1"><h4 class="font-bold truncate">Ola Kuchnowska</h4><p class="text-xs text-radio-neon truncate">"Queer Corner"</p></div>
+                            </div>
+                            <div class="glass-panel p-3 flex gap-4 rounded-xl items-center hover:bg-slate-800/50 transition">
+                                <div class="w-12 h-12 shrink-0 rounded-lg bg-emerald-500/20 flex items-center justify-center text-emerald-300 font-bold text-xl border border-emerald-500/30">I</div>
+                                <div class="min-w-0 flex-1"><h4 class="font-bold truncate">Isia Bond</h4><p class="text-xs text-radio-neon truncate">"My name is Bond", "Mów Dalej"</p></div>
+                            </div>
+                            <div class="glass-panel p-3 flex gap-4 rounded-xl items-center hover:bg-slate-800/50 transition">
+                                <div class="w-12 h-12 shrink-0 rounded-lg bg-emerald-500/20 flex items-center justify-center text-emerald-300 font-bold text-xl border border-emerald-500/30">L</div>
+                                <div class="min-w-0 flex-1"><h4 class="font-bold truncate">Laura Potaczek</h4><p class="text-xs text-radio-neon truncate">"Przesłuchano"</p></div>
+                            </div>
+                            <div class="glass-panel p-3 flex gap-4 rounded-xl items-center hover:bg-slate-800/50 transition">
+                                <div class="w-12 h-12 shrink-0 rounded-lg bg-blue-500/20 flex items-center justify-center text-blue-300 font-bold text-xl border border-blue-500/30">J</div>
+                                <div class="min-w-0 flex-1"><h4 class="font-bold truncate">Jasiu Wątroba</h4><p class="text-xs text-radio-neon truncate">"Naczynia Połączone"</p></div>
+                            </div>
+                            <div class="glass-panel p-3 flex gap-4 rounded-xl items-center hover:bg-slate-800/50 transition">
+                                <div class="w-12 h-12 shrink-0 rounded-lg bg-lime-500/20 flex items-center justify-center text-lime-300 font-bold text-xl border border-lime-500/30">J</div>
+                                <div class="min-w-0 flex-1"><h4 class="font-bold truncate">Jan Wróbel</h4><p class="text-xs text-radio-neon truncate">"Końcówka Języka"</p></div>
+                            </div>
+                            <div class="glass-panel p-3 flex gap-4 rounded-xl items-center hover:bg-slate-800/50 transition">
+                                <div class="w-12 h-12 shrink-0 rounded-lg bg-pink-500/20 flex items-center justify-center text-pink-300 font-bold text-xl border border-pink-500/30">Z</div>
+                                <div class="min-w-0 flex-1"><h4 class="font-bold truncate">Zuza Biernacka</h4><p class="text-xs text-radio-neon truncate">"Shuffle"</p></div>
+                            </div>
+                            <div class="glass-panel p-3 flex gap-4 rounded-xl items-center hover:bg-slate-800/50 transition">
+                                <div class="w-12 h-12 shrink-0 rounded-lg bg-red-500/20 flex items-center justify-center text-red-300 font-bold text-xl border border-red-500/30">D</div>
+                                <div class="min-w-0 flex-1"><h4 class="font-bold truncate">Daisy</h4><p class="text-xs text-radio-neon truncate">"Talkable"</p></div>
+                            </div>
+                            <div class="glass-panel p-3 flex gap-4 rounded-xl items-center hover:bg-slate-800/50 transition">
+                                <div class="w-12 h-12 shrink-0 rounded-lg bg-indigo-500/20 flex items-center justify-center text-indigo-300 font-bold text-xl border border-indigo-500/30">M</div>
+                                <div class="min-w-0 flex-1"><h4 class="font-bold truncate">Marlena Gąsiorowska</h4><p class="text-xs text-radio-neon truncate">"Czas na romans"</p></div>
+                            </div>
+                            <div class="glass-panel p-3 flex gap-4 rounded-xl items-center hover:bg-slate-800/50 transition">
+                                <div class="w-12 h-12 shrink-0 rounded-lg bg-orange-500/20 flex items-center justify-center text-orange-300 font-bold text-xl border border-orange-500/30">R</div>
+                                <div class="min-w-0 flex-1"><h4 class="font-bold truncate">Remek Sitnik</h4><p class="text-xs text-radio-neon truncate">"W co dzisiaj pogramy?"</p></div>
+                            </div>
+                            <div class="glass-panel p-3 flex gap-4 rounded-xl items-center hover:bg-slate-800/50 transition">
+                                <div class="w-12 h-12 shrink-0 rounded-lg bg-sky-500/20 flex items-center justify-center text-sky-300 font-bold text-xl border border-sky-500/30">W</div>
+                                <div class="min-w-0 flex-1"><h4 class="font-bold truncate">Wiktor Brylonek</h4><p class="text-xs text-radio-neon truncate">"Bolid FM"</p></div>
+                            </div>
+                            <div class="glass-panel p-3 flex gap-4 rounded-xl items-center hover:bg-slate-800/50 transition">
+                                <div class="w-12 h-12 shrink-0 rounded-lg bg-fuchsia-500/20 flex items-center justify-center text-fuchsia-300 font-bold text-xl border border-fuchsia-500/30">I</div>
+                                <div class="min-w-0 flex-1"><h4 class="font-bold truncate">Iga Małkus</h4><p class="text-xs text-radio-neon truncate">"Bolid FM"</p></div>
+                            </div>
+                            <div class="glass-panel p-3 flex gap-4 rounded-xl items-center hover:bg-slate-800/50 transition">
+                                <div class="w-12 h-12 shrink-0 rounded-lg bg-violet-500/20 flex items-center justify-center text-violet-300 font-bold text-xl border border-violet-500/30">K</div>
+                                <div class="min-w-0 flex-1"><h4 class="font-bold truncate">Kacper Augustyniak</h4><p class="text-xs text-radio-neon truncate">"Kakofonia"</p></div>
+                            </div>
+                        </div>
 
-                        <button onclick="scrollCreators('down')" class="w-full py-3 flex items-center justify-center hover:bg-white/5 text-gray-400 hover:text-white transition rounded-b-xl z-10 relative">
+                        <button onclick="scrollCreators('down')" aria-label="Przewiń listę twórców w dół" class="w-full py-2 flex items-center justify-center hover:bg-white/5 text-gray-400 hover:text-white transition rounded-b-lg mt-2">
                             <i data-lucide="chevron-down" class="w-5 h-5"></i>
                         </button>
                     </div>
@@ -342,67 +399,118 @@
         </div>
     </section>
 
-    <section id="contact" class="py-24 relative overflow-hidden bg-gradient-to-b from-transparent to-[#020617] scroll-mt-24">
+    <section id="contact" class="py-12 relative overflow-hidden bg-gradient-to-b from-radio-dark to-slate-950 scroll-mt-24">
         <div class="container mx-auto px-6 relative z-10">
-            <h2 class="text-4xl md:text-5xl font-black text-center uppercase mb-12">Dołącz do <span class="text-radio-accent">Stacji</span></h2>
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-5xl font-bold mb-6">O nas i <span class="text-radio-neon">Rekrutacja</span></h2>
+            </div>
 
-            <div class="max-w-4xl mx-auto glass-panel p-8 md:p-12 rounded-3xl mb-16 shadow-2xl">
-                <div class="space-y-6 text-gray-300 text-lg font-medium">
+            <div class="max-w-4xl mx-auto glass-panel p-8 md:p-12 rounded-3xl mb-12 border border-slate-700/50">
+                <div class="space-y-6 text-gray-300 leading-relaxed text-lg text-left md:text-justify">
                     <p>
-                        <span class="text-white font-bold">Uniradio</span> to niezależne, nieustannie rozwijające się radio internetowe wydziału dziennikarstwa i komunikacji społecznej UWr. Projekt studencki zainicjowano w 2002 roku.
+                        <span class="text-radio-accent font-bold text-xl">Uniradio</span> to niezależne, nieustannie rozwijające się radio internetowe wydziału dziennikarstwa i komunikacji społecznej UWr. Projekt studencki zainicjowano w ówczesnej Katedrze Dziennikarstwa w 2002 roku, a obecnie działa pod okiem <span class="text-white font-semibold">dr. Łukasza Śmigla</span>.
                     </p>
                     <p>
-                        U nas poznajesz tajniki pracy radiowców „od kuchni” — uczysz się przygotowywania autorskich audycji, realizowania dźwięku i promocji. Absolwenci często lądują potem w stacjach komercyjnych.
+                        W obrębie projektu studenci mogą poznawać tajniki pracy radiowców „od kuchni” — uczyć się przygotowywania autorskich audycji, realizowania dźwięku oraz odpowiadania za promocję projektu. Zdobyte doświadczenie niejednokrotnie pozwoliło absolwentom kontynuować pasję w profesjonalnych instytucjach medialnych, takich jak <span class="text-radio-neon">Radio Wrocław</span> czy <span class="text-radio-neon">Radio RAM</span>.
+                    </p>
+                    <p>
+                        Audycje nadawane są z <span class="text-white font-semibold">sali radiowej 102</span> w budynku Instytutu Dziennikarstwa przy ulicy Joliot-Curie, a materiały rozpowszechniane online.
+                    </p>
+                    <p>
+                        Ramówka ustalana jest na początku każdego semestru, koncentrując się na kreatywności oraz wkładzie własnym uczestników projektu, umożliwiając jednocześnie naukę poprzez eksperymenty z formą. <span class="text-radio-pink font-semibold">Realizacja dźwięku</span> skupia się na kontroli aspektów technicznych emitowanego materiału, czego studenci mogą nauczyć się między innymi na specjalnych szkoleniach organizowanych przez <span class="text-white font-semibold">dr. Jakuba Wilka</span>. Tworzenie materiałów promocyjnych obejmuje robienie zdjęć, grafik, postów na media społecznościowe oraz nadzór strony internetowej projektu.
                     </p>
                     
-                    <div class="mt-10 pt-8 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-6">
-                        <p class="font-bold text-white text-xl uppercase tracking-wide">Pisz na maila:</p>
-                        <a href="mailto:projektuniradio@gmail.com" class="inline-flex items-center gap-3 bg-radio-accent hover:bg-white hover:text-black text-white px-8 py-4 rounded-full font-black uppercase tracking-wider transition-all duration-300">
-                            <i data-lucide="mail" class="w-5 h-5"></i> projektuniradio@gmail.com
-                        </a>
+                    <div class="border-t border-slate-700 pt-6 mt-8">
+                        <p class="font-bold text-white text-xl mb-4 italic text-center md:text-left">Zapraszamy wszystkich chętnych do współpracy — niezależnie od wiedzy i umiejętności.</p>
+                        <div class="flex flex-col md:flex-row items-center gap-4 w-full">
+                            <div class="flex items-center justify-center md:justify-start gap-2 sm:gap-3 bg-slate-800/50 p-3 sm:p-4 rounded-xl border border-slate-700 w-full md:w-auto overflow-hidden">
+                                <i data-lucide="mail" class="text-radio-accent w-5 h-5 sm:w-6 sm:h-6 shrink-0"></i>
+                                <a href="mailto:projektuniradio@gmail.com" class="text-[13px] min-[360px]:text-sm sm:text-base md:text-xl font-bold text-white hover:text-radio-accent transition decoration-radio-accent hover:underline underline-offset-4 whitespace-nowrap tracking-tight sm:tracking-normal">projektuniradio@gmail.com</a>
+                            </div>
+                        </div>
                     </div>
+                </div>
+            </div>
+
+            <div class="max-w-5xl mx-auto text-center">
+                <h3 class="text-2xl font-bold mb-4">Tutaj znajdziesz nasze studio</h3>
+                <p class="text-gray-400 mb-8">Fryderyka Joliot-Curie 15, Wrocław, sala 102.</p>
+                <div class="glass-panel p-2 rounded-2xl overflow-hidden h-[400px] md:h-[500px] border border-slate-700/50 relative">
+                    <div id="map-placeholder" class="absolute inset-0 flex flex-col items-center justify-center bg-slate-800/95 z-10 p-6 transition-opacity duration-500 rounded-xl">
+                        <i data-lucide="map-pin" class="w-12 h-12 text-gray-500 mb-4 animate-bounce"></i>
+                        <h4 class="text-xl font-bold text-white mb-2">Mapa zablokowana ze względu na prywatność</h4>
+                        <p class="text-gray-400 mb-6 max-w-md text-sm">Aby wyświetlić interaktywną mapę, potrzebujemy Twojej zgody na wczytanie plików cookie firmy Google.</p>
+                        <button onclick="acceptCookies()" class="bg-radio-accent hover:bg-violet-600 text-white px-6 py-3 rounded-full font-bold transition-all hover:scale-105 active:scale-95 shadow-lg shadow-violet-900/50 text-sm">Zaakceptuj Cookies i Pokaż Mapę</button>
+                    </div>
+                    <iframe id="google-map-iframe" title="Mapa z lokalizacją studia Uniradio" data-src="https://maps.google.com/maps?q=51.11103944446098,17.053642186250958&hl=pl&z=18&output=embed" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" class="grayscale opacity-80 hover:grayscale-0 hover:opacity-100 transition duration-700"></iframe>
                 </div>
             </div>
         </div>
     </section>
     </main>
 
-    <footer class="bg-[#020617] pt-12 pb-32">
+    <footer class="bg-slate-950 pt-10 pb-28 md:pb-24">
         <div class="container mx-auto px-6 flex flex-col items-center text-center">
-            <div class="flex items-center gap-2 mb-2">
-                <i data-lucide="radio" class="text-white w-6 h-6"></i>
-                <span class="text-2xl font-black uppercase tracking-tighter">UniRadio</span>
+            <div class="flex items-center gap-2 mb-1">
+                <i data-lucide="radio" class="text-radio-accent w-4 h-4"></i>
+                <span class="text-base font-bold">UniRadio</span>
             </div>
-            <p class="text-gray-500 text-xs uppercase tracking-[0.2em] font-bold">Gramy słowem</p>
+            <p class="text-gray-600 text-[10px] max-w-sm uppercase tracking-widest">Gramy słowem</p>
+            <div class="mt-4 flex flex-col items-center gap-1 text-xs text-gray-500 font-normal">
+                <a href="galeria" class="hover:text-white transition-colors duration-300">Galeria</a>
+                <a href="polityka-prywatnosci" class="hover:text-white transition-colors duration-300">Polityka Prywatności</a>
+            </div>
         </div>
     </footer>
 
-    <div class="fixed bottom-0 left-0 w-full bg-slate-900/95 backdrop-blur-xl border-t border-white/10 z-50 py-4 shadow-[0_-10px_40px_rgba(0,0,0,0.5)]" id="player-bar">
+    <div id="cookie-banner" class="fixed bottom-0 left-0 w-full bg-slate-900/95 backdrop-blur-xl border-t border-slate-700 z-[70] py-6 px-4 md:px-8 transform translate-y-full transition-transform duration-700 flex flex-col md:flex-row items-center justify-between gap-6 shadow-[0_-10px_40px_rgba(0,0,0,0.5)]">
+        <div class="text-sm text-gray-300 text-left md:max-w-4xl">
+            <p class="font-bold text-white text-base mb-1">Cenimy Twoją prywatność 🍪</p>
+            Używamy plików cookie oraz podobnych technologii (m.in. Google Analytics i Google Maps) do analizy ruchu, poprawy bezpieczeństwa i zapewnienia pełnej funkcjonalności strony. Zanim te skrypty zostaną załadowane, potrzebujemy Twojej zgody. Więcej szczegółów znajdziesz w naszej <a href="polityka-prywatnosci" class="text-radio-neon hover:text-radio-pink transition-colors underline underline-offset-2">Polityce Prywatności</a>.
+        </div>
+        <div class="flex flex-col sm:flex-row items-center gap-3 shrink-0 w-full md:w-auto">
+            <button onclick="declineCookies()" class="w-full sm:w-auto px-6 py-3 rounded-xl border border-slate-600 text-gray-300 hover:bg-slate-800 transition font-medium text-sm">Odrzuć analitykę</button>
+            <button onclick="acceptCookies()" class="w-full sm:w-auto px-6 py-3 rounded-xl bg-radio-accent hover:bg-violet-600 text-white transition font-bold text-sm shadow-lg shadow-violet-900/50 hover:scale-105 active:scale-95">Akceptuję wszystkie</button>
+        </div>
+    </div>
+
+    <!-- Pasek Playera z dodanym w prawej części linkiem awaryjnym (Plan B) -->
+    <div class="fixed bottom-0 left-0 w-full bg-slate-900/95 backdrop-blur-lg border-t border-slate-700 z-50 py-3" id="player-bar">
         <div class="container mx-auto px-6 flex items-center justify-between">
-            <div class="flex items-center gap-4 flex-1">
-                <div class="flex flex-col justify-center overflow-hidden">
-                    <h4 class="font-black uppercase text-sm tracking-widest text-white" id="player-show-title">Transmisja na żywo</h4>
-                    <div id="player-show-presenter" class="text-xs text-radio-neon font-bold uppercase mt-1">Uniradio Projekt</div>
+            <div class="flex items-center gap-4 flex-1 min-w-0">
+                <div class="hidden sm:block w-12 h-12 bg-slate-800 rounded-lg overflow-hidden shrink-0 relative">
+                    <img src="462547296_1491965518304482_2108257348268410961_n.jpg" class="w-full h-full object-cover opacity-80" alt="Okładka transmisji">
+                </div>
+                <div class="flex flex-col justify-center overflow-hidden min-w-0">
+                    <h4 class="font-bold text-sm truncate text-white" id="player-show-title">Transmisja na żywo</h4>
+                    <div id="player-show-presenter" class="text-xs text-gray-400 truncate mt-0.5">Uniradio Projekt</div>
                 </div>
             </div>
             
-            <div class="flex items-center justify-center px-4">
-                <button onclick="toggleBottomPlayer()" class="w-14 h-14 rounded-full bg-radio-neon text-black flex items-center justify-center hover:scale-110 hover:shadow-[0_0_20px_rgba(56,189,248,0.5)] transition-all" id="bottom-play-btn">
-                    <span id="icon-play-wrapper"><i data-lucide="play" class="w-6 h-6 fill-current translate-x-[1px]"></i></span>
-                    <span id="icon-pause-wrapper" class="hidden"><i data-lucide="pause" class="w-6 h-6 fill-current"></i></span>
+            <div class="flex items-center justify-center shrink-0 px-2">
+                <button onclick="toggleBottomPlayer()" aria-label="Odtwarzaj radio na żywo" class="w-12 h-12 rounded-full bg-white text-radio-dark flex items-center justify-center hover:scale-105 transition" id="bottom-play-btn">
+                    <span id="icon-play-wrapper" class="flex items-center justify-center"><i data-lucide="play" class="w-6 h-6 fill-current translate-x-[1px]"></i></span>
+                    <span id="icon-pause-wrapper" class="flex items-center justify-center hidden"><i data-lucide="pause" class="w-6 h-6 fill-current"></i></span>
                 </button>
             </div>
             
-            <div class="flex-1 flex justify-end items-center gap-3">
-                <button onclick="toggleMute()" id="mute-btn" class="text-gray-400 hover:text-white transition">
+            <div class="flex-1 flex justify-end items-center gap-2 sm:gap-3 pr-2 md:pr-4">
+                <button onclick="toggleMute()" id="mute-btn" aria-label="Wycisz/Odwieś" class="text-gray-400 hover:text-white transition flex items-center justify-center shrink-0 w-6 h-6">
                     <span id="icon-vol-2"><i data-lucide="volume-2" class="w-5 h-5"></i></span>
                     <span id="icon-vol-1" class="hidden"><i data-lucide="volume-1" class="w-5 h-5"></i></span>
                     <span id="icon-vol-x" class="hidden"><i data-lucide="volume-x" class="w-5 h-5"></i></span>
                 </button>
-                <input type="range" id="volume-slider" min="0" max="1" step="0.01" value="0.5" class="w-24 h-1.5 bg-slate-700 rounded-lg appearance-none cursor-pointer">
+                <input type="range" id="volume-slider" min="0" max="1" step="0.01" value="0.5" aria-label="Głośność"
+                       class="w-20 sm:w-28 md:w-36 h-1.5 bg-slate-700 rounded-lg appearance-none cursor-pointer transition-all">
             </div>
         </div>
+        
+        <!-- Link Zewnętrznego Playera wyciśnięty totalnie w prawy dolny róg -->
+        <a href="https://uniradioprojekt.radio12345.com/" target="_blank" rel="noopener noreferrer" style="position: absolute; right: 5px; bottom: 2px; font-size: 10px; line-height: 1; color: #64748b; text-decoration: none; opacity: 0.6; transition: all 0.2s; z-index: 60;" onmouseover="this.style.opacity='1'; this.style.color='#8b5cf6';" onmouseout="this.style.opacity='0.6'; this.style.color='#64748b';">
+            Źródło www
+        </a>
     </div>
+
     <script>
         // --- SYSTEM COOKIES & RODO ---
         const GA_TRACKING_ID = 'G-RX84HKZJEC';
@@ -1188,6 +1296,5 @@
             else { navbar.classList.remove('bg-slate-900/90', 'shadow-lg'); }
         });
     </script>
-
-    </body>
+</body>
 </html>
