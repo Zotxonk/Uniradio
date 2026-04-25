@@ -218,14 +218,16 @@
     </section>
 
     <section id="schedule" class="py-12 bg-slate-900/50 scroll-mt-24">
+        <!-- Klasy z natywnego CSS z pliku: container centruje i blokuje max szerokość, a grid lg:grid-cols-4 dzieli na odpowiednie sekcje -->
         <div class="container mx-auto px-6">
             <h2 class="text-3xl font-bold mb-10 flex items-center gap-3">
                 <i data-lucide="calendar" class="text-radio-accent"></i> Ramówka
             </h2>
 
             <div class="grid lg:grid-cols-4 gap-8">
+                <!-- Lewa kolumna: Kalendarz (zajmuje 1 z 4 kolumn) -->
                 <div class="lg:col-span-1">
-                    <div class="glass-panel p-6 rounded-2xl border border-slate-700/50 sticky top-28 shadow-xl">
+                    <div class="glass-panel p-4 md:p-6 rounded-2xl border border-slate-700/50 sticky top-28 shadow-xl">
                         <div class="flex justify-between items-center mb-6">
                             <button id="prev-month" aria-label="Poprzedni miesiąc" class="p-2 bg-slate-800 hover:bg-slate-700 rounded-lg transition text-gray-300 hover:text-white border border-slate-700"><i data-lucide="chevron-left" class="w-4 h-4"></i></button>
                             <h3 id="calendar-month-year" class="font-bold text-sm uppercase tracking-wider text-white"></h3>
@@ -258,13 +260,15 @@
                     </div>
                 </div>
 
+                <!-- Prawa kolumna: Ramówki (zajmuje 3 z 4 kolumn) -->
                 <div class="lg:col-span-3">
-                    <div class="mb-8 border-b border-slate-700/50 pb-4">
-                        <h3 id="schedule-variant-title" class="text-3xl font-bold">
+                    <div class="mb-6 border-b border-slate-700/50 pb-4">
+                        <h3 id="schedule-variant-title" class="text-2xl font-bold">
                             </h3>
                     </div>
                     
-                    <div id="schedule-panels" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Używamy lg:grid-cols-4 wewnątrz, by wymusić podział dni w jednej linii na PC -->
+                    <div id="schedule-panels" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                         </div>
                     
                     <div class="mt-12 text-center bg-slate-800/30 p-6 rounded-2xl border border-slate-700/50 hover:bg-slate-800/50 transition duration-300">
@@ -384,9 +388,26 @@
                                 <div class="w-12 h-12 shrink-0 rounded-lg bg-fuchsia-500/20 flex items-center justify-center text-fuchsia-300 font-bold text-xl border border-fuchsia-500/30">I</div>
                                 <div class="min-w-0 flex-1"><h4 class="font-bold truncate">Iga Małkus</h4><p class="text-xs text-radio-neon truncate">"Bolid FM"</p></div>
                             </div>
+                            <!-- Używamy klas gwarantowanie obecnych w CSS (odcienie 500, 300) -->
                             <div class="glass-panel p-3 flex gap-4 rounded-xl items-center hover:bg-slate-800/50 transition">
-                                <div class="w-12 h-12 shrink-0 rounded-lg bg-violet-500/20 flex items-center justify-center text-violet-300 font-bold text-xl border border-violet-500/30">K</div>
+                                <div class="w-12 h-12 shrink-0 rounded-lg bg-indigo-500/20 flex items-center justify-center text-indigo-300 font-bold text-xl border border-indigo-500/30">K</div>
                                 <div class="min-w-0 flex-1"><h4 class="font-bold truncate">Kacper Augustyniak</h4><p class="text-xs text-radio-neon truncate">"Kakofonia"</p></div>
+                            </div>
+                            <div class="glass-panel p-3 flex gap-4 rounded-xl items-center hover:bg-slate-800/50 transition">
+                                <div class="w-12 h-12 shrink-0 rounded-lg bg-cyan-500/20 flex items-center justify-center text-cyan-300 font-bold text-xl border border-cyan-500/30">M</div>
+                                <div class="min-w-0 flex-1"><h4 class="font-bold truncate">Mariusz Jaro</h4><p class="text-xs text-radio-neon truncate">"ŻETO"</p></div>
+                            </div>
+                            <div class="glass-panel p-3 flex gap-4 rounded-xl items-center hover:bg-slate-800/50 transition">
+                                <div class="w-12 h-12 shrink-0 rounded-lg bg-emerald-500/20 flex items-center justify-center text-emerald-300 font-bold text-xl border border-emerald-500/30">M</div>
+                                <div class="min-w-0 flex-1"><h4 class="font-bold truncate">Mateusz Podgórny</h4><p class="text-xs text-radio-neon truncate">"Między linami"</p></div>
+                            </div>
+                            <div class="glass-panel p-3 flex gap-4 rounded-xl items-center hover:bg-slate-800/50 transition">
+                                <div class="w-12 h-12 shrink-0 rounded-lg bg-rose-500/20 flex items-center justify-center text-rose-300 font-bold text-xl border border-rose-500/30">M</div>
+                                <div class="min-w-0 flex-1"><h4 class="font-bold truncate">Maria Buczyńska</h4><p class="text-xs text-radio-neon truncate">"Maria Buczyńska"</p></div>
+                            </div>
+                            <div class="glass-panel p-3 flex gap-4 rounded-xl items-center hover:bg-slate-800/50 transition">
+                                <div class="w-12 h-12 shrink-0 rounded-lg bg-purple-500/20 flex items-center justify-center text-purple-300 font-bold text-xl border border-purple-500/30">I</div>
+                                <div class="min-w-0 flex-1"><h4 class="font-bold truncate">Iza Sypiańska</h4><p class="text-xs text-radio-neon truncate">"Safickim piórem pisane"</p></div>
                             </div>
                         </div>
 
@@ -619,7 +640,7 @@
 
         const minAllowedDate = new Date(2026, 1, 25); 
         const cancelledDates = [
-            '2026-02-27', '2026-03-04', '2026-03-25', '2026-04-02', '2026-04-03'
+            '2026-02-27', '2026-03-04', '2026-03-25', '2026-04-02', '2026-04-03', '2026-05-01'
         ];
 
         // --- POMOCNICZE FUNKCJE CZASOWE ---
@@ -652,10 +673,41 @@
 
             const day = dateObj.getDay();
             let dayId = '';
-            if (day === 3) dayId = 'sroda';
+            if (day === 1) dayId = 'poniedzialek';
+            else if (day === 3) dayId = 'sroda';
             else if (day === 4) dayId = 'czwartek';
             else if (day === 5) dayId = 'piatek';
             else return null;
+
+            // --- NOWA LOGIKA DLA PONIEDZIAŁKÓW (od 27.04.2026) ---
+            if (dayId === 'poniedzialek') {
+                const startMonday = new Date(2026, 3, 27); // 27 kwietnia (miesiąc indeksowany od 0)
+                const checkDate = new Date(dateObj);
+                checkDate.setHours(0,0,0,0);
+                
+                if (checkDate < startMonday) return null; // Brak historycznych poniedziałków
+                
+                const diffTime = checkDate.getTime() - startMonday.getTime();
+                const diffWeeks = Math.round(diffTime / (1000 * 60 * 60 * 24 * 7));
+                
+                if (diffWeeks % 2 === 0) {
+                    return [
+                        { time: "17:00", title: "Wejście na Antenę", presenter: "" },
+                        { time: "17:05", title: "ŻETO", presenter: "Mariusz Jaro" },
+                        { time: "17:50", title: "Między linami", presenter: "Mateusz Podgórny" },
+                        { time: "18:35", title: "Maria Buczyńska", presenter: "Maria Buczyńska" },
+                        { time: "18:50", title: "Safickim piórem pisane", presenter: "Iza Sypiańska" },
+                        { time: "19:50", title: "Zejście z Anteny", presenter: "" }
+                    ];
+                } else {
+                    return [
+                        { time: "17:00", title: "Wejście na Antenę", presenter: "" },
+                        { time: "17:05", title: "ŻETO", presenter: "Mariusz Jaro" },
+                        { time: "17:50", title: "Między linami", presenter: "Mateusz Podgórny" },
+                        { time: "18:35", title: "Zejście z Anteny", presenter: "" }
+                    ];
+                }
+            }
 
             const variantKey = getWeekVariant(dateObj);
             const baseData = scheduleData[variantKey][dayId];
@@ -795,6 +847,26 @@
                     { time: "19:05", title: "Zejście z Anteny", presenter: "" }
                 ];
             }
+
+            // --- WYJĄTKI NA NASTĘPNY TYDZIEŃ (27.04 - 03.05.2026) ---
+            // Środa: 29.04.2026
+            if (dateStr === '2026-04-29' && dayId === 'sroda') {
+                renderedData = [
+                    { time: "18:15", title: "Wejście na Antenę", presenter: "" },
+                    { time: "18:20", title: "Kakofonia", presenter: "Kacper Augustyniak" },
+                    { time: "19:20", title: "Blaszak", presenter: "Lauri Potocki" },
+                    { time: "20:50", title: "Zejście z Anteny", presenter: "" }
+                ];
+            }
+            // Czwartek: 30.04.2026
+            if (dateStr === '2026-04-30' && dayId === 'czwartek') {
+                renderedData = [
+                    { time: "17:40", title: "Wejście na Antenę", presenter: "" },
+                    { time: "17:45", title: "My name is Bond", presenter: "Isia Bond" },
+                    { time: "18:30", title: "Wzgórza Opowieści", presenter: "Wojtek Paszko" },
+                    { time: "19:30", title: "Zejście z Anteny", presenter: "" }
+                ];
+            }
             
             return renderedData;
         }
@@ -910,7 +982,8 @@
                     const day = testDate.getDay();
                     const dateStr = formatDateStr(testDate);
                     
-                    if (day >= 3 && day <= 5 && !cancelledDates.includes(dateStr)) {
+                    const isHistoricalMonday = (day === 1 && testDate < new Date(2026, 3, 27));
+                    if (((day >= 3 && day <= 5) || (day === 1 && !isHistoricalMonday)) && !cancelledDates.includes(dateStr)) {
                         return testDate;
                     }
                 }
@@ -957,7 +1030,8 @@
                     const dayOfWeek = dateObj.getDay();
                     const dateStr = formatDateStr(dateObj);
 
-                    let isBroadcastDay = (dayOfWeek >= 3 && dayOfWeek <= 5); 
+                    const isHistoricalMonday = (dayOfWeek === 1 && dateObj < new Date(2026, 3, 27));
+                    let isBroadcastDay = ((dayOfWeek >= 3 && dayOfWeek <= 5) || (dayOfWeek === 1 && !isHistoricalMonday)); 
                     
                     if (cancelledDates.includes(dateStr)) {
                         isBroadcastDay = false;
@@ -1074,6 +1148,7 @@
                 scheduleTitle.innerHTML = `<span class="text-white">Ramówka</span>`;
 
                 const layoutDays = [
+                    { id: 'poniedzialek', name: 'Poniedziałek', color: 'radio-accent', icon: 'mic' },
                     { id: 'sroda', name: 'Środa', color: 'radio-neon', icon: 'mic-2' },
                     { id: 'czwartek', name: 'Czwartek', color: 'radio-pink', icon: 'music' },
                     { id: 'piatek', name: 'Piątek', color: 'radio-accent', icon: 'radio' }
@@ -1089,7 +1164,7 @@
                     const specificDate = new Date(selectedDate);
                     specificDate.setHours(0,0,0,0);
                     const day = specificDate.getDay() === 0 ? 7 : specificDate.getDay(); 
-                    const dayOffsets = { 'sroda': 3, 'czwartek': 4, 'piatek': 5 };
+                    const dayOffsets = { 'poniedzialek': 1, 'sroda': 3, 'czwartek': 4, 'piatek': 5 };
                     const offset = dayOffsets[dayInfo.id] - day;
                     specificDate.setDate(specificDate.getDate() + offset);
                     
@@ -1098,7 +1173,8 @@
                     if (cancelledDates.includes(dateStr)) {
                         if (dateStr === '2026-04-02') {
                             const bannerSlot = document.createElement('div');
-                            bannerSlot.className = 'md:col-span-1 lg:col-span-2 flex mt-14';
+                            bannerSlot.className = 'mt-8 flex';
+                            bannerSlot.style.gridColumn = '1 / -1';
                             bannerSlot.innerHTML = `
                                 <div class="glass-panel p-4 rounded-xl border-l-4 border-radio-pink bg-gradient-to-br from-violet-900/60 via-slate-900/40 to-blue-900/60 flex flex-col items-center justify-center text-center w-full relative overflow-hidden group shadow-[0_0_20px_rgba(244,114,182,0.15)]">
                                     <div class="absolute -top-10 -right-10 w-24 h-24 bg-radio-neon/20 rounded-full blur-2xl"></div>
@@ -1145,21 +1221,20 @@
                     const col = document.createElement('div');
                     
                     let html = `
-                        <h3 class="text-2xl font-bold mb-6 flex items-center gap-3 ${styling.text}">
-                            <span class="w-2 h-8 ${styling.bg} rounded-full"></span> ${dayInfo.name}
+                        <h3 class="text-base font-bold mb-4 flex items-center gap-2 ${styling.text}">
+                            <span class="w-2 h-6 ${styling.bg} rounded-full shrink-0"></span> <span class="truncate">${dayInfo.name}</span>
                         </h3>
-                        <div class="space-y-4">
+                        <div class="space-y-3">
                     `;
 
                     renderedData.forEach(item => {
                         const elementId = `schedule-item-${dateStr}-${item.time.replace(':','')}`;
-                        const presenterHtml = item.presenter ? `<p class="text-sm text-gray-400 mt-1">${item.presenter}</p>` : '';
+                        const presenterHtml = item.presenter ? `<p class="text-xs text-gray-400 mt-1 leading-tight">${item.presenter}</p>` : '';
                         
-                        // Zmieniono h4, usunięto stąd "group-hover:${styling.text}", aby tytuł pozostawał biały i zachowywał spójność.
                         html += `
-                            <div id="${elementId}" class="relative glass-panel p-4 rounded-xl border-l-4 ${styling.borderL} ${styling.borderHover} transition-colors duration-300 group">
-                                <span class="${styling.text} font-bold text-sm font-mono tracking-wide mb-1 block">${item.time}</span>
-                                <h4 class="text-lg font-bold text-white transition">${item.title}</h4>
+                            <div id="${elementId}" class="relative glass-panel p-3 rounded-xl border-l-4 ${styling.borderL} ${styling.borderHover} transition-colors duration-300 group">
+                                <span class="${styling.text} font-bold text-xs font-mono tracking-wide mb-1 block">${item.time}</span>
+                                <h4 class="text-sm font-bold text-white transition leading-tight">${item.title}</h4>
                                 ${presenterHtml}
                             </div>
                         `;
