@@ -388,14 +388,13 @@
                                 <div class="w-12 h-12 shrink-0 rounded-lg bg-fuchsia-500/20 flex items-center justify-center text-fuchsia-300 font-bold text-xl border border-fuchsia-500/30">I</div>
                                 <div class="min-w-0 flex-1"><h4 class="font-bold truncate">Iga Małkus</h4><p class="text-xs text-radio-neon truncate">"Bolid FM"</p></div>
                             </div>
-                            <!-- Używamy klas gwarantowanie obecnych w CSS (odcienie 500, 300) -->
                             <div class="glass-panel p-3 flex gap-4 rounded-xl items-center hover:bg-slate-800/50 transition">
                                 <div class="w-12 h-12 shrink-0 rounded-lg bg-indigo-500/20 flex items-center justify-center text-indigo-300 font-bold text-xl border border-indigo-500/30">K</div>
                                 <div class="min-w-0 flex-1"><h4 class="font-bold truncate">Kacper Augustyniak</h4><p class="text-xs text-radio-neon truncate">"Kakofonia"</p></div>
                             </div>
                             <div class="glass-panel p-3 flex gap-4 rounded-xl items-center hover:bg-slate-800/50 transition">
                                 <div class="w-12 h-12 shrink-0 rounded-lg bg-cyan-500/20 flex items-center justify-center text-cyan-300 font-bold text-xl border border-cyan-500/30">M</div>
-                                <div class="min-w-0 flex-1"><h4 class="font-bold truncate">Mariusz Jaro</h4><p class="text-xs text-radio-neon truncate">"ŻETO"</p></div>
+                                <div class="min-w-0 flex-1"><h4 class="font-bold truncate">Max</h4><p class="text-xs text-radio-neon truncate">"ŻETO"</p></div>
                             </div>
                             <div class="glass-panel p-3 flex gap-4 rounded-xl items-center hover:bg-slate-800/50 transition">
                                 <div class="w-12 h-12 shrink-0 rounded-lg bg-emerald-500/20 flex items-center justify-center text-emerald-300 font-bold text-xl border border-emerald-500/30">M</div>
@@ -403,11 +402,16 @@
                             </div>
                             <div class="glass-panel p-3 flex gap-4 rounded-xl items-center hover:bg-slate-800/50 transition">
                                 <div class="w-12 h-12 shrink-0 rounded-lg bg-rose-500/20 flex items-center justify-center text-rose-300 font-bold text-xl border border-rose-500/30">M</div>
-                                <div class="min-w-0 flex-1"><h4 class="font-bold truncate">Maria Buczyńska</h4><p class="text-xs text-radio-neon truncate">"Maria Buczyńska"</p></div>
+                                <div class="min-w-0 flex-1"><h4 class="font-bold truncate">Maria Buczyńska</h4><p class="text-xs text-radio-neon truncate">"Bez spojlerów"</p></div>
                             </div>
                             <div class="glass-panel p-3 flex gap-4 rounded-xl items-center hover:bg-slate-800/50 transition">
                                 <div class="w-12 h-12 shrink-0 rounded-lg bg-purple-500/20 flex items-center justify-center text-purple-300 font-bold text-xl border border-purple-500/30">I</div>
                                 <div class="min-w-0 flex-1"><h4 class="font-bold truncate">Iza Sypiańska</h4><p class="text-xs text-radio-neon truncate">"Safickim piórem pisane"</p></div>
+                            </div>
+                            <!-- Nowa twórczyni (Oliwia Mik) -->
+                            <div class="glass-panel p-3 flex gap-4 rounded-xl items-center hover:bg-slate-800/50 transition">
+                                <div class="w-12 h-12 shrink-0 rounded-lg bg-amber-500/20 flex items-center justify-center text-amber-300 font-bold text-xl border border-amber-500/30">O</div>
+                                <div class="min-w-0 flex-1"><h4 class="font-bold truncate">Oliwia Mik</h4><p class="text-xs text-radio-neon truncate">"Polski kącik filmowy"</p></div>
                             </div>
                         </div>
 
@@ -693,16 +697,16 @@
                 if (diffWeeks % 2 === 0) {
                     return [
                         { time: "17:00", title: "Wejście na Antenę", presenter: "" },
-                        { time: "17:05", title: "ŻETO", presenter: "Mariusz Jaro" },
+                        { time: "17:05", title: "ŻETO", presenter: "Max" },
                         { time: "17:50", title: "Między linami", presenter: "Mateusz Podgórny" },
-                        { time: "18:35", title: "Maria Buczyńska", presenter: "Maria Buczyńska" },
+                        { time: "18:35", title: "Bez spojlerów", presenter: "Maria Buczyńska" },
                         { time: "18:50", title: "Safickim piórem pisane", presenter: "Iza Sypiańska" },
                         { time: "19:50", title: "Zejście z Anteny", presenter: "" }
                     ];
                 } else {
                     return [
                         { time: "17:00", title: "Wejście na Antenę", presenter: "" },
-                        { time: "17:05", title: "ŻETO", presenter: "Mariusz Jaro" },
+                        { time: "17:05", title: "ŻETO", presenter: "Max" },
                         { time: "17:50", title: "Między linami", presenter: "Mateusz Podgórny" },
                         { time: "18:35", title: "Zejście z Anteny", presenter: "" }
                     ];
@@ -852,7 +856,8 @@
             // Środa: 29.04.2026
             if (dateStr === '2026-04-29' && dayId === 'sroda') {
                 renderedData = [
-                    { time: "18:15", title: "Wejście na Antenę", presenter: "" },
+                    { time: "17:40", title: "Wejście na Antenę", presenter: "" },
+                    { time: "17:45", title: "Polski kącik filmowy", presenter: "Oliwia Mik" },
                     { time: "18:20", title: "Kakofonia", presenter: "Kacper Augustyniak" },
                     { time: "19:20", title: "Blaszak", presenter: "Lauri Potocki" },
                     { time: "20:50", title: "Zejście z Anteny", presenter: "" }
