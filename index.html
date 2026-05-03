@@ -218,14 +218,12 @@
     </section>
 
     <section id="schedule" class="py-12 bg-slate-900/50 scroll-mt-24">
-        <!-- Klasy z natywnego CSS z pliku: container centruje i blokuje max szerokość, a grid lg:grid-cols-4 dzieli na odpowiednie sekcje -->
         <div class="container mx-auto px-6">
             <h2 class="text-3xl font-bold mb-10 flex items-center gap-3">
                 <i data-lucide="calendar" class="text-radio-accent"></i> Ramówka
             </h2>
 
             <div class="grid lg:grid-cols-4 gap-8">
-                <!-- Lewa kolumna: Kalendarz (zajmuje 1 z 4 kolumn) -->
                 <div class="lg:col-span-1">
                     <div class="glass-panel p-4 md:p-6 rounded-2xl border border-slate-700/50 sticky top-28 shadow-xl">
                         <div class="flex justify-between items-center mb-6">
@@ -260,14 +258,12 @@
                     </div>
                 </div>
 
-                <!-- Prawa kolumna: Ramówki (zajmuje 3 z 4 kolumn) -->
                 <div class="lg:col-span-3">
                     <div class="mb-6 border-b border-slate-700/50 pb-4">
                         <h3 id="schedule-variant-title" class="text-2xl font-bold">
                             </h3>
                     </div>
                     
-                    <!-- Używamy lg:grid-cols-4 wewnątrz, by wymusić podział dni w jednej linii na PC -->
                     <div id="schedule-panels" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                         </div>
                     
@@ -408,7 +404,6 @@
                                 <div class="w-12 h-12 shrink-0 rounded-lg bg-purple-500/20 flex items-center justify-center text-purple-300 font-bold text-xl border border-purple-500/30">I</div>
                                 <div class="min-w-0 flex-1"><h4 class="font-bold truncate">Iza Sypiańska</h4><p class="text-xs text-radio-neon truncate">"Safickim piórem pisane"</p></div>
                             </div>
-                            <!-- Nowa twórczyni (Oliwia Mik) -->
                             <div class="glass-panel p-3 flex gap-4 rounded-xl items-center hover:bg-slate-800/50 transition">
                                 <div class="w-12 h-12 shrink-0 rounded-lg bg-amber-500/20 flex items-center justify-center text-amber-300 font-bold text-xl border border-amber-500/30">O</div>
                                 <div class="min-w-0 flex-1"><h4 class="font-bold truncate">Oliwia Mik</h4><p class="text-xs text-radio-neon truncate">"Polski kącik filmowy"</p></div>
@@ -499,7 +494,7 @@
         </div>
     </div>
 
-    <!-- Pasek Playera z dodanym w prawej części linkiem awaryjnym (Plan B) -->
+    <!-- Pasek Playera -->
     <div class="fixed bottom-0 left-0 w-full bg-slate-900/95 backdrop-blur-lg border-t border-slate-700 z-50 py-3" id="player-bar">
         <div class="container mx-auto px-6 flex items-center justify-between">
             <div class="flex items-center gap-4 flex-1 min-w-0">
@@ -530,7 +525,6 @@
             </div>
         </div>
         
-        <!-- Link Zewnętrznego Playera wyciśnięty totalnie w prawy dolny róg -->
         <a href="https://uniradioprojekt.radio12345.com/" target="_blank" rel="noopener noreferrer" style="position: absolute; right: 5px; bottom: 2px; font-size: 10px; line-height: 1; color: #64748b; text-decoration: none; opacity: 0.6; transition: all 0.2s; z-index: 60;" onmouseover="this.style.opacity='1'; this.style.color='#8b5cf6';" onmouseout="this.style.opacity='0.6'; this.style.color='#64748b';">
             Źródło www
         </a>
@@ -642,6 +636,68 @@
             }
         };
 
+        // --- NOWA BAZA DANYCH RAMÓWKI (od 4 maja 2026) ---
+        const newScheduleData = {
+            wariantA: {
+                poniedzialek: [
+                    { time: "17:00", title: "Wejście na Antenę", presenter: "" },
+                    { time: "17:15", title: "ŻETO", presenter: "Max" },
+                    { time: "18:00", title: "Między linami", presenter: "Mateusz Podgórny" },
+                    { time: "18:45", title: "Bez spojlerów", presenter: "Maria Buczyńska" },
+                    { time: "19:00", title: "Safickim piórem pisane", presenter: "Iza Sypiańska" },
+                    { time: "20:00", title: "Zejście z Anteny", presenter: "" }
+                ],
+                sroda: [
+                    { time: "17:40", title: "Wejście na Antenę", presenter: "" },
+                    { time: "17:55", title: "Polski kącik filmowy", presenter: "Oliwia Mik" },
+                    { time: "18:30", title: "Kakofonia", presenter: "Kacper Augustyniak" },
+                    { time: "19:30", title: "Blaszak", presenter: "Lauri Potocki" },
+                    { time: "21:00", title: "Zejście z Anteny", presenter: "" }
+                ],
+                czwartek: [
+                    { time: "17:45", title: "Wejście na Antenę", presenter: "" },
+                    { time: "18:00", title: "My Name is Bond", presenter: "Isia Bond" },
+                    { time: "19:00", title: "Wzgórza Opowieści", presenter: "Wojtek Paszko" },
+                    { time: "20:00", title: "Czas na romans", presenter: "Klaudia Latańska i Marlena Gąsiorowska" },
+                    { time: "21:00", title: "Zejście z Anteny", presenter: "" }
+                ],
+                piatek: [
+                    { time: "17:00", title: "Wejście na Antenę", presenter: "" },
+                    { time: "17:15", title: "Talkable / Is this love at first read?", presenter: "Daisy / Jack" },
+                    { time: "18:15", title: "Antypop", presenter: "Dawid Gruszka" },
+                    { time: "18:20", title: "Zejście z Anteny", presenter: "" }
+                ]
+            },
+            wariantB: {
+                poniedzialek: [
+                    { time: "17:00", title: "Wejście na Antenę", presenter: "" },
+                    { time: "17:15", title: "ŻETO", presenter: "Max" },
+                    { time: "18:00", title: "Między linami", presenter: "Mateusz Podgórny" },
+                    { time: "18:45", title: "Zejście z Anteny", presenter: "" }
+                ],
+                sroda: [
+                    { time: "18:00", title: "Wejście na Antenę", presenter: "" },
+                    { time: "18:15", title: "Queer Corner", presenter: "Ola Kuchnowska" },
+                    { time: "19:15", title: "Blaszak", presenter: "Lauri Potocki" },
+                    { time: "20:45", title: "Zejście z Anteny", presenter: "" }
+                ],
+                czwartek: [
+                    { time: "17:45", title: "Wejście na Antenę", presenter: "" },
+                    { time: "18:00", title: "Głos Azji", presenter: "Weronika Kosobudzka" },
+                    { time: "19:00", title: "Tajemnice Historii", presenter: "Wojtek Paszko" },
+                    { time: "19:45", title: "W co dzisiaj pogramy?", presenter: "Remek Sitnik" },
+                    { time: "20:45", title: "Zejście z Anteny", presenter: "" }
+                ],
+                piatek: [
+                    { time: "17:00", title: "Wejście na Antenę", presenter: "" },
+                    { time: "17:15", title: "(Nie)dobre, bo polskie", presenter: "Dawid Gruszka i Lauri Potocki" },
+                    { time: "18:15", title: "Antypop", presenter: "Dawid Gruszka" },
+                    { time: "18:20", title: "Talkable / Is this love at first read?", presenter: "Daisy / Jack" },
+                    { time: "19:20", title: "Zejście z Anteny", presenter: "" }
+                ]
+            }
+        };
+
         const minAllowedDate = new Date(2026, 1, 25); 
         const cancelledDates = [
             '2026-02-27', '2026-03-04', '2026-03-25', '2026-04-02', '2026-04-03', '2026-05-01'
@@ -683,197 +739,207 @@
             else if (day === 5) dayId = 'piatek';
             else return null;
 
-            // --- NOWA LOGIKA DLA PONIEDZIAŁKÓW (od 27.04.2026) ---
-            if (dayId === 'poniedzialek') {
-                const startMonday = new Date(2026, 3, 27); // 27 kwietnia (miesiąc indeksowany od 0)
-                const checkDate = new Date(dateObj);
-                checkDate.setHours(0,0,0,0);
-                
-                if (checkDate < startMonday) return null; // Brak historycznych poniedziałków
-                
-                const diffTime = checkDate.getTime() - startMonday.getTime();
-                const diffWeeks = Math.round(diffTime / (1000 * 60 * 60 * 24 * 7));
-                
-                if (diffWeeks % 2 === 0) {
-                    return [
+            const newScheduleStart = new Date(2026, 4, 4); // 4 maja 2026
+            const checkDate = new Date(dateObj);
+            checkDate.setHours(0,0,0,0);
+
+            if (checkDate < newScheduleStart) {
+                // --- STARA LOGIKA (DO 3 MAJA 2026 WŁĄCZNIE) ---
+                if (dayId === 'poniedzialek') {
+                    const startMonday = new Date(2026, 3, 27); // 27 kwietnia
+                    const oldCheckDate = new Date(dateObj);
+                    oldCheckDate.setHours(0,0,0,0);
+                    
+                    if (oldCheckDate < startMonday) return null; // Brak historycznych poniedziałków
+                    
+                    const diffTime = oldCheckDate.getTime() - startMonday.getTime();
+                    const diffWeeks = Math.round(diffTime / (1000 * 60 * 60 * 24 * 7));
+                    
+                    if (diffWeeks % 2 === 0) {
+                        return [
+                            { time: "17:00", title: "Wejście na Antenę", presenter: "" },
+                            { time: "17:05", title: "ŻETO", presenter: "Max" },
+                            { time: "17:50", title: "Między linami", presenter: "Mateusz Podgórny" },
+                            { time: "18:35", title: "Bez spojlerów", presenter: "Maria Buczyńska" },
+                            { time: "18:50", title: "Safickim piórem pisane", presenter: "Iza Sypiańska" },
+                            { time: "19:50", title: "Zejście z Anteny", presenter: "" }
+                        ];
+                    } else {
+                        return [
+                            { time: "17:00", title: "Wejście na Antenę", presenter: "" },
+                            { time: "17:05", title: "ŻETO", presenter: "Max" },
+                            { time: "17:50", title: "Między linami", presenter: "Mateusz Podgórny" },
+                            { time: "18:35", title: "Zejście z Anteny", presenter: "" }
+                        ];
+                    }
+                }
+
+                const variantKey = getWeekVariant(dateObj);
+                const baseData = scheduleData[variantKey][dayId];
+                if (!baseData) return null;
+
+                let renderedData = JSON.parse(JSON.stringify(baseData));
+
+                // Zastosowanie wyjątków
+                if (dateStr === '2026-02-26' && dayId === 'czwartek') {
+                    renderedData = renderedData.map(item => {
+                        if (item.time === '19:00') { return { time: "19:00", title: "Kram", presenter: "Dawid Gruszka" }; }
+                        return item;
+                    });
+                }
+                if (dateStr === '2026-03-05' && dayId === 'czwartek') {
+                    renderedData = [
                         { time: "17:00", title: "Wejście na Antenę", presenter: "" },
-                        { time: "17:05", title: "ŻETO", presenter: "Max" },
-                        { time: "17:50", title: "Między linami", presenter: "Mateusz Podgórny" },
-                        { time: "18:35", title: "Bez spojlerów", presenter: "Maria Buczyńska" },
-                        { time: "18:50", title: "Safickim piórem pisane", presenter: "Iza Sypiańska" },
-                        { time: "19:50", title: "Zejście z Anteny", presenter: "" }
-                    ];
-                } else {
-                    return [
-                        { time: "17:00", title: "Wejście na Antenę", presenter: "" },
-                        { time: "17:05", title: "ŻETO", presenter: "Max" },
-                        { time: "17:50", title: "Między linami", presenter: "Mateusz Podgórny" },
-                        { time: "18:35", title: "Zejście z Anteny", presenter: "" }
+                        { time: "17:05", title: "Przesłuchano", presenter: "Isia Bond i Laura Potaczek" },
+                        { time: "17:35", title: "Naczynia Połączone", presenter: "Jasiu Wątroba" },
+                        { time: "18:15", title: "Głos Azji", presenter: "Weronika Kosobudzka" },
+                        { time: "19:15", title: "Wzgórza Opowieści", presenter: "Wojtek Paszko" },
+                        { time: "20:15", title: "Shuffle", presenter: "Dawid Gruszka i Zuza Biernacka" },
+                        { time: "21:15", title: "(Nie)dobre, bo polskie", presenter: "Dawid Gruszka i Lauri Potocki" },
+                        { time: "22:15", title: "Zejście z Anteny", presenter: "" }
                     ];
                 }
-            }
+                if (dateStr === '2026-03-06' && dayId === 'piatek') {
+                    renderedData = [
+                        { time: "17:00", title: "Wejście na Antenę", presenter: "" },
+                        { time: "17:05", title: "Blaszak", presenter: "Lauri Potocki" },
+                        { time: "18:05", title: "Końcówka Języka", presenter: "Jan Wróbel" },
+                        { time: "19:05", title: "Talkable", presenter: "Daisy" },
+                        { time: "20:05", title: "Is this love at first read?", presenter: "Jack" },
+                        { time: "21:05", title: "Zejście z Anteny", presenter: "" }
+                    ];
+                }
+                if (dateStr === '2026-03-13' && dayId === 'piatek') {
+                    renderedData = [
+                        { time: "17:00", title: "Wejście na Antenę", presenter: "" },
+                        { time: "17:05", title: "Końcówka Języka", presenter: "Jan Wróbel" },
+                        { time: "18:10", title: "Is this love at first read?", presenter: "Jack" },
+                        { time: "19:10", title: "Zejście z Anteny", presenter: "" }
+                    ];
+                }
+                if (dateStr === '2026-03-20' && dayId === 'piatek') {
+                    renderedData = [
+                        { time: "17:00", title: "Wejście na Antenę", presenter: "" },
+                        { time: "17:05", title: "(Nie)dobre, bo polskie", presenter: "Lauri Potocki i Dawid Gruszka" },
+                        { time: "18:10", title: "Zejście z Anteny", presenter: "" }
+                    ];
+                }
+                if (dateStr === '2026-03-26' && dayId === 'czwartek') {
+                    renderedData = [
+                        { time: "18:55", title: "Wejście na Antenę", presenter: "" },
+                        { time: "19:00", title: "W co dzisiaj pogramy?", presenter: "Remek Sitnik" },
+                        { time: "19:45", title: "Zejście z Anteny", presenter: "" }
+                    ];
+                }
+                if (dateStr === '2026-03-27' && dayId === 'piatek') {
+                    renderedData = [
+                        { time: "18:00", title: "Wejście na Antenę", presenter: "" },
+                        { time: "18:05", title: "Końcówka Języka", presenter: "Jan Wróbel" },
+                        { time: "19:05", title: "Talkable", presenter: "Daisy" },
+                        { time: "20:05", title: "Zejście z Anteny", presenter: "" }
+                    ];
+                }
+                if (dateStr === '2026-04-08' && dayId === 'sroda') {
+                    renderedData = renderedData
+                        .map(item => {
+                            if (item.time === '18:05') { 
+                                return { time: "18:05", title: "My name is Bond", presenter: "Isia Bond" }; 
+                            }
+                            if (item.title === 'Zejście z Anteny') {
+                                return { time: "19:05", title: "Zejście z Anteny", presenter: "" };
+                            }
+                            return item;
+                        })
+                        .filter(item => item.title !== "Blaszak"); 
+                }
 
-            const variantKey = getWeekVariant(dateObj);
-            const baseData = scheduleData[variantKey][dayId];
-            if (!baseData) return null;
-
-            let renderedData = JSON.parse(JSON.stringify(baseData));
-
-            // Zastosowanie wyjątków
-            if (dateStr === '2026-02-26' && dayId === 'czwartek') {
-                renderedData = renderedData.map(item => {
-                    if (item.time === '19:00') { return { time: "19:00", title: "Kram", presenter: "Dawid Gruszka" }; }
-                    return item;
-                });
-            }
-            if (dateStr === '2026-03-05' && dayId === 'czwartek') {
-                renderedData = [
-                    { time: "17:00", title: "Wejście na Antenę", presenter: "" },
-                    { time: "17:05", title: "Przesłuchano", presenter: "Isia Bond i Laura Potaczek" },
-                    { time: "17:35", title: "Naczynia Połączone", presenter: "Jasiu Wątroba" },
-                    { time: "18:15", title: "Głos Azji", presenter: "Weronika Kosobudzka" },
-                    { time: "19:15", title: "Wzgórza Opowieści", presenter: "Wojtek Paszko" },
-                    { time: "20:15", title: "Shuffle", presenter: "Dawid Gruszka i Zuza Biernacka" },
-                    { time: "21:15", title: "(Nie)dobre, bo polskie", presenter: "Dawid Gruszka i Lauri Potocki" },
-                    { time: "22:15", title: "Zejście z Anteny", presenter: "" }
-                ];
-            }
-            if (dateStr === '2026-03-06' && dayId === 'piatek') {
-                renderedData = [
-                    { time: "17:00", title: "Wejście na Antenę", presenter: "" },
-                    { time: "17:05", title: "Blaszak", presenter: "Lauri Potocki" },
-                    { time: "18:05", title: "Końcówka Języka", presenter: "Jan Wróbel" },
-                    { time: "19:05", title: "Talkable", presenter: "Daisy" },
-                    { time: "20:05", title: "Is this love at first read?", presenter: "Jack" },
-                    { time: "21:05", title: "Zejście z Anteny", presenter: "" }
-                ];
-            }
-            if (dateStr === '2026-03-13' && dayId === 'piatek') {
-                renderedData = [
-                    { time: "17:00", title: "Wejście na Antenę", presenter: "" },
-                    { time: "17:05", title: "Końcówka Języka", presenter: "Jan Wróbel" },
-                    { time: "18:10", title: "Is this love at first read?", presenter: "Jack" },
-                    { time: "19:10", title: "Zejście z Anteny", presenter: "" }
-                ];
-            }
-            if (dateStr === '2026-03-20' && dayId === 'piatek') {
-                renderedData = [
-                    { time: "17:00", title: "Wejście na Antenę", presenter: "" },
-                    { time: "17:05", title: "(Nie)dobre, bo polskie", presenter: "Lauri Potocki i Dawid Gruszka" },
-                    { time: "18:10", title: "Zejście z Anteny", presenter: "" }
-                ];
-            }
-            if (dateStr === '2026-03-26' && dayId === 'czwartek') {
-                renderedData = [
-                    { time: "18:55", title: "Wejście na Antenę", presenter: "" },
-                    { time: "19:00", title: "W co dzisiaj pogramy?", presenter: "Remek Sitnik" },
-                    { time: "19:45", title: "Zejście z Anteny", presenter: "" }
-                ];
-            }
-            if (dateStr === '2026-03-27' && dayId === 'piatek') {
-                renderedData = [
-                    { time: "18:00", title: "Wejście na Antenę", presenter: "" },
-                    { time: "18:05", title: "Końcówka Języka", presenter: "Jan Wróbel" },
-                    { time: "19:05", title: "Talkable", presenter: "Daisy" },
-                    { time: "20:05", title: "Zejście z Anteny", presenter: "" }
-                ];
-            }
-            if (dateStr === '2026-04-08' && dayId === 'sroda') {
-                renderedData = renderedData
-                    .map(item => {
-                        // Zmiana audycji na Isię
-                        if (item.time === '18:05') { 
-                            return { time: "18:05", title: "My name is Bond", presenter: "Isia Bond" }; 
-                        }
-                        // Przesunięcie końca ramówki
+                if (dateStr === '2026-04-15' && dayId === 'sroda') {
+                    renderedData = [
+                        { time: "18:15", title: "Wejście na Antenę", presenter: "" },
+                        { time: "18:20", title: "Kakofonia", presenter: "Kacper Augustyniak" },
+                        { time: "19:20", title: "Blaszak", presenter: "Lauri Potocki" },
+                        { time: "20:20", title: "Zejście z Anteny", presenter: "" }
+                    ];
+                }
+                if (dateStr === '2026-04-16' && dayId === 'czwartek') {
+                    renderedData = [
+                        { time: "17:40", title: "Wejście na Antenę", presenter: "" },
+                        { time: "17:45", title: "Wzgórza opowieści", presenter: "Wojtek Paszko" },
+                        { time: "18:45", title: "Czas na romans", presenter: "Klaudia Latańska i Marlena Gąsiorowska" },
+                        { time: "19:30", title: "Zejście z Anteny", presenter: "" }
+                    ];
+                }
+                if (dateStr === '2026-04-17' && dayId === 'piatek') {
+                    renderedData = [
+                        { time: "17:25", title: "Wejście na Antenę", presenter: "" },
+                        { time: "17:30", title: "(Nie)dobre, bo polskie", presenter: "Lauri Potocki i Dawid Gruszka" },
+                        { time: "18:30", title: "Talkable", presenter: "Daisy" },
+                        { time: "19:00", title: "Zejście z Anteny", presenter: "" }
+                    ];
+                }
+                if (dateStr === '2026-04-22' && dayId === 'sroda') {
+                    renderedData = renderedData.map(item => {
                         if (item.title === 'Zejście z Anteny') {
-                            return { time: "19:05", title: "Zejście z Anteny", presenter: "" };
+                            return { time: "20:35", title: "Zejście z Anteny", presenter: "" };
                         }
                         return item;
-                    })
-                    .filter(item => item.title !== "Blaszak"); // Wyrzucenie Blaszaka
-            }
+                    });
+                }
+                if (dateStr === '2026-04-23' && dayId === 'czwartek') {
+                    renderedData = [
+                        { time: "17:45", title: "Wejście na Antenę", presenter: "" },
+                        { time: "17:50", title: "Głos Azji", presenter: "Weronika Kosobudzka" },
+                        { time: "18:50", title: "Tajemnice Historii", presenter: "Wojtek Paszko" },
+                        { time: "19:50", title: "W co dzisiaj pogramy?", presenter: "Remek Sitnik" },
+                        { time: "20:35", title: "Zejście z Anteny", presenter: "" }
+                    ];
+                }
+                if (dateStr === '2026-04-24' && dayId === 'piatek') {
+                    renderedData = [
+                        { time: "18:00", title: "Wejście na Antenę", presenter: "" },
+                        { time: "18:05", title: "Is this love at first read?", presenter: "Jack" },
+                        { time: "19:05", title: "Zejście z Anteny", presenter: "" }
+                    ];
+                }
+                if (dateStr === '2026-04-29' && dayId === 'sroda') {
+                    renderedData = [
+                        { time: "17:40", title: "Wejście na Antenę", presenter: "" },
+                        { time: "17:45", title: "Polski kącik filmowy", presenter: "Oliwia Mik" },
+                        { time: "18:20", title: "Kakofonia", presenter: "Kacper Augustyniak" },
+                        { time: "19:20", title: "Blaszak", presenter: "Lauri Potocki" },
+                        { time: "20:50", title: "Zejście z Anteny", presenter: "" }
+                    ];
+                }
+                if (dateStr === '2026-04-30' && dayId === 'czwartek') {
+                    renderedData = [
+                        { time: "17:40", title: "Wejście na Antenę", presenter: "" },
+                        { time: "17:45", title: "My name is Bond", presenter: "Isia Bond" },
+                        { time: "18:30", title: "Wzgórza Opowieści", presenter: "Wojtek Paszko" },
+                        { time: "19:30", title: "Zejście z Anteny", presenter: "" }
+                    ];
+                }
 
-            // --- NOWA, TYMCZASOWA RAMÓWKA NA BIEŻĄCY TYDZIEŃ ---
-            // Środa: 15.04.2026
-            if (dateStr === '2026-04-15' && dayId === 'sroda') {
-                renderedData = [
-                    { time: "18:15", title: "Wejście na Antenę", presenter: "" },
-                    { time: "18:20", title: "Kakofonia", presenter: "Kacper Augustyniak" },
-                    { time: "19:20", title: "Blaszak", presenter: "Lauri Potocki" },
-                    { time: "20:20", title: "Zejście z Anteny", presenter: "" }
-                ];
-            }
-            // Czwartek: 16.04.2026
-            if (dateStr === '2026-04-16' && dayId === 'czwartek') {
-                renderedData = [
-                    { time: "17:40", title: "Wejście na Antenę", presenter: "" },
-                    { time: "17:45", title: "Wzgórza opowieści", presenter: "Wojtek Paszko" },
-                    { time: "18:45", title: "Czas na romans", presenter: "Klaudia Latańska i Marlena Gąsiorowska" },
-                    { time: "19:30", title: "Zejście z Anteny", presenter: "" }
-                ];
-            }
-            // Piątek: 17.04.2026
-            if (dateStr === '2026-04-17' && dayId === 'piatek') {
-                renderedData = [
-                    { time: "17:25", title: "Wejście na Antenę", presenter: "" },
-                    { time: "17:30", title: "(Nie)dobre, bo polskie", presenter: "Lauri Potocki i Dawid Gruszka" },
-                    { time: "18:30", title: "Talkable", presenter: "Daisy" },
-                    { time: "19:00", title: "Zejście z Anteny", presenter: "" }
-                ];
-            }
+                return renderedData;
 
-            // --- NOWE ZMIANY NA TEN TYDZIEŃ (23-24 KWIETNIA 2026) ---
-            // Środa: 22.04.2026 (Wydłużony Blaszak na 1,5h)
-            if (dateStr === '2026-04-22' && dayId === 'sroda') {
-                renderedData = renderedData.map(item => {
-                    if (item.title === 'Zejście z Anteny') {
-                        return { time: "20:35", title: "Zejście z Anteny", presenter: "" };
-                    }
-                    return item;
-                });
-            }
-            // Czwartek: 23.04.2026
-            if (dateStr === '2026-04-23' && dayId === 'czwartek') {
-                renderedData = [
-                    { time: "17:45", title: "Wejście na Antenę", presenter: "" },
-                    { time: "17:50", title: "Głos Azji", presenter: "Weronika Kosobudzka" },
-                    { time: "18:50", title: "Tajemnice Historii", presenter: "Wojtek Paszko" },
-                    { time: "19:50", title: "W co dzisiaj pogramy?", presenter: "Remek Sitnik" },
-                    { time: "20:35", title: "Zejście z Anteny", presenter: "" }
-                ];
-            }
-            // Piątek: 24.04.2026
-            if (dateStr === '2026-04-24' && dayId === 'piatek') {
-                renderedData = [
-                    { time: "18:00", title: "Wejście na Antenę", presenter: "" },
-                    { time: "18:05", title: "Is this love at first read?", presenter: "Jack" },
-                    { time: "19:05", title: "Zejście z Anteny", presenter: "" }
-                ];
-            }
+            } else {
+                // --- NOWA LOGIKA (OD 4 MAJA 2026) ---
+                const startMonday = new Date(2026, 4, 4); // Pierwszy poniedziałek nowej ramówki
+                const targetMonday = new Date(checkDate);
+                const dayNr = (targetMonday.getDay() + 6) % 7; // Przesunięcie do poniedziałku (0 - Pon, 6 - Niedz)
+                targetMonday.setDate(targetMonday.getDate() - dayNr);
 
-            // --- WYJĄTKI NA NASTĘPNY TYDZIEŃ (27.04 - 03.05.2026) ---
-            // Środa: 29.04.2026
-            if (dateStr === '2026-04-29' && dayId === 'sroda') {
-                renderedData = [
-                    { time: "17:40", title: "Wejście na Antenę", presenter: "" },
-                    { time: "17:45", title: "Polski kącik filmowy", presenter: "Oliwia Mik" },
-                    { time: "18:20", title: "Kakofonia", presenter: "Kacper Augustyniak" },
-                    { time: "19:20", title: "Blaszak", presenter: "Lauri Potocki" },
-                    { time: "20:50", title: "Zejście z Anteny", presenter: "" }
-                ];
+                // Obliczenie różnicy tygodni pomiędzy tygodniem daty docelowej, a pierwszym tygodniem startowym (4 maja)
+                const diffTime = targetMonday.getTime() - startMonday.getTime();
+                const weekIndex = Math.round(diffTime / (1000 * 60 * 60 * 24 * 7));
+
+                // Tydzień 4 maja (weekIndex 0) to Wariant B, następny (weekIndex 1) to Wariant A, i tak dalej
+                const variantKey = (weekIndex % 2 === 0) ? 'wariantB' : 'wariantA'; 
+                
+                const baseData = newScheduleData[variantKey][dayId];
+                if (!baseData) return null;
+
+                return JSON.parse(JSON.stringify(baseData));
             }
-            // Czwartek: 30.04.2026
-            if (dateStr === '2026-04-30' && dayId === 'czwartek') {
-                renderedData = [
-                    { time: "17:40", title: "Wejście na Antenę", presenter: "" },
-                    { time: "17:45", title: "My name is Bond", presenter: "Isia Bond" },
-                    { time: "18:30", title: "Wzgórza Opowieści", presenter: "Wojtek Paszko" },
-                    { time: "19:30", title: "Zejście z Anteny", presenter: "" }
-                ];
-            }
-            
-            return renderedData;
         }
 
         // --- SPRAWDZANIE CO TERAZ LECI ---
@@ -914,7 +980,7 @@
             if (titleEl && presenterEl) {
                 if (currentShow) {
                     titleEl.textContent = currentShow.title;
-                    if (currentShow.title === "Wejście na Antenę") {
+                    if (currentShow.title.includes("Wejście na Antenę")) {
                         presenterEl.innerHTML = `<span class="flex items-center gap-1.5 text-radio-neon font-bold"><span class="w-2 h-2 rounded-full bg-radio-neon animate-pulse shadow-[0_0_8px_#38bdf8]"></span> Zaraz zaczynamy...</span>`;
                     } else {
                         const presText = currentShow.presenter ? ` • ${currentShow.presenter}` : '';
@@ -1251,7 +1317,7 @@
                 });
 
                 lucide.createIcons();
-                updateLiveStatus(); // Zastosuj modyfikacje DOM dla "Teraz gramy" po załadowaniu html'a z ramówką
+                updateLiveStatus();
             }
         });
 
@@ -1262,7 +1328,6 @@
             else { list.scrollBy({ top: scrollAmount, behavior: 'smooth' }); }
         }
         
-        // Funkcja otwarcia w osobnym okienku (poprzednia metoda, zachowana w razie potrzeby)
         function openPlayer() { window.open('https://uniradioprojekt.radio12345.com/', 'UniRadioPlayer', 'width=400,height=600,menubar=no,toolbar=no,location=no,status=no'); }
 
         // --- OBSŁUGA ODTWARZACZA ---
