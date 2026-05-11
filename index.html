@@ -401,10 +401,6 @@
                                 <div class="min-w-0 flex-1"><h4 class="font-bold truncate">Maria Buczyńska</h4><p class="text-xs text-radio-neon truncate">"Bez spojlerów"</p></div>
                             </div>
                             <div class="glass-panel p-3 flex gap-4 rounded-xl items-center hover:bg-slate-800/50 transition">
-                                <div class="w-12 h-12 shrink-0 rounded-lg bg-purple-500/20 flex items-center justify-center text-purple-300 font-bold text-xl border border-purple-500/30">I</div>
-                                <div class="min-w-0 flex-1"><h4 class="font-bold truncate">Iza Sypiańska</h4><p class="text-xs text-radio-neon truncate">"Safickim piórem pisane"</p></div>
-                            </div>
-                            <div class="glass-panel p-3 flex gap-4 rounded-xl items-center hover:bg-slate-800/50 transition">
                                 <div class="w-12 h-12 shrink-0 rounded-lg bg-amber-500/20 flex items-center justify-center text-amber-300 font-bold text-xl border border-amber-500/30">O</div>
                                 <div class="min-w-0 flex-1"><h4 class="font-bold truncate">Oliwia Mik</h4><p class="text-xs text-radio-neon truncate">"Polski kącik filmowy"</p></div>
                             </div>
@@ -644,8 +640,7 @@
                     { time: "17:15", title: "ŻETO", presenter: "Max" },
                     { time: "18:00", title: "Między linami", presenter: "Mateusz Podgórny" },
                     { time: "18:45", title: "Bez spojlerów", presenter: "Maria Buczyńska" },
-                    { time: "19:00", title: "Safickim piórem pisane", presenter: "Iza Sypiańska" },
-                    { time: "20:00", title: "Zejście z Anteny", presenter: "" }
+                    { time: "19:30", title: "Zejście z Anteny", presenter: "" }
                 ],
                 sroda: [
                     { time: "17:40", title: "Wejście na Antenę", presenter: "" },
@@ -761,8 +756,7 @@
                             { time: "17:05", title: "ŻETO", presenter: "Max" },
                             { time: "17:50", title: "Między linami", presenter: "Mateusz Podgórny" },
                             { time: "18:35", title: "Bez spojlerów", presenter: "Maria Buczyńska" },
-                            { time: "18:50", title: "Safickim piórem pisane", presenter: "Iza Sypiańska" },
-                            { time: "19:50", title: "Zejście z Anteny", presenter: "" }
+                            { time: "19:30", title: "Zejście z Anteny", presenter: "" }
                         ];
                     } else {
                         return [
@@ -780,7 +774,7 @@
 
                 let renderedData = JSON.parse(JSON.stringify(baseData));
 
-                // Zastosowanie wyjątków
+                // Zastosowanie wyjątków historycznych
                 if (dateStr === '2026-02-26' && dayId === 'czwartek') {
                     renderedData = renderedData.map(item => {
                         if (item.time === '19:00') { return { time: "19:00", title: "Kram", presenter: "Dawid Gruszka" }; }
@@ -852,7 +846,6 @@
                         })
                         .filter(item => item.title !== "Blaszak"); 
                 }
-
                 if (dateStr === '2026-04-15' && dayId === 'sroda') {
                     renderedData = [
                         { time: "18:15", title: "Wejście na Antenę", presenter: "" },
@@ -922,17 +915,25 @@
                 return renderedData;
 
             } else {
+                // --- WYJĄTEK 11 MAJA 2026 (USUWANIE ŻETO I PRZESUNIĘCIE STARTU) ---
+                if (dateStr === '2026-05-11' && dayId === 'poniedzialek') {
+                    return [
+                        { time: "17:45", title: "Wejście na Antenę", presenter: "" },
+                        { time: "18:00", title: "Między linami", presenter: "Mateusz Podgórny" },
+                        { time: "18:45", title: "Bez spojlerów", presenter: "Maria Buczyńska" },
+                        { time: "19:30", title: "Zejście z Anteny", presenter: "" }
+                    ];
+                }
+
                 // --- NOWA LOGIKA (OD 4 MAJA 2026) ---
-                const startMonday = new Date(2026, 4, 4); // Pierwszy poniedziałek nowej ramówki
+                const startMonday = new Date(2026, 4, 4); 
                 const targetMonday = new Date(checkDate);
-                const dayNr = (targetMonday.getDay() + 6) % 7; // Przesunięcie do poniedziałku (0 - Pon, 6 - Niedz)
+                const dayNr = (targetMonday.getDay() + 6) % 7; 
                 targetMonday.setDate(targetMonday.getDate() - dayNr);
 
-                // Obliczenie różnicy tygodni pomiędzy tygodniem daty docelowej, a pierwszym tygodniem startowym (4 maja)
                 const diffTime = targetMonday.getTime() - startMonday.getTime();
                 const weekIndex = Math.round(diffTime / (1000 * 60 * 60 * 24 * 7));
 
-                // Tydzień 4 maja (weekIndex 0) to Wariant B, następny (weekIndex 1) to Wariant A, i tak dalej
                 const variantKey = (weekIndex % 2 === 0) ? 'wariantB' : 'wariantA'; 
                 
                 const baseData = newScheduleData[variantKey][dayId];
@@ -955,14 +956,14 @@
                 const [hours, mins] = item.time.split(':').map(Number);
                 const itemMinutes = hours * 60 + mins;
 
-                let nextItemMinutes = 24 * 60; // Domyślnie do północy
+                let nextItemMinutes = 24 * 60; 
                 if (schedule[i+1]) {
                     const [nHours, nMins] = schedule[i+1].time.split(':').map(Number);
                     nextItemMinutes = nHours * 60 + nMins;
                 }
 
                 if (currentMinutes >= itemMinutes && currentMinutes < nextItemMinutes) {
-                    if (item.title.toLowerCase().includes("zejście")) return null; // Koniec ramówki na ten dzień
+                    if (item.title.toLowerCase().includes("zejście")) return null; 
                     return { ...item, dateStr: formatDateStr(now) };
                 }
             }
@@ -973,7 +974,6 @@
         function updateLiveStatus() {
             const currentShow = getCurrentShowInfo();
 
-            // 1. Zmiana paska odtwarzacza
             const titleEl = document.getElementById('player-show-title');
             const presenterEl = document.getElementById('player-show-presenter');
 
@@ -992,13 +992,11 @@
                 }
             }
 
-            // 2. Usunięcie starych podświetleń z ramówki
             document.querySelectorAll('.schedule-item-live-badge').forEach(el => el.remove());
             document.querySelectorAll('.schedule-item-active').forEach(el => {
                 el.classList.remove('ring-2', 'ring-radio-neon', 'shadow-[0_0_15px_rgba(56,189,248,0.3)]', 'bg-slate-800/80', 'schedule-item-active');
             });
 
-            // 3. Dodanie podświetlenia dla obecnego show (jeśli kalendarz wyświetla ten tydzień)
             if (currentShow) {
                 const targetId = `schedule-item-${currentShow.dateStr}-${currentShow.time.replace(':','')}`;
                 const targetEl = document.getElementById(targetId);
@@ -1035,7 +1033,6 @@
             renderCalendar();
             renderSchedule();
 
-            // Oś czasu: uaktualnij status co minutę by reagować na wejście audycji na żywo
             setInterval(updateLiveStatus, 60000);
 
             function getClosestBroadcastDate(date) {
@@ -1062,12 +1059,10 @@
             }
 
             document.getElementById('prev-month').addEventListener('click', () => {
-                currentDate.setDate(1); 
                 currentDate.setMonth(currentDate.getMonth() - 1);
                 renderCalendar();
             });
             document.getElementById('next-month').addEventListener('click', () => {
-                currentDate.setDate(1); 
                 currentDate.setMonth(currentDate.getMonth() + 1);
                 renderCalendar();
             });
@@ -1142,9 +1137,6 @@
                                 renderSchedule();
                             };
                             currentWeekRow.classList.add('group/week', 'cursor-pointer', 'hover:bg-slate-800');
-                        } else {
-                            currentWeekRow.classList.remove('group/week', 'cursor-pointer', 'hover:bg-slate-800');
-                            currentWeekRow.classList.add('cursor-not-allowed', 'pointer-events-none');
                         }
 
                         grid.appendChild(currentWeekRow);
@@ -1167,29 +1159,23 @@
                 if (!date1 || !date2) return false;
                 const d1 = new Date(date1);
                 const d2 = new Date(date2);
-                
                 d1.setHours(0,0,0,0);
                 const diff1 = d1.getDay() === 0 ? 6 : d1.getDay() - 1;
                 d1.setDate(d1.getDate() - diff1); 
-                
                 d2.setHours(0,0,0,0);
                 const diff2 = d2.getDay() === 0 ? 6 : d2.getDay() - 1;
                 d2.setDate(d2.getDate() - diff2); 
-                
                 return d1.getTime() === d2.getTime();
             }
 
             function createCalendarCell(dayNum, isBroadcast, isSelectedWeek, isToday, dateObj) {
                 const div = document.createElement('div');
                 div.className = 'py-2 rounded-md transition-all flex flex-col items-center justify-center relative ';
-
                 if (!dayNum) {
                     div.className += 'text-transparent ';
                     return div;
                 }
-
                 let innerSpan = `<span class="relative z-10">${dayNum}</span>`;
-
                 if (isSelectedWeek) {
                     if (isBroadcast) {
                         div.className += 'bg-radio-accent text-white font-bold shadow-md scale-105 z-10 ';
@@ -1201,12 +1187,10 @@
                 } else {
                     div.className += 'bg-slate-900/40 text-slate-500 group-hover/week:text-slate-300 ';
                 }
-
                 if (isToday) {
                     div.className += ' ring-2 ring-radio-pink/80 z-20 shadow-[0_0_10px_rgba(244,114,182,0.3)] ';
                     innerSpan += `<div class="absolute bottom-1 w-1 h-1 rounded-full bg-radio-pink shadow-[0_0_5px_#f472b6]"></div>`;
                 }
-
                 div.innerHTML = innerSpan;
                 return div;
             }
@@ -1214,23 +1198,19 @@
             function renderSchedule() {
                 const container = document.getElementById('schedule-panels');
                 container.innerHTML = ''; 
-
                 const scheduleTitle = document.getElementById('schedule-variant-title');
                 scheduleTitle.innerHTML = `<span class="text-white">Ramówka</span>`;
-
                 const layoutDays = [
                     { id: 'poniedzialek', name: 'Poniedziałek', color: 'radio-accent', icon: 'mic' },
                     { id: 'sroda', name: 'Środa', color: 'radio-neon', icon: 'mic-2' },
                     { id: 'czwartek', name: 'Czwartek', color: 'radio-pink', icon: 'music' },
                     { id: 'piatek', name: 'Piątek', color: 'radio-accent', icon: 'radio' }
                 ];
-
                 const styleDictionary = {
                     'radio-neon': { text: 'text-radio-neon', bg: 'bg-radio-neon', borderHover: 'hover:border-radio-neon', borderL: 'border-radio-neon/50' },
                     'radio-pink': { text: 'text-radio-pink', bg: 'bg-radio-pink', borderHover: 'hover:border-radio-pink', borderL: 'border-radio-pink/50' },
                     'radio-accent': { text: 'text-radio-accent', bg: 'bg-radio-accent', borderHover: 'hover:border-radio-accent', borderL: 'border-radio-accent/50' }
                 };
-
                 layoutDays.forEach(dayInfo => {
                     const specificDate = new Date(selectedDate);
                     specificDate.setHours(0,0,0,0);
@@ -1238,9 +1218,8 @@
                     const dayOffsets = { 'poniedzialek': 1, 'sroda': 3, 'czwartek': 4, 'piatek': 5 };
                     const offset = dayOffsets[dayInfo.id] - day;
                     specificDate.setDate(specificDate.getDate() + offset);
-                    
                     const dateStr = formatDateStr(specificDate);
-
+                    
                     if (cancelledDates.includes(dateStr)) {
                         if (dateStr === '2026-04-02') {
                             const bannerSlot = document.createElement('div');
@@ -1279,29 +1258,20 @@
                         container.appendChild(emptySlot);
                         return; 
                     }
-
-                    const renderedData = getScheduleForDate(specificDate);
-                    if (!renderedData || renderedData.length === 0) {
-                        const emptySlot = document.createElement('div');
-                        emptySlot.className = 'hidden lg:block'; 
-                        container.appendChild(emptySlot);
-                        return;
-                    }
                     
+                    const renderedData = getScheduleForDate(specificDate);
+                    if (!renderedData || renderedData.length === 0) return;
                     const styling = styleDictionary[dayInfo.color];
                     const col = document.createElement('div');
-                    
                     let html = `
                         <h3 class="text-base font-bold mb-4 flex items-center gap-2 ${styling.text}">
                             <span class="w-2 h-6 ${styling.bg} rounded-full shrink-0"></span> <span class="truncate">${dayInfo.name}</span>
                         </h3>
                         <div class="space-y-3">
                     `;
-
                     renderedData.forEach(item => {
                         const elementId = `schedule-item-${dateStr}-${item.time.replace(':','')}`;
                         const presenterHtml = item.presenter ? `<p class="text-xs text-gray-400 mt-1 leading-tight">${item.presenter}</p>` : '';
-                        
                         html += `
                             <div id="${elementId}" class="relative glass-panel p-3 rounded-xl border-l-4 ${styling.borderL} ${styling.borderHover} transition-colors duration-300 group">
                                 <span class="${styling.text} font-bold text-xs font-mono tracking-wide mb-1 block">${item.time}</span>
@@ -1310,12 +1280,10 @@
                             </div>
                         `;
                     });
-
                     html += `</div>`;
                     col.innerHTML = html;
                     container.appendChild(col);
                 });
-
                 lucide.createIcons();
                 updateLiveStatus();
             }
@@ -1328,9 +1296,6 @@
             else { list.scrollBy({ top: scrollAmount, behavior: 'smooth' }); }
         }
         
-        function openPlayer() { window.open('https://uniradioprojekt.radio12345.com/', 'UniRadioPlayer', 'width=400,height=600,menubar=no,toolbar=no,location=no,status=no'); }
-
-        // --- OBSŁUGA ODTWARZACZA ---
         const radioStreamUrl = "https://uk6freenew.listen2myradio.com/live.mp3?typeportmount=s1_4501_stream_788952852";
         let radioAudioPlayer = new Audio(radioStreamUrl);
         let isRadioPlaying = false;
@@ -1342,34 +1307,21 @@
             const playWrapper = document.getElementById('icon-play-wrapper');
             const pauseWrapper = document.getElementById('icon-pause-wrapper');
             const playBtn = document.getElementById('bottom-play-btn');
-
             if (isRadioPlaying) {
                 radioAudioPlayer.pause();
                 radioAudioPlayer.src = "";
-                
                 playWrapper.classList.remove('hidden');
                 pauseWrapper.classList.add('hidden');
                 isRadioPlaying = false;
             } else {
                 if (!isStreamUnlocked) {
                     const unlockWindow = window.open('https://uniradioprojekt.radio12345.com/', 'UnlockPlayer', 'width=10,height=10,left=9999,top=9999');
-                    
-                    if(playBtn) {
-                        playBtn.style.opacity = '0.5';
-                        playBtn.style.pointerEvents = 'none'; 
-                    }
-                    
+                    if(playBtn) { playBtn.style.opacity = '0.5'; playBtn.style.pointerEvents = 'none'; }
                     setTimeout(() => {
-                        if (unlockWindow && !unlockWindow.closed) {
-                            unlockWindow.close();
-                        }
+                        if (unlockWindow && !unlockWindow.closed) { unlockWindow.close(); }
                         startRadioPlayback();
                         isStreamUnlocked = true; 
-                        
-                        if(playBtn) {
-                            playBtn.style.opacity = '1';
-                            playBtn.style.pointerEvents = 'auto';
-                        }
+                        if(playBtn) { playBtn.style.opacity = '1'; playBtn.style.pointerEvents = 'auto'; }
                     }, 1000);
                 } else {
                     startRadioPlayback();
@@ -1380,12 +1332,8 @@
         function startRadioPlayback() {
             const playWrapper = document.getElementById('icon-play-wrapper');
             const pauseWrapper = document.getElementById('icon-pause-wrapper');
-            
             radioAudioPlayer.src = radioStreamUrl;
-            radioAudioPlayer.play().catch(error => {
-                console.error("Błąd podczas odtwarzania radia:", error);
-            });
-            
+            radioAudioPlayer.play().catch(error => { console.error("Błąd podczas odtwarzania radia:", error); });
             playWrapper.classList.add('hidden');
             pauseWrapper.classList.remove('hidden');
             isRadioPlaying = true;
@@ -1395,29 +1343,20 @@
             document.getElementById('icon-vol-2').classList.add('hidden');
             document.getElementById('icon-vol-1').classList.add('hidden');
             document.getElementById('icon-vol-x').classList.add('hidden');
-
-            if (val === 0) {
-                document.getElementById('icon-vol-x').classList.remove('hidden');
-            } else if (val < 0.5) {
-                document.getElementById('icon-vol-1').classList.remove('hidden');
-            } else {
-                document.getElementById('icon-vol-2').classList.remove('hidden');
-            }
+            if (val === 0) { document.getElementById('icon-vol-x').classList.remove('hidden'); }
+            else if (val < 0.5) { document.getElementById('icon-vol-1').classList.remove('hidden'); }
+            else { document.getElementById('icon-vol-2').classList.remove('hidden'); }
         }
 
         document.getElementById('volume-slider').addEventListener('input', (e) => {
             const vol = parseFloat(e.target.value);
             radioAudioPlayer.volume = vol;
-            
-            if (vol > 0) {
-                previousVolume = vol; 
-            }
+            if (vol > 0) { previousVolume = vol; }
             updateVolumeIcon(vol);
         });
 
         function toggleMute() {
             const slider = document.getElementById('volume-slider');
-            
             if (radioAudioPlayer.volume > 0) {
                 previousVolume = radioAudioPlayer.volume; 
                 radioAudioPlayer.volume = 0;
@@ -1426,7 +1365,6 @@
                 radioAudioPlayer.volume = previousVolume > 0 ? previousVolume : 0.5;
                 slider.value = radioAudioPlayer.volume;
             }
-            
             updateVolumeIcon(radioAudioPlayer.volume);
         }
         
