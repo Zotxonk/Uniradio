@@ -408,6 +408,10 @@
                                 <div class="w-12 h-12 shrink-0 rounded-lg bg-orange-500/20 flex items-center justify-center text-orange-300 font-bold text-xl border border-orange-500/30">A</div>
                                 <div class="min-w-0 flex-1"><h4 class="font-bold truncate">Agnieszka Kotuła</h4><p class="text-xs text-radio-neon truncate">"Podium"</p></div>
                             </div>
+                            <div class="glass-panel p-3 flex gap-4 rounded-xl items-center hover:bg-slate-800/50 transition">
+                                <div class="w-12 h-12 shrink-0 rounded-lg bg-fuchsia-500/20 flex items-center justify-center text-fuchsia-300 font-bold text-xl border border-fuchsia-500/30">O</div>
+                                <div class="min-w-0 flex-1"><h4 class="font-bold truncate">Ola Zdunek</h4><p class="text-xs text-radio-neon truncate">"Studium Przypadku"</p></div>
+                            </div>
                         </div>
 
                         <button onclick="scrollCreators('down')" aria-label="Przewiń listę twórców w dół" class="w-full py-2 flex items-center justify-center hover:bg-white/5 text-gray-400 hover:text-white transition rounded-b-lg mt-2">
@@ -644,7 +648,8 @@
                     { time: "17:15", title: "ŻETO", presenter: "Max" },
                     { time: "18:00", title: "Między linami", presenter: "Mateusz Podgórny" },
                     { time: "18:45", title: "Bez spojlerów", presenter: "Maria Buczyńska" },
-                    { time: "19:30", title: "Zejście z Anteny", presenter: "" }
+                    { time: "19:30", title: "Studium Przypadku", presenter: "Ola Zdunek" },
+                    { time: "20:00", title: "Zejście z Anteny", presenter: "" }
                 ],
                 sroda: [
                     { time: "17:40", title: "Wejście na Antenę", presenter: "" },
@@ -673,7 +678,8 @@
                     { time: "17:00", title: "Wejście na Antenę", presenter: "" },
                     { time: "17:15", title: "ŻETO", presenter: "Max" },
                     { time: "18:00", title: "Między linami", presenter: "Mateusz Podgórny" },
-                    { time: "18:45", title: "Zejście z Anteny", presenter: "" }
+                    { time: "18:45", title: "Studium Przypadku", presenter: "Ola Zdunek" },
+                    { time: "19:15", title: "Zejście z Anteny", presenter: "" }
                 ],
                 sroda: [
                     { time: "18:00", title: "Wejście na Antenę", presenter: "" },
@@ -927,6 +933,16 @@
                         { time: "18:00", title: "Między linami", presenter: "Mateusz Podgórny" },
                         { time: "18:45", title: "Bez spojlerów", presenter: "Maria Buczyńska" },
                         { time: "19:30", title: "Zejście z Anteny", presenter: "" }
+                    ];
+                }
+
+                // --- WYJĄTEK 4 MAJA 2026 (BEZ STUDIUM PRZYPADKU) ---
+                if (dateStr === '2026-05-04' && dayId === 'poniedzialek') {
+                    return [
+                        { time: "17:00", title: "Wejście na Antenę", presenter: "" },
+                        { time: "17:15", title: "ŻETO", presenter: "Max" },
+                        { time: "18:00", title: "Między linami", presenter: "Mateusz Podgórny" },
+                        { time: "18:45", title: "Zejście z Anteny", presenter: "" }
                     ];
                 }
 
