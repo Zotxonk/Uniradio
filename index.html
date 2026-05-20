@@ -412,6 +412,10 @@
                                 <div class="w-12 h-12 shrink-0 rounded-lg bg-fuchsia-500/20 flex items-center justify-center text-fuchsia-300 font-bold text-xl border border-fuchsia-500/30">O</div>
                                 <div class="min-w-0 flex-1"><h4 class="font-bold truncate">Ola Zdunek</h4><p class="text-xs text-radio-neon truncate">"Studium Przypadku"</p></div>
                             </div>
+                            <div class="glass-panel p-3 flex gap-4 rounded-xl items-center hover:bg-slate-800/50 transition">
+                                <div class="w-12 h-12 shrink-0 rounded-lg bg-teal-500/20 flex items-center justify-center text-teal-300 font-bold text-xl border border-teal-500/30">N</div>
+                                <div class="min-w-0 flex-1"><h4 class="font-bold truncate">Natalia Barczak</h4><p class="text-xs text-radio-neon truncate">"Europejski Banger"</p></div>
+                            </div>
                         </div>
 
                         <button onclick="scrollCreators('down')" aria-label="Przewiń listę twórców w dół" class="w-full py-2 flex items-center justify-center hover:bg-white/5 text-gray-400 hover:text-white transition rounded-b-lg mt-2">
@@ -926,6 +930,16 @@
                 return renderedData;
 
             } else {
+                // --- WYJĄTEK 20 MAJA 2026 (EUROPEJSKI BANGER ZAMIAST QUEER CORNER) ---
+                if (dateStr === '2026-05-20' && dayId === 'sroda') {
+                    return [
+                        { time: "17:45", title: "Wejście na Antenę", presenter: "" },
+                        { time: "18:00", title: "Europejski Banger", presenter: "Natalia Barczak" },
+                        { time: "19:00", title: "Blaszak", presenter: "Lauri Potocki" },
+                        { time: "20:30", title: "Zejście z Anteny", presenter: "" }
+                    ];
+                }
+
                 // --- WYJĄTEK 11 MAJA 2026 (USUWANIE ŻETO I PRZESUNIĘCIE STARTU) ---
                 if (dateStr === '2026-05-11' && dayId === 'poniedzialek') {
                     return [
