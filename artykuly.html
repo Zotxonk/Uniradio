@@ -14,7 +14,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Ikony -->
     <script src="https://unpkg.com/lucide@latest"></script>
-    <!-- Fonty: DM Sans (Spójne z resztą strony) -->
+    <!-- Fonty: DM Sans -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap" rel="stylesheet">
@@ -28,8 +28,8 @@
                     },
                     colors: {
                         'radio-dark': '#0f172a',
-                        'radio-accent': '#8b5cf6', // Fioletowy akcent
-                        'radio-neon': '#38bdf8',   // Błękitny neon
+                        'radio-accent': '#8b5cf6', 
+                        'radio-neon': '#38bdf8',   
                         'radio-pink': '#f472b6',
                     },
                     animation: {
@@ -69,13 +69,11 @@
         <div class="container mx-auto px-6 py-4 flex justify-between items-center glass-panel rounded-b-2xl mt-0 relative z-50">
             <!-- Logo z mechanizmem Fallback -->
             <a href="/" class="flex items-center gap-3 hover:opacity-90 transition group">
-                <!-- 1. Próba załadowania Twojego obrazka. -->
                 <img src="logogradientztekstem.png" 
                      alt="UniRadio Logo" 
                      class="h-12 w-auto object-contain"
                      onerror="this.style.display='none'; document.getElementById('fallback-logo').classList.remove('hidden'); document.getElementById('fallback-logo').classList.add('flex');">
                 
-                <!-- 2. Zapasowe logo SVG -->
                 <div id="fallback-logo" class="hidden items-center gap-3">
                     <div class="relative w-10 h-10 flex items-center justify-center">
                         <svg viewBox="0 0 100 100" class="absolute inset-0 w-full h-full text-radio-accent group-hover:scale-110 transition duration-300">
@@ -93,23 +91,17 @@
                 </div>
             </a>
             
-            <!-- Linki -->
             <div class="hidden md:flex items-center space-x-8 font-medium">
                 <a href="/" class="hover:text-radio-accent transition">Start</a>
-                
-                <!-- Separator -->
                 <div class="h-6 w-px bg-white/20"></div>
-
-                <!-- Nowe strony -->
                 <a href="podcasty" class="hover:text-radio-accent transition">Podcasty</a>
-                <!-- Aktywny link dla tej strony -->
                 <a href="#" class="text-radio-accent hover:text-radio-accent transition font-bold">Artykuły</a>
             </div>
 
             <div class="flex items-center gap-4">
-                <a href="https://www.instagram.com/uniradio.projekt" target="_blank" 
+                <a href="https://www.instagram.com/uniradio.projekt/" target="_blank" 
                    class="flex items-center gap-2 bg-gradient-to-tr from-radio-accent/20 to-radio-pink/20 hover:from-radio-accent hover:to-radio-pink text-white px-4 py-2 rounded-full transition-all duration-300 border border-white/10 group shadow-lg shadow-radio-accent/10">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5 group-hover:scale-110 transition"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
+                    <i data-lucide="instagram" class="w-5 h-5 group-hover:scale-110 transition"></i>
                     <span class="text-xs font-bold hidden lg:inline">Instagram</span>
                 </a>
 
@@ -134,25 +126,28 @@
         </div>
     </nav>
 
-    <!-- FEATURED ARTICLE (HERO) -->
+    <!-- FEATURED ARTICLE (HERO) - NOWY ARTYKUŁ (ART 3) -->
     <section class="pt-32 pb-12 relative overflow-hidden">
         <!-- Tło dekoracyjne -->
         <div class="absolute top-0 right-0 w-[600px] h-[600px] bg-radio-pink/10 rounded-full blur-[120px] translate-x-1/3 -translate-y-1/4 pointer-events-none"></div>
         <div class="absolute top-20 left-0 w-96 h-96 bg-radio-accent/10 rounded-full blur-[100px] -translate-x-1/2 pointer-events-none"></div>
 
         <div class="container mx-auto px-6 relative z-10">
-            <!-- Featured Card (Najnowszy artykuł - Art 2) -->
+            <!-- Featured Card -->
             <div class="glass-panel rounded-3xl overflow-hidden border border-slate-700/50 shadow-2xl relative group">
                 <div class="grid md:grid-cols-2 gap-0">
-                    <div class="relative h-64 md:h-auto overflow-hidden">
-                        <img src="wojtek_smiszne.jpg" alt="Uniradio otwarte na nowe twarze!" class="w-full h-full object-cover hover-card-zoom">
-                        <div class="absolute inset-0 bg-gradient-to-t md:bg-gradient-to-r from-slate-900 via-transparent to-transparent opacity-90 md:opacity-60"></div>
+                    <!-- ZMiana: Użycie absolutnego dopasowania zdjęcia, by zachować stałą, idealną wysokość ze screena -->
+                    <div class="relative h-64 md:h-full min-h-[300px] overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1526498460520-4c246339dccb?q=80&w=1200&auto=format&fit=crop" alt="Character AI. Nowa forma relacji" class="absolute inset-0 w-full h-full object-cover hover-card-zoom">
+                        <div class="absolute inset-0 bg-gradient-to-t md:bg-gradient-to-r from-slate-900 via-transparent to-transparent opacity-90 md:opacity-60 pointer-events-none"></div>
                     </div>
                     
-                    <div class="p-8 md:p-12 flex flex-col justify-center relative bg-slate-900/40">
-                        <h1 class="text-3xl md:text-5xl font-black leading-tight mb-4 group-hover:text-radio-neon transition duration-300">Uniradio otwarte na nowe twarze!</h1>
-                        <p class="text-gray-400 text-lg leading-relaxed mb-8">
-                            Relacja z pierwszego oficjalnego dnia otwartego w Instytucie Dziennikarstwa i Komunikacji Społecznej. Sprawdź, jak bawiliśmy się 5 marca!
+                    <!-- Lekkie zmniejszenie paddingu, by karta nie puchła niepotrzebnie na wysokość -->
+                    <div class="p-8 md:p-10 flex flex-col justify-center relative bg-slate-900/40">
+                        <span class="text-radio-neon font-bold text-xs uppercase tracking-widest mb-2 block">Technologia</span>
+                        <h1 class="text-3xl md:text-4xl lg:text-5xl font-black leading-tight mb-4 group-hover:text-radio-neon transition duration-300">Character AI. Nowa forma relacji młodych ludzi</h1>
+                        <p class="text-gray-400 text-base lg:text-lg leading-relaxed mb-8">
+                            Dlaczego młodzi ludzie coraz częściej sięgają po intymne rozmowy z chatbotami i jakie konsekwencje niosą długotrwałe rozmowy z botami?
                         </p>
                         
                         <div class="flex items-center justify-between border-t border-slate-700 pt-6">
@@ -161,10 +156,11 @@
                                     <i data-lucide="user" class="w-5 h-5 text-gray-400"></i>
                                 </div>
                                 <div>
-                                    <p class="text-sm font-bold text-white">Zuzanna Biernacka</p>
+                                    <p class="text-sm font-bold text-white">Weronika Żukowska</p>
                                 </div>
                             </div>
-                            <a href="art_2.html" class="flex items-center gap-2 bg-white text-radio-dark hover:bg-radio-neon hover:text-black font-bold px-6 py-3 rounded-full transition shadow-lg">
+                            <!-- Link bez ".html" na końcu -->
+                            <a href="art_3" class="flex items-center gap-2 bg-white text-radio-dark hover:bg-radio-neon hover:text-black font-bold px-6 py-3 rounded-full transition shadow-lg">
                                 Czytaj <i data-lucide="arrow-right" class="w-4 h-4"></i>
                             </a>
                         </div>
@@ -191,6 +187,7 @@
 
                     <select id="category-filter" class="bg-slate-900 text-gray-300 text-sm rounded-lg px-4 py-2 outline-none focus:ring-2 focus:ring-radio-accent/50 border border-transparent focus:border-radio-accent/30 cursor-pointer hover:text-white transition">
                         <option value="all">Wszystkie Kategorie</option>
+                        <option value="Technologia">Technologia</option>
                         <option value="Wydarzenia">Wydarzenia</option>
                         <option value="Radio">Radio</option>
                     </select>
@@ -225,7 +222,7 @@
     <div id="cookie-banner" class="fixed bottom-0 left-0 w-full bg-slate-900/95 backdrop-blur-xl border-t border-slate-700 z-[70] py-6 px-4 md:px-8 transform translate-y-full transition-transform duration-700 flex flex-col md:flex-row items-center justify-between gap-6 shadow-[0_-10px_40px_rgba(0,0,0,0.5)]">
         <div class="text-sm text-gray-300 text-justify md:text-left md:max-w-4xl">
             <p class="font-bold text-white text-base mb-1">Cenimy Twoją prywatność 🍪</p>
-            Używamy plików cookie oraz podobnych technologii (m.in. Google Analytics i Google Maps) do analizy ruchu, poprawy bezpieczeństwa i zapewnienia pełnej funkcjonalności strony. Zanim te skrypty zostaną załadowane, potrzebujemy Twojej zgody. Więcej szczegółów znajdziesz w naszej <a href="polityka-prywatnosci" class="text-radio-neon hover:text-radio-pink transition-colors underline underline-offset-2">Polityce Prywatności</a>.
+            Używamy plików cookie oraz podobnych technologii (m.in. Google Analytics) do analizy ruchu, poprawy bezpieczeństwa i zapewnienia pełnej funkcjonalności strony. Zanim te skrypty zostaną załadowane, potrzebujemy Twojej zgody. Więcej szczegółów znajdziesz w naszej <a href="polityka-prywatnosci" class="text-radio-neon hover:text-radio-pink transition-colors underline underline-offset-2">Polityce Prywatności</a>.
         </div>
         <div class="flex flex-col sm:flex-row items-center gap-3 shrink-0 w-full md:w-auto">
             <button onclick="declineCookies()" class="w-full sm:w-auto px-6 py-3 rounded-xl border border-slate-600 text-gray-300 hover:bg-slate-800 transition font-medium text-sm">Odrzuć analitykę</button>
@@ -236,12 +233,12 @@
     <!-- JS LOGIC -->
     <script>
         // --- SYSTEM COOKIES & RODO ---
-        const GA_TRACKING_ID = 'G-RX84HKZJEC'; // Podpięty prawdziwy kod Google Analytics
+        const GA_TRACKING_ID = 'G-RX84HKZJEC';
 
         function loadGoogleAnalytics() {
             if (window.gaLoaded) return;
             const script = document.createElement('script');
-            script.src = `https://www.googletagmanager.com/gtag/js?id=G-RX84HKZJEC`;
+            script.src = `https://www.googletagmanager.com/gtag/js?id=${GA_TRACKING_ID}`;
             script.async = true;
             document.head.appendChild(script);
 
@@ -270,32 +267,42 @@
             if (banner) banner.classList.add('translate-y-full');
         };
 
-        // Tylko dwa konkretne artykuły
+        // Baza artykułów (Linki bez .html, zaktualizowane daty na 2026)
         const articlesData = [
             {
                 id: 1,
+                title: "Character AI. Nowa forma relacji młodych ludzi",
+                category: "Technologia",
+                author: "Weronika Żukowska",
+                date: "Maj 2026",
+                desc: "Dlaczego młodzi ludzie coraz częściej sięgają po intymne rozmowy z chatbotami i jakie konsekwencje niosą długotrwałe rozmowy z botami?",
+                image: "https://images.unsplash.com/photo-1526498460520-4c246339dccb?q=80&w=600&auto=format&fit=crop",
+                link: "art_3"
+            },
+            {
+                id: 2,
                 title: "Uniradio otwarte na nowe twarze!",
                 category: "Wydarzenia",
                 author: "Zuzanna Biernacka",
                 date: "Marzec 2026",
                 desc: "Relacja z pierwszego oficjalnego dnia otwartego w Instytucie Dziennikarstwa i Komunikacji Społecznej. Sprawdź, jak bawiliśmy się 5 marca!",
                 image: "wojtek_smiszne.jpg",
-                link: "art_2.html"
+                link: "art_2"
             },
             {
-                id: 2,
+                id: 3,
                 title: "Cisza nie trwa wiecznie…",
                 category: "Radio",
                 author: "Dawid Gruszka",
                 date: "Luty 2026",
                 desc: "…jak śpiewał Freddie Mercury The Show Must Go On. Projekt Uniradio przy Uniwersytecie Wrocławskim wchodzi w nowy semestr – i to z przytupem!",
                 image: "mikser_close.jpg",
-                link: "art_1.html"
+                link: "art_1"
             }
         ];
 
         document.addEventListener('DOMContentLoaded', () => {
-            // Obsługa pojawiania się banera cookies przy wejściu na stronę
+            // Check Cookies
             const consent = localStorage.getItem('cookieConsent');
             if (consent === 'granted') {
                 enableServices(); 
@@ -356,6 +363,9 @@
                     <a href="${art.link}" class="block relative h-60 rounded-2xl overflow-hidden mb-4 border border-slate-700/50 shadow-lg">
                         <div class="absolute inset-0 bg-slate-900 animate-pulse"></div>
                         <img src="${art.image}" class="w-full h-full object-cover hover-card-zoom relative z-10" loading="lazy">
+                        <span class="absolute top-4 right-4 bg-slate-900/80 backdrop-blur text-white text-xs font-bold px-3 py-1 rounded-full border border-white/10 z-20">
+                            ${art.category}
+                        </span>
                     </a>
                     
                     <div class="flex-1 flex flex-col px-1">
