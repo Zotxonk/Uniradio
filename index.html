@@ -406,7 +406,7 @@
                             </div>
                             <div class="glass-panel p-3 flex gap-4 rounded-xl items-center hover:bg-slate-800/50 transition">
                                 <div class="w-12 h-12 shrink-0 rounded-lg bg-orange-500/20 flex items-center justify-center text-orange-300 font-bold text-xl border border-orange-500/30">A</div>
-                                <div class="min-w-0 flex-1"><h4 class="font-bold truncate">Agnieszka Kotuła</h4><p class="text-xs text-radio-neon truncate">"Podium"</p></div>
+                                <div class="min-w-0 flex-1"><h4 class="font-bold truncate">Agnieszka</h4><p class="text-xs text-radio-neon truncate">"Podium"</p></div>
                             </div>
                             <div class="glass-panel p-3 flex gap-4 rounded-xl items-center hover:bg-slate-800/50 transition">
                                 <div class="w-12 h-12 shrink-0 rounded-lg bg-fuchsia-500/20 flex items-center justify-center text-fuchsia-300 font-bold text-xl border border-fuchsia-500/30">O</div>
@@ -671,7 +671,7 @@
                 ],
                 piatek: [
                     { time: "17:00", title: "Wejście na Antenę", presenter: "" },
-                    { time: "17:15", title: "Podium", presenter: "Agnieszka Kotuła" },
+                    { time: "17:15", title: "Podium", presenter: "Agnieszka" },
                     { time: "17:45", title: "Antypop", presenter: "Dawid Gruszka" },
                     { time: "17:50", title: "Talkable", presenter: "Daisy" },
                     { time: "18:50", title: "Zejście z Anteny", presenter: "" }
@@ -930,6 +930,18 @@
                 return renderedData;
 
             } else {
+                // --- WYJĄTEK 29 MAJA 2026 (ZMIENIONY PIĄTEK) ---
+                if (dateStr === '2026-05-29' && dayId === 'piatek') {
+                    return [
+                        { time: "17:00", title: "Wejście na Antenę", presenter: "" },
+                        { time: "17:15", title: "Podium", presenter: "Agnieszka" },
+                        { time: "17:45", title: "Talkable", presenter: "Daisy" },
+                        { time: "18:15", title: "Antypop", presenter: "Dawid Gruszka" },
+                        { time: "18:20", title: "Europejski Banger", presenter: "Natalia Barczak" },
+                        { time: "19:20", title: "Zejście z Anteny", presenter: "" }
+                    ];
+                }
+
                 // --- WYJĄTEK 20 MAJA 2026 (EUROPEJSKI BANGER ZAMIAST QUEER CORNER) ---
                 if (dateStr === '2026-05-20' && dayId === 'sroda') {
                     return [
