@@ -409,7 +409,7 @@
                                 <div class="min-w-0 flex-1"><h4 class="font-bold truncate">Agnieszka</h4><p class="text-xs text-radio-neon truncate">"Podium"</p></div>
                             </div>
                             <div class="glass-panel p-3 flex gap-4 rounded-xl items-center hover:bg-slate-800/50 transition">
-                                <div class="w-12 h-12 shrink-0 rounded-lg bg-fuchsia-500/20 flex items-center justify-center text-fuchsia-300 font-bold text-xl border border-fuchsia-500/30">O</div>
+                                <img src="ola-zdunek2 (Niestandardowe).jpg" alt="Ola Zdunek" class="w-12 h-12 shrink-0 rounded-lg object-cover border border-fuchsia-500/30">
                                 <div class="min-w-0 flex-1"><h4 class="font-bold truncate">Ola Zdunek</h4><p class="text-xs text-radio-neon truncate">"Studium Przypadku"</p></div>
                             </div>
                             <div class="glass-panel p-3 flex gap-4 rounded-xl items-center hover:bg-slate-800/50 transition">
@@ -745,8 +745,24 @@
             const checkDate = new Date(dateObj);
             checkDate.setHours(0,0,0,0);
 
-            // Blokada renderowania jakichkolwiek zaplanowanych audycji od 15 Czerwca 2026 włącznie.
+            // Blokada renderowania wiosennych zaplanowanych audycji od 15 Czerwca 2026 włącznie.
+            // Z wyjątkiem nowej letniej ramówki od 24 lipca 2026
+            const summerFridayStart = new Date(2026, 6, 24);
             if (checkDate >= endOfScheduleDate) {
+                if (checkDate >= summerFridayStart && dateObj.getDay() === 5) {
+                    const diffDays = Math.round((checkDate.getTime() - summerFridayStart.getTime()) / (1000 * 60 * 60 * 24));
+                    if (diffDays % 14 === 0) {
+                        return [
+                            { time: "15:55", title: "Wejście na Antenę", presenter: "" },
+                            { time: "16:00", title: "Fala Z", presenter: "Dawid Gruszka" },
+                            { time: "16:45", title: "Głos Azji", presenter: "Weronika Kosobudzka" },
+                            { time: "17:45", title: "Kakofonia", presenter: "Kacper Augustyniak" },
+                            { time: "18:30", title: "Blaszak", presenter: "Lauri Potocki" },
+                            { time: "20:00", title: "Dźwięki subiektywne", presenter: "Monika" },
+                            { time: "21:00", title: "Zejście z Anteny", presenter: "" }
+                        ];
+                    }
+                }
                 return null;
             }
 
@@ -1094,9 +1110,9 @@
             let currentDate = getNow(); 
             currentDate.setDate(1); 
             
-            // Jeśli wizyta następuje po zakończeniu ramówki, odsyłamy domyślnie kalendarz do czerwca 2026
-            if (getNow() >= endOfScheduleDate) {
-                currentDate = new Date(2026, 5, 1);
+            // Jeśli wizyta następuje po zakończeniu wiosennej ramówki, przesuń na odpowiedni miesiąc
+            if (getNow() >= endOfScheduleDate && getNow() < new Date(2026, 6, 24)) {
+                currentDate = new Date(2026, 6, 1); // Pokaż lipiec, bo tam startuje letnia ramówka
             }
 
             let selectedDate = getClosestBroadcastDate(getNow()); 
@@ -1115,9 +1131,25 @@
                     current.setHours(0,0,0,0);
                 }
 
-                // Zatrzymujemy domyślną selekcję na ostatnim aktywnym tygodniu ramówki
-                if (current >= endOfScheduleDate) {
-                    return new Date(2026, 5, 11); // 11 czerwca 2026 (czwartek)
+                const summerFridayStart = new Date(2026, 6, 24);
+                
+                // Jeśli jesteśmy w wakacyjnej przerwie, skocz od razu do pierwszej letniej audycji
+                if (current >= endOfScheduleDate && current < summerFridayStart) {
+                    return new Date(summerFridayStart);
+                }
+
+                // Szukanie w trakcie letniej ramówki
+                if (current >= summerFridayStart) {
+                    let testDate = new Date(current);
+                    for(let i = 0; i < 14; i++) { // Szukaj do 2 tygodni do przodu
+                        if (testDate.getDay() === 5) {
+                            const diffDays = Math.round((testDate - summerFridayStart) / 86400000);
+                            if (diffDays >= 0 && diffDays % 14 === 0) {
+                                return new Date(testDate);
+                            }
+                        }
+                        testDate.setDate(testDate.getDate() + 1);
+                    }
                 }
 
                 for(let i = 0; i < 7; i++) {
@@ -1133,7 +1165,7 @@
                         }
                     }
                 }
-                return current;
+                return current < endOfScheduleDate ? current : new Date(2026, 5, 11);
             }
 
             document.getElementById('prev-month').addEventListener('click', () => {
@@ -1181,9 +1213,18 @@
                         isBroadcastDay = false;
                     }
 
-                    // Zablokuj renderowanie ramówki od daty końcowej
+                    const summerFridayStart = new Date(2026, 6, 24);
+
+                    // Zablokuj renderowanie ramówki od daty końcowej, uwzględniając letnie piątki
                     if (dateObj >= minAllowedDate && dateObj < endOfScheduleDate) {
                         weekHasAllowedDays = true;
+                    } else if (dateObj >= summerFridayStart && dayOfWeek === 5) {
+                        const diffDays = Math.round((dateObj - summerFridayStart) / 86400000);
+                        if (diffDays % 14 === 0) {
+                            weekHasAllowedDays = true;
+                        } else {
+                            isBroadcastDay = false;
+                        }
                     } else {
                         isBroadcastDay = false;
                     }
