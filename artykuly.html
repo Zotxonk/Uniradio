@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Uniradio - Artykuły</title>
+    <!-- Wymuszenie ikony - rozszerzone wsparcie dla różnych przeglądarek -->
+    <link rel="icon" type="image/png" sizes="32x32" href="logogradientbeztekstu.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="logogradientbeztekstu.png">
+    <link rel="shortcut icon" type="image/png" href="logogradientbeztekstu.png">
+    <link rel="apple-touch-icon" href="logogradientbeztekstu.png">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Ikony -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Fonty: DM Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['DM Sans', 'sans-serif'],
+                    },
+                    colors: {
+                        'radio-dark': '#0f172a',
+                        'radio-accent': '#8b5cf6', 
+                        'radio-neon': '#38bdf8',   
+                        'radio-pink': '#f472b6',
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #1e293b; }
+        ::-webkit-scrollbar-thumb { background: #475569; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #64748b; }
+        
+        html { scroll-behavior: smooth; }
+        
+        .glass-panel {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .hover-card-zoom {
+            transition: transform 0.5s ease;
+        }
+        .group:hover .hover-card-zoom {
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body class="bg-radio-dark text-white font-sans antialiased overflow-x-hidden pb-24">
+
+    <!-- Navbar -->
+    <nav class="fixed w-full z-50 transition-all duration-300" id="navbar">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center glass-panel rounded-b-2xl mt-0 relative z-50">
+            <!-- Logo z mechanizmem Fallback -->
+            <a href="/" class="flex items-center gap-3 hover:opacity-90 transition group">
+                <img src="logogradientztekstem.png" 
+                     alt="UniRadio Logo" 
+                     class="h-12 w-auto object-contain"
+                     onerror="this.style.display='none'; document.getElementById('fallback-logo').classList.remove('hidden'); document.getElementById('fallback-logo').classList.add('flex');">
+                
+                <div id="fallback-logo" class="hidden items-center gap-3">
+                    <div class="relative w-10 h-10 flex items-center justify-center">
+                        <svg viewBox="0 0 100 100" class="absolute inset-0 w-full h-full text-radio-accent group-hover:scale-110 transition duration-300">
+                            <circle cx="50" cy="50" r="7" fill="#38bdf8" />
+                            <path d="M38 38 A 18 18 0 0 0 38 62" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" />
+                            <path d="M28 28 A 32 32 0 0 0 28 72" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" />
+                            <path d="M62 38 A 18 18 0 0 1 62 62" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" />
+                            <path d="M72 28 A 32 32 0 0 1 72 72" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" />
+                        </svg>
+                    </div>
+                    <div class="flex flex-col leading-none">
+                        <span class="text-2xl font-black tracking-tighter uppercase">Uni<span class="text-radio-accent">Radio</span></span>
+                        <span class="text-[8px] uppercase tracking-[0.2em] font-bold text-gray-400">Uniwersytet Wrocławski</span>
+                    </div>
+                </div>
+            </a>
+            
+            <div class="hidden md:flex items-center space-x-8 font-medium">
+                <a href="/" class="hover:text-radio-accent transition">Start</a>
+                <div class="h-6 w-px bg-white/20"></div>
+                <a href="podcasty" class="hover:text-radio-accent transition">Podcasty</a>
+                <a href="#" class="text-radio-accent hover:text-radio-accent transition font-bold">Artykuły</a>
+            </div>
+
+            <div class="flex items-center gap-4">
+                <a href="https://www.instagram.com/uniradio.projekt" target="_blank" aria-label="Odwiedź nasz profil na Instagramie"
+                   class="flex items-center gap-2 bg-gradient-to-tr from-radio-accent/20 to-radio-pink/20 hover:from-radio-accent hover:to-radio-pink text-white px-4 py-2 rounded-full transition-all duration-300 border border-white/10 group shadow-lg shadow-radio-accent/10">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5 group-hover:scale-110 transition"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
+                    <span class="text-xs font-bold hidden lg:inline">Instagram</span>
+                </a>
+
+                <button class="md:hidden text-gray-300 hover:text-white transition" onclick="toggleMobileMenu()">
+                    <i data-lucide="menu" class="w-8 h-8"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu Container -->
+        <div id="mobile-menu" class="hidden md:hidden absolute top-full left-0 w-full px-4 -mt-2 pb-4">
+            <div class="glass-panel rounded-2xl p-6 flex flex-col space-y-4 shadow-2xl animate-in slide-in-from-top-4 duration-200">
+                <a href="/" class="text-lg font-medium hover:text-radio-accent transition border-b border-white/5 pb-2" onclick="toggleMobileMenu()">Start</a>
+                
+                <a href="podcasty" class="text-lg font-bold text-radio-neon hover:text-white transition flex items-center gap-2" onclick="toggleMobileMenu()">
+                    <i data-lucide="headphones" class="w-4 h-4"></i> Podcasty
+                </a>
+                <a href="#" class="text-lg font-bold text-radio-pink hover:text-white transition flex items-center gap-2" onclick="toggleMobileMenu()">
+                    <i data-lucide="file-text" class="w-4 h-4"></i> Artykuły
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- FEATURED ARTICLE (HERO) - NOWY ARTYKUŁ (ART 6) -->
+    <section class="pt-32 pb-12 relative overflow-hidden">
+        <!-- Tło dekoracyjne -->
+        <div class="absolute top-0 right-0 w-[600px] h-[600px] bg-radio-pink/10 rounded-full blur-[120px] translate-x-1/3 -translate-y-1/4 pointer-events-none"></div>
+        <div class="absolute top-20 left-0 w-96 h-96 bg-radio-accent/10 rounded-full blur-[100px] -translate-x-1/2 pointer-events-none"></div>
+
+        <div class="container mx-auto px-6 relative z-10">
+            <!-- Featured Card -->
+            <div class="glass-panel rounded-3xl overflow-hidden border border-slate-700/50 shadow-2xl relative group">
+                <div class="grid md:grid-cols-2 gap-0">
+                    <!-- Absolutne dopasowanie zdjęcia (proporcja ze screena) -->
+                    <div class="relative h-64 md:h-full min-h-[300px] overflow-hidden">
+                        <img src="DSC_0013.jpg" alt="Hikari 2026 relacja" class="absolute inset-0 w-full h-full object-cover hover-card-zoom">
+                        <div class="absolute inset-0 bg-gradient-to-t md:bg-gradient-to-r from-slate-900 via-transparent to-transparent opacity-90 md:opacity-60 pointer-events-none"></div>
+                    </div>
+                    
+                    <div class="p-8 md:p-10 flex flex-col justify-center relative bg-slate-900/40">
+                        <span class="text-radio-neon font-bold text-xs uppercase tracking-widest mb-2 block">Wydarzenia</span>
+                        <h1 class="text-3xl md:text-4xl lg:text-5xl font-black leading-tight mb-4 group-hover:text-radio-neon transition duration-300">Hikari 2026. Festiwal Kultury Azjatyckiej miejscem pełnym wrażeń</h1>
+                        <p class="text-gray-400 text-base lg:text-lg leading-relaxed mb-8">
+                            W ostatni weekend sierpnia korytarze poznańskiego Collegium da Vinci wypełniły się miłośnikami kultury dalekiego wschodu.
+                        </p>
+                        
+                        <div class="flex items-center justify-between border-t border-slate-700 pt-6">
+                            <div class="flex items-center gap-3">
+                                <img src="Kopia dawid-gruszka1 (Niestandardowe).jpg" alt="Dawid Gruszka" class="w-10 h-10 rounded-full border border-slate-600 object-cover">
+                                <div>
+                                    <p class="text-sm font-bold text-white">Dawid Gruszka</p>
+                                </div>
+                            </div>
+                            <!-- Link bez ".html" na końcu -->
+                            <a href="art_6" class="flex items-center gap-2 bg-white text-radio-dark hover:bg-radio-neon hover:text-black font-bold px-6 py-3 rounded-full transition shadow-lg">
+                                Czytaj <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ARTYKUŁY LISTA -->
+    <section class="py-12 bg-slate-900/50 border-t border-slate-800 scroll-mt-24">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between items-end md:items-center mb-10 gap-4">
+                <div>
+                    <h2 class="text-3xl font-bold mb-2">Wszystkie <span class="text-radio-pink">Publikacje</span></h2>
+                </div>
+                
+                <!-- Filter Bar -->
+                <div class="flex flex-col md:flex-row gap-3 w-full md:w-auto bg-slate-800 p-2 rounded-xl border border-slate-700">
+                    <div class="relative group">
+                        <i data-lucide="search" class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 group-focus-within:text-radio-pink transition w-4 h-4"></i>
+                        <input type="text" id="search-input" placeholder="Szukaj artykułu..." class="bg-slate-900 text-white text-sm rounded-lg pl-9 pr-4 py-2 outline-none focus:ring-2 focus:ring-radio-pink/50 w-full md:w-48 placeholder-gray-600 transition border border-transparent focus:border-radio-pink/30">
+                    </div>
+
+                    <select id="category-filter" class="bg-slate-900 text-gray-300 text-sm rounded-lg px-4 py-2 outline-none focus:ring-2 focus:ring-radio-accent/50 border border-transparent focus:border-radio-accent/30 cursor-pointer hover:text-white transition">
+                        <option value="all">Wszystkie Kategorie</option>
+                        <option value="Technologia">Technologia</option>
+                        <option value="Wydarzenia">Wydarzenia</option>
+                        <option value="Radio">Radio</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- GRID ARTYKUŁÓW -->
+            <div id="articles-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Generowane przez JS -->
+            </div>
+            
+            <div id="empty-state" class="hidden text-center py-20">
+                <i data-lucide="file-x" class="w-16 h-16 text-gray-600 mx-auto mb-4"></i>
+                <h3 class="text-xl font-bold text-gray-300">Brak artykułów</h3>
+                <p class="text-gray-500">Nie znaleziono tekstów spełniających kryteria.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-slate-950 pt-12 pb-12 border-t border-slate-800 mt-12">
+        <div class="container mx-auto px-6 flex flex-col items-center text-center">
+            <div class="flex items-center gap-2 mb-2">
+                <i data-lucide="radio" class="text-radio-accent w-5 h-5"></i>
+                <span class="text-lg font-bold">UniRadio</span>
+            </div>
+            <p class="text-gray-600 text-[10px] uppercase tracking-widest">Gramy słowem</p>
+        </div>
+    </footer>
+
+    <!-- COOKIE BANNER -->
+    <div id="cookie-banner" class="fixed bottom-0 left-0 w-full bg-slate-900/95 backdrop-blur-xl border-t border-slate-700 z-[70] py-6 px-4 md:px-8 transform translate-y-full transition-transform duration-700 flex flex-col md:flex-row items-center justify-between gap-6 shadow-[0_-10px_40px_rgba(0,0,0,0.5)]">
+        <div class="text-sm text-gray-300 text-justify md:text-left md:max-w-4xl">
+            <p class="font-bold text-white text-base mb-1">Cenimy Twoją prywatność 🍪</p>
+            Używamy plików cookie oraz podobnych technologii (m.in. Google Analytics) do analizy ruchu, poprawy bezpieczeństwa i zapewnienia pełnej funkcjonalności strony. Zanim te skrypty zostaną załadowane, potrzebujemy Twojej zgody. Więcej szczegółów znajdziesz w naszej <a href="polityka-prywatnosci" class="text-radio-neon hover:text-radio-pink transition-colors underline underline-offset-2">Polityce Prywatności</a>.
+        </div>
+        <div class="flex flex-col sm:flex-row items-center gap-3 shrink-0 w-full md:w-auto">
+            <button onclick="declineCookies()" class="w-full sm:w-auto px-6 py-3 rounded-xl border border-slate-600 text-gray-300 hover:bg-slate-800 transition font-medium text-sm">Odrzuć analitykę</button>
+            <button onclick="acceptCookies()" class="w-full sm:w-auto px-6 py-3 rounded-xl bg-radio-accent hover:bg-violet-600 text-white transition font-bold text-sm shadow-lg shadow-violet-900/50 hover:scale-105 active:scale-95">Akceptuję wszystkie</button>
+        </div>
+    </div>
+
+    <!-- JS LOGIC -->
+    <script>
+        // --- SYSTEM COOKIES & RODO ---
+        const GA_TRACKING_ID = 'G-RX84HKZJEC';
+
+        function loadGoogleAnalytics() {
+            if (window.gaLoaded) return;
+            const script = document.createElement('script');
+            script.src = `https://www.googletagmanager.com/gtag/js?id=${GA_TRACKING_ID}`;
+            script.async = true;
+            document.head.appendChild(script);
+
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', GA_TRACKING_ID);
+            window.gaLoaded = true;
+            console.log("Włączono skrypty śledzące.");
+        }
+
+        function enableServices() {
+            loadGoogleAnalytics(); 
+        }
+
+        window.acceptCookies = function() {
+            localStorage.setItem('cookieConsent', 'granted');
+            const banner = document.getElementById('cookie-banner');
+            if (banner) banner.classList.add('translate-y-full');
+            enableServices();
+        };
+
+        window.declineCookies = function() {
+            localStorage.setItem('cookieConsent', 'denied');
+            const banner = document.getElementById('cookie-banner');
+            if (banner) banner.classList.add('translate-y-full');
+        };
+
+        // Baza artykułów z uwzględnieniem wszystkich starszych
+        const articlesData = [
+            {
+                id: 1,
+                title: "Łódź Summer Festival. Największy miejski festiwal w Polsce",
+                category: "Wydarzenia",
+                author: "Julia Anielak",
+                date: "Sierpień 2026",
+                desc: "Relacja z tegorocznej, rekordowej edycji festiwalu z udziałem ponad 32 artystów. Przeczytaj naszą relację!",
+                image: "4B6A6989 2.jpg",
+                link: "art_4"
+            },
+            {
+                id: 2,
+                title: "AI a sztuka - jak to jest? | Hikari 2026",
+                category: "Technologia",
+                author: "Dawid Gruszka",
+                date: "Wrzesień 2026",
+                desc: "Sektor kreatywny w dobie GenAI. Rozmowy ze specjalistami podczas Festiwalu Kultury Azjatyckiej Hikari 2026.",
+                image: "DSC_0028.jpg",
+                link: "art_5"
+            },
+            {
+                id: 3,
+                title: "Character AI. Nowa forma relacji młodych ludzi",
+                category: "Technologia",
+                author: "Weronika Żukowska",
+                date: "Maj 2026",
+                desc: "Dlaczego młodzi ludzie coraz częściej sięgają po intymne rozmowy z chatbotami i jakie konsekwencje niosą długotrwałe rozmowy z botami?",
+                image: "https://images.unsplash.com/photo-1526498460520-4c246339dccb?q=80&w=600&auto=format&fit=crop",
+                link: "art_3"
+            },
+            {
+                id: 4,
+                title: "Uniradio otwarte na nowe twarze!",
+                category: "Wydarzenia",
+                author: "Zuzanna Biernacka",
+                date: "Marzec 2026",
+                desc: "Relacja z pierwszego oficjalnego dnia otwartego w Instytucie Dziennikarstwa i Komunikacji Społecznej. Sprawdź, jak bawiliśmy się 5 marca!",
+                image: "wojtek_smiszne.jpg",
+                link: "art_2"
+            },
+            {
+                id: 5,
+                title: "Cisza nie trwa wiecznie…",
+                category: "Radio",
+                author: "Dawid Gruszka",
+                date: "Luty 2026",
+                desc: "…jak śpiewał Freddie Mercury The Show Must Go On. Projekt Uniradio przy Uniwersytecie Wrocławskim wchodzi w nowy semestr – i to z przytupem!",
+                image: "mikser_close.jpg",
+                link: "art_1"
+            }
+        ];
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Check Cookies
+            const consent = localStorage.getItem('cookieConsent');
+            if (consent === 'granted') {
+                enableServices(); 
+            } else if (consent === null) {
+                setTimeout(() => {
+                    const banner = document.getElementById('cookie-banner');
+                    if (banner) banner.classList.remove('translate-y-full');
+                }, 800);
+            }
+
+            lucide.createIcons();
+            renderArticles();
+            
+            // Listeners
+            document.getElementById('search-input').addEventListener('input', renderArticles);
+            document.getElementById('category-filter').addEventListener('change', renderArticles);
+        });
+
+        // --- OBSŁUGA MENU MOBILNEGO ---
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        // --- Navbar Scroll Effect ---
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) { 
+                navbar.classList.add('bg-slate-900/90', 'shadow-lg'); 
+            } else { 
+                navbar.classList.remove('bg-slate-900/90', 'shadow-lg'); 
+            }
+        });
+
+        function renderArticles() {
+            const grid = document.getElementById('articles-grid');
+            const search = document.getElementById('search-input').value.toLowerCase();
+            const category = document.getElementById('category-filter').value;
+            
+            grid.innerHTML = '';
+
+            const filtered = articlesData.filter(item => {
+                const matchSearch = item.title.toLowerCase().includes(search) || item.desc.toLowerCase().includes(search);
+                const matchCat = category === 'all' || item.category === category;
+                return matchSearch && matchCat;
+            });
+
+            if (filtered.length === 0) {
+                document.getElementById('empty-state').classList.remove('hidden');
+            } else {
+                document.getElementById('empty-state').classList.add('hidden');
+            }
+
+            filtered.forEach(art => {
+                const card = document.createElement('div');
+                card.className = "flex flex-col group h-full";
+                card.innerHTML = `
+                    <a href="${art.link}" class="block relative h-60 rounded-2xl overflow-hidden mb-4 border border-slate-700/50 shadow-lg">
+                        <div class="absolute inset-0 bg-slate-900 animate-pulse"></div>
+                        <img src="${art.image}" class="w-full h-full object-cover hover-card-zoom relative z-10" loading="lazy">
+                        <span class="absolute top-4 right-4 bg-slate-900/80 backdrop-blur text-white text-xs font-bold px-3 py-1 rounded-full border border-white/10 z-20">
+                            ${art.category}
+                        </span>
+                    </a>
+                    
+                    <div class="flex-1 flex flex-col px-1">
+                        <div class="flex items-center gap-3 text-xs text-gray-500 mb-2 font-mono">
+                            <span>${art.date}</span>
+                        </div>
+                        
+                        <h3 class="text-xl font-bold leading-tight mb-2 group-hover:text-radio-neon transition">${art.title}</h3>
+                        <p class="text-gray-400 text-sm line-clamp-2 mb-4 flex-1 leading-relaxed">${art.desc}</p>
+                        
+                        <div class="border-t border-slate-800 pt-4 mt-auto flex justify-between items-center">
+                            <span class="text-xs font-semibold text-gray-300">Autor: ${art.author}</span>
+                            <a href="${art.link}" class="text-radio-accent hover:text-white text-xs font-bold uppercase tracking-widest flex items-center gap-1 transition-all group-hover:gap-2">
+                                Czytaj <i data-lucide="arrow-right" class="w-3 h-3"></i>
+                            </a>
+                        </div>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+            lucide.createIcons();
+        }
+    </script>
+</body>
+</html>

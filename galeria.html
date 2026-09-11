@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Uniradio - Galeria</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="logogradientbeztekstu.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="logogradientbeztekstu.png">
+    <link rel="shortcut icon" type="image/png" href="logogradientbeztekstu.png">
+    <link rel="apple-touch-icon" href="logogradientbeztekstu.png">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['DM Sans', 'sans-serif'],
+                    },
+                    colors: {
+                        'radio-dark': '#0f172a',
+                        'radio-accent': '#8b5cf6', 
+                        'radio-neon': '#38bdf8',   
+                        'radio-pink': '#f472b6',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #1e293b; }
+        ::-webkit-scrollbar-thumb { background: #475569; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #64748b; }
+        
+        html { scroll-behavior: smooth; }
+        
+        .glass-panel {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Subtelne animacje galerii */
+        .gallery-item {
+            transition: opacity 0.4s ease, transform 0.4s ease;
+        }
+        .gallery-item.hide {
+            opacity: 0;
+            transform: scale(0.9);
+            pointer-events: none;
+            position: absolute;
+        }
+        
+        /* Chowanie przycisków w lightboxie na mobilkach, żeby nie zasłaniały */
+        @media (max-width: 768px) {
+            .lightbox-btn-text { display: none; }
+        }
+
+        /* Płynne skalowanie i przesuwanie na desktopie */
+        #lightbox-img {
+            transition: transform 0.1s ease-out;
+            will-change: transform;
+            cursor: grab;
+        }
+        #lightbox-img:active {
+            cursor: grabbing;
+        }
+        /* Wyłączenie przejścia na mobilkach podczas gestów dla płynności */
+        #lightbox-img.no-transition {
+            transition: none;
+        }
+    </style>
+</head>
+<body class="bg-radio-dark text-white font-sans antialiased overflow-x-hidden pb-24">
+
+    <nav class="fixed w-full z-50 transition-all duration-300" id="navbar">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center glass-panel rounded-b-2xl mt-0 relative z-50">
+            <a href="/" class="flex items-center gap-3 hover:opacity-90 transition group">
+                <img src="logogradientztekstem.png" 
+                     alt="UniRadio Logo" 
+                     class="h-12 w-auto object-contain"
+                     onerror="this.style.display='none'; document.getElementById('fallback-logo').classList.remove('hidden'); document.getElementById('fallback-logo').classList.add('flex');">
+                
+                <div id="fallback-logo" class="hidden items-center gap-3">
+                    <div class="relative w-10 h-10 flex items-center justify-center">
+                        <svg viewBox="0 0 100 100" class="absolute inset-0 w-full h-full text-radio-accent group-hover:scale-110 transition duration-300">
+                            <circle cx="50" cy="50" r="7" fill="#38bdf8" />
+                            <path d="M38 38 A 18 18 0 0 0 38 62" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" />
+                            <path d="M28 28 A 32 32 0 0 0 28 72" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" />
+                            <path d="M62 38 A 18 18 0 0 1 62 62" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" />
+                            <path d="M72 28 A 32 32 0 0 1 72 72" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" />
+                        </svg>
+                    </div>
+                    <div class="flex flex-col leading-none">
+                        <span class="text-2xl font-black tracking-tighter uppercase">Uni<span class="text-radio-accent">Radio</span></span>
+                        <span class="text-[8px] uppercase tracking-[0.2em] font-bold text-gray-400">Uniwersytet Wrocławski</span>
+                    </div>
+                </div>
+            </a>
+            
+            <div class="hidden md:flex items-center space-x-8 font-medium">
+                <a href="/" class="hover:text-radio-accent transition">Start</a>
+                <div class="h-6 w-px bg-white/20"></div>
+                <a href="podcasty" class="hover:text-radio-accent transition">Podcasty</a>
+                <a href="artykuly" class="hover:text-radio-accent transition">Artykuły</a>
+            </div>
+
+            <div class="flex items-center gap-4">
+                <a href="https://www.instagram.com/uniradio.projekt" target="_blank" 
+                   class="flex items-center gap-2 bg-gradient-to-tr from-radio-accent/20 to-radio-pink/20 hover:from-radio-accent hover:to-radio-pink text-white px-4 py-2 rounded-full transition-all duration-300 border border-white/10 group shadow-lg shadow-radio-accent/10">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5 group-hover:scale-110 transition"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
+                    <span class="text-xs font-bold hidden lg:inline">Instagram</span>
+                </a>
+
+                <button class="md:hidden text-gray-300 hover:text-white transition" onclick="toggleMobileMenu()">
+                    <i data-lucide="menu" class="w-8 h-8"></i>
+                </button>
+            </div>
+        </div>
+
+        <div id="mobile-menu" class="hidden md:hidden absolute top-full left-0 w-full px-4 -mt-2 pb-4">
+            <div class="glass-panel rounded-2xl p-6 flex flex-col space-y-4 shadow-2xl animate-in slide-in-from-top-4 duration-200">
+                <a href="/" class="text-lg font-medium hover:text-radio-accent transition border-b border-white/5 pb-2" onclick="toggleMobileMenu()">Start</a>
+                
+                <a href="podcasty" class="text-lg font-medium hover:text-radio-neon transition flex items-center gap-2" onclick="toggleMobileMenu()">
+                    <i data-lucide="headphones" class="w-4 h-4"></i> Podcasty
+                </a>
+                <a href="artykuly" class="text-lg font-medium hover:text-radio-pink transition flex items-center gap-2" onclick="toggleMobileMenu()">
+                    <i data-lucide="file-text" class="w-4 h-4"></i> Artykuły
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <header class="relative pt-36 pb-16 overflow-hidden">
+        <div class="absolute top-0 right-0 w-[400px] h-[400px] bg-radio-neon/10 rounded-full blur-[100px] pointer-events-none"></div>
+        <div class="absolute bottom-0 left-0 w-[500px] h-[500px] bg-radio-accent/10 rounded-full blur-[120px] pointer-events-none"></div>
+
+        <div class="container mx-auto px-6 relative z-10 text-center">
+            <h1 class="text-5xl md:text-7xl font-black leading-tight mb-4 tracking-tight">
+                Galeria
+            </h1>
+        </div>
+    </header>
+
+    <section class="pb-24 relative z-10 min-h-screen">
+        <div class="container mx-auto px-6">
+            
+            <div class="flex flex-wrap justify-center gap-3 mb-12 sticky top-24 z-40 bg-radio-dark/80 backdrop-blur-md py-4 rounded-2xl" id="nav-buttons">
+                </div>
+
+            <div id="gallery-container" class="relative">
+                </div>
+
+            <div id="empty-state" class="hidden text-center py-20">
+                <div class="bg-slate-800/50 rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-4">
+                    <i data-lucide="camera-off" class="w-10 h-10 text-gray-600"></i>
+                </div>
+                <h3 class="text-xl font-bold text-gray-300">Brak zdjęć</h3>
+            </div>
+
+        </div>
+    </section>
+
+    <div id="lightbox" class="fixed inset-0 z-[100] hidden bg-slate-950/95 backdrop-blur-md flex flex-col items-center justify-center transition-opacity duration-300 opacity-0">
+        
+        <div class="absolute top-0 left-0 w-full p-6 flex justify-between items-center z-50">
+            <span id="lightbox-year" class="bg-radio-accent text-white px-4 py-1.5 rounded-full text-sm font-bold tracking-wider"></span>
+            
+            <button onclick="closeLightbox()" class="text-gray-400 hover:text-white transition bg-slate-800/50 hover:bg-slate-700/80 p-3 rounded-full backdrop-blur-sm">
+                <i data-lucide="x" class="w-6 h-6"></i>
+            </button>
+        </div>
+
+        <button onclick="prevImage(event)" class="absolute left-4 top-1/2 -translate-y-1/2 z-50 text-white/50 hover:text-white transition bg-slate-800/30 hover:bg-radio-accent p-4 md:p-6 rounded-full backdrop-blur-sm group">
+            <i data-lucide="chevron-left" class="w-8 h-8 md:w-10 md:h-10 transform group-hover:-translate-x-1 transition"></i>
+        </button>
+
+        <!-- Usunięto klasę 'overflow-hidden' z poniższego kontenera, dzięki czemu obraz po powiększeniu wychodzi poza ramkę i wypełnia ekran -->
+        <div class="relative w-full max-w-5xl max-h-[80vh] px-16 flex items-center justify-center z-40" onclick="closeLightbox(event)" id="lightbox-content">
+            <img id="lightbox-img" src="" alt="Powiększone zdjęcie" draggable="false" class="max-w-full max-h-[80vh] object-contain rounded-lg shadow-2xl ring-1 ring-white/10" onclick="event.stopPropagation()">
+        </div>
+
+        <button onclick="nextImage(event)" class="absolute right-4 top-1/2 -translate-y-1/2 z-50 text-white/50 hover:text-white transition bg-slate-800/30 hover:bg-radio-accent p-4 md:p-6 rounded-full backdrop-blur-sm group">
+            <i data-lucide="chevron-right" class="w-8 h-8 md:w-10 md:h-10 transform group-hover:translate-x-1 transition"></i>
+        </button>
+    </div>
+
+    <footer class="bg-slate-950 pt-12 pb-12 border-t border-slate-800 mt-12">
+        <div class="container mx-auto px-6 flex flex-col items-center text-center">
+            <div class="flex items-center gap-2 mb-2">
+                <i data-lucide="radio" class="text-radio-accent w-5 h-5"></i>
+                <span class="text-lg font-bold">Uniradio</span>
+            </div>
+            <p class="text-gray-600 text-[10px] uppercase tracking-widest">Gramy słowem</p>
+        </div>
+    </footer>
+
+    <div id="cookie-banner" class="fixed bottom-0 left-0 w-full bg-slate-900/95 backdrop-blur-xl border-t border-slate-700 z-[70] py-6 px-4 md:px-8 transform translate-y-full transition-transform duration-700 flex flex-col md:flex-row items-center justify-between gap-6 shadow-[0_-10px_40px_rgba(0,0,0,0.5)]">
+        <div class="text-sm text-gray-300 text-justify md:text-left md:max-w-4xl">
+            <p class="font-bold text-white text-base mb-1">Cenimy Twoją prywatność 🍪</p>
+            Używamy plików cookie oraz podobnych technologii (m.in. Google Analytics i Google Maps) do analizy ruchu, poprawy bezpieczeństwa i zapewnienia pełnej funkcjonalności strony. Zanim te skrypty zostaną załadowane, potrzebujemy Twojej zgody. Więcej szczegółów znajdziesz w naszej <a href="polityka-prywatnosci" class="text-radio-neon hover:text-radio-pink transition-colors underline underline-offset-2">Polityce Prywatności</a>.
+        </div>
+        <div class="flex flex-col sm:flex-row items-center gap-3 shrink-0 w-full md:w-auto">
+            <button onclick="declineCookies()" class="w-full sm:w-auto px-6 py-3 rounded-xl border border-slate-600 text-gray-300 hover:bg-slate-800 transition font-medium text-sm">Odrzuć analitykę</button>
+            <button onclick="acceptCookies()" class="w-full sm:w-auto px-6 py-3 rounded-xl bg-radio-accent hover:bg-violet-600 text-white transition font-bold text-sm shadow-lg shadow-violet-900/50 hover:scale-105 active:scale-95">Akceptuję wszystkie</button>
+        </div>
+    </div>
+
+    <script>
+        // --- SYSTEM COOKIES & RODO ---
+        const GA_TRACKING_ID = 'G-RX84HKZJEC'; // Podpięty prawdziwy kod Google Analytics
+
+        function loadGoogleAnalytics() {
+            if (window.gaLoaded) return;
+            const script = document.createElement('script');
+            script.src = `https://www.googletagmanager.com/gtag/js?id=${GA_TRACKING_ID}`;
+            script.async = true;
+            document.head.appendChild(script);
+
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', GA_TRACKING_ID);
+            window.gaLoaded = true;
+            console.log("Włączono skrypty śledzące.");
+        }
+
+        function enableServices() {
+            loadGoogleAnalytics(); 
+        }
+
+        window.acceptCookies = function() {
+            localStorage.setItem('cookieConsent', 'granted');
+            const banner = document.getElementById('cookie-banner');
+            if (banner) banner.classList.add('translate-y-full');
+            enableServices();
+        };
+
+        window.declineCookies = function() {
+            localStorage.setItem('cookieConsent', 'denied');
+            const banner = document.getElementById('cookie-banner');
+            if (banner) banner.classList.add('translate-y-full');
+        };
+
+        // Funkcja pomocnicza kodująca polskie znaki i spacje w ścieżce url,
+        // bez rozwalania struktury folderów ze slashami /
+        function encodePath(src) {
+            return src.split('/').map(part => encodeURIComponent(part)).join('/');
+        }
+
+        // BAZA ZDJĘĆ - Mix poziomych i pionowych zdjęć z różnych lat
+        const galleryData = [
+            // 2026 (Nowe zdjęcia)
+            { id: 72, year: '2026', src: 'galeria_img/2026/DSC_0451 (Duży).JPG' },
+            { id: 73, year: '2026', src: 'galeria_img/2026/DSC_0455 (Duży).JPG' },
+            { id: 74, year: '2026', src: 'galeria_img/2026/DSC_0457 (Duży).JPG' },
+            { id: 75, year: '2026', src: 'galeria_img/2026/DSC_0462 (Duży).JPG' },
+            { id: 76, year: '2026', src: 'galeria_img/2026/DSC_0463 (Duży).JPG' },
+            { id: 77, year: '2026', src: 'galeria_img/2026/DSC_0465 (Duży).JPG' },
+            { id: 78, year: '2026', src: 'galeria_img/2026/DSC_0468 (Duży).JPG' },
+            { id: 79, year: '2026', src: 'galeria_img/2026/DSC_0473 (Duży).JPG' },
+            { id: 80, year: '2026', src: 'galeria_img/2026/DSC_0477 (Duży).JPG' },
+            { id: 81, year: '2026', src: 'galeria_img/2026/DSC_0483 (Duży).JPG' },
+            { id: 82, year: '2026', src: 'galeria_img/2026/DSC_0485 (Duży).JPG' },
+            { id: 83, year: '2026', src: 'galeria_img/2026/DSC_0487 (Duży).JPG' },
+            { id: 84, year: '2026', src: 'galeria_img/2026/DSC_0491 (Duży).JPG' },
+            { id: 85, year: '2026', src: 'galeria_img/2026/DSC_0495 (Duży).JPG' },
+            { id: 86, year: '2026', src: 'galeria_img/2026/DSC_0496 (Duży).JPG' },
+            { id: 87, year: '2026', src: 'galeria_img/2026/DSC_0498 (Duży).JPG' },
+            { id: 88, year: '2026', src: 'galeria_img/2026/DSC_0500 (Duży).JPG' },
+            { id: 89, year: '2026', src: 'galeria_img/2026/DSC_0506 (Duży).JPG' },
+            { id: 90, year: '2026', src: 'galeria_img/2026/DSC_0514 (Duży).JPG' },
+            { id: 91, year: '2026', src: 'galeria_img/2026/DSC_0516 (Duży).JPG' },
+            { id: 92, year: '2026', src: 'galeria_img/2026/DSC_0520 (Duży).JPG' },
+            { id: 93, year: '2026', src: 'galeria_img/2026/DSC_0524 (Duży).JPG' },
+            { id: 94, year: '2026', src: 'galeria_img/2026/DSC_0526 (Duży).JPG' },
+            { id: 95, year: '2026', src: 'galeria_img/2026/DSC_0529 (Duży).JPG' },
+            { id: 96, year: '2026', src: 'galeria_img/2026/DSC_0531 (Duży).JPG' },
+            { id: 97, year: '2026', src: 'galeria_img/2026/DSC_0534 (Duży).JPG' },
+            { id: 98, year: '2026', src: 'galeria_img/2026/DSC_0543 (Duży).JPG' },
+            { id: 99, year: '2026', src: 'galeria_img/2026/DSC_0545 (Duży).JPG' },
+            { id: 100, year: '2026', src: 'galeria_img/2026/DSC_0546 (Duży).JPG' },
+            { id: 101, year: '2026', src: 'galeria_img/2026/DSC_0553 (Duży).JPG' },
+            { id: 102, year: '2026', src: 'galeria_img/2026/DSC_0555 (Duży).JPG' },
+            { id: 103, year: '2026', src: 'galeria_img/2026/DSC_0560 (Duży).JPG' },
+            { id: 104, year: '2026', src: 'galeria_img/2026/DSC_0561 (Duży).JPG' },
+            { id: 105, year: '2026', src: 'galeria_img/2026/DSC_0566 (Duży).JPG' },
+            { id: 106, year: '2026', src: 'galeria_img/2026/DSC_0568 (Duży).JPG' },
+            { id: 107, year: '2026', src: 'galeria_img/2026/DSC_0570 (Duży).JPG' },
+            { id: 108, year: '2026', src: 'galeria_img/2026/DSC_0574 (Duży).JPG' },
+            { id: 109, year: '2026', src: 'galeria_img/2026/DSC_0579 (Duży).JPG' },
+            { id: 110, year: '2026', src: 'galeria_img/2026/DSC_0580 (Duży).JPG' },
+            { id: 111, year: '2026', src: 'galeria_img/2026/DSC_0585 (Duży).JPG' },
+            { id: 112, year: '2026', src: 'galeria_img/2026/DSC_0587 (Duży).JPG' },
+            { id: 113, year: '2026', src: 'galeria_img/2026/DSC_0588 (Duży).JPG' },
+            { id: 114, year: '2026', src: 'galeria_img/2026/DSC_0590 (Duży).JPG' },
+            { id: 115, year: '2026', src: 'galeria_img/2026/DSC_0591 (Duży).JPG' },
+            { id: 116, year: '2026', src: 'galeria_img/2026/DSC_0596 (Duży).JPG' },
+            { id: 117, year: '2026', src: 'galeria_img/2026/DSC_0597 (Duży).JPG' },
+            { id: 118, year: '2026', src: 'galeria_img/2026/DSC_0598 (Duży).JPG' },
+            { id: 119, year: '2026', src: 'galeria_img/2026/DSC_0599 (Duży).JPG' },
+            { id: 120, year: '2026', src: 'galeria_img/2026/DSC_0600 (Duży).JPG' },
+            { id: 121, year: '2026', src: 'galeria_img/2026/DSC_0602 (Duży).JPG' },
+            { id: 122, year: '2026', src: 'galeria_img/2026/DSC_0603 (Duży).JPG' },
+            { id: 123, year: '2026', src: 'galeria_img/2026/DSC_0604 (Duży).JPG' },
+            { id: 124, year: '2026', src: 'galeria_img/2026/DSC_0605 (Duży).JPG' },
+            { id: 125, year: '2026', src: 'galeria_img/2026/DSC_0607 (Duży).JPG' },
+            { id: 126, year: '2026', src: 'galeria_img/2026/DSC_0610 (Duży).JPG' },
+            { id: 127, year: '2026', src: 'galeria_img/2026/DSC_0611 (Duży).JPG' },
+            { id: 128, year: '2026', src: 'galeria_img/2026/DSC_0613 (Duży).JPG' },
+            { id: 129, year: '2026', src: 'galeria_img/2026/DSC_0615 (Duży).JPG' },
+            { id: 130, year: '2026', src: 'galeria_img/2026/DSC_0618 (Duży).JPG' },
+            { id: 131, year: '2026', src: 'galeria_img/2026/DSC_0619 (Duży).JPG' },
+            { id: 132, year: '2026', src: 'galeria_img/2026/DSC_0624 (Duży).JPG' },
+            { id: 133, year: '2026', src: 'galeria_img/2026/DSC_0625 (Duży).JPG' },
+            { id: 134, year: '2026', src: 'galeria_img/2026/DSC_0628 (Duży).JPG' },
+            { id: 135, year: '2026', src: 'galeria_img/2026/DSC_0633 (Duży).JPG' },
+            { id: 136, year: '2026', src: 'galeria_img/2026/DSC_0636 (Duży).JPG' },
+            { id: 137, year: '2026', src: 'galeria_img/2026/DSC_0641 (Duży).JPG' },
+            { id: 138, year: '2026', src: 'galeria_img/2026/DSC_0645 (Duży).JPG' },
+            { id: 139, year: '2026', src: 'galeria_img/2026/DSC_0649 (Duży).JPG' },
+            { id: 140, year: '2026', src: 'galeria_img/2026/DSC_0650 (Duży).JPG' },
+            { id: 141, year: '2026', src: 'galeria_img/2026/DSC_0656 (Duży).JPG' },
+            { id: 142, year: '2026', src: 'galeria_img/2026/DSC_0657 (Duży).JPG' },
+            { id: 143, year: '2026', src: 'galeria_img/2026/DSC_0659 (Duży).JPG' },
+            { id: 144, year: '2026', src: 'galeria_img/2026/DSC_0665 (Duży).JPG' },
+            { id: 145, year: '2026', src: 'galeria_img/2026/DSC_0668 (Duży).JPG' },
+            { id: 146, year: '2026', src: 'galeria_img/2026/DSC_0670 (Duży).JPG' },
+            { id: 147, year: '2026', src: 'galeria_img/2026/DSC_0676 (Duży).JPG' },
+            { id: 148, year: '2026', src: 'galeria_img/2026/DSC_0682 (Duży).JPG' },
+            { id: 149, year: '2026', src: 'galeria_img/2026/DSC_0683 (Duży).JPG' },
+            { id: 150, year: '2026', src: 'galeria_img/2026/DSC_0686 (Duży).JPG' },
+            { id: 151, year: '2026', src: 'galeria_img/2026/DSC_0689 (Duży).JPG' },
+            { id: 152, year: '2026', src: 'galeria_img/2026/DSC_0693 (Duży).JPG' },
+            { id: 153, year: '2026', src: 'galeria_img/2026/DSC_0696 (Duży).JPG' },
+            { id: 154, year: '2026', src: 'galeria_img/2026/DSC_0698 (Duży).JPG' },
+            { id: 155, year: '2026', src: 'galeria_img/2026/DSC_0699 (Duży).JPG' },
+            { id: 156, year: '2026', src: 'galeria_img/2026/DSC_0701 (Duży).JPG' },
+            { id: 157, year: '2026', src: 'galeria_img/2026/DSC_0704 (Duży).JPG' },
+            { id: 158, year: '2026', src: 'galeria_img/2026/DSC_0705 (Duży).JPG' },
+            { id: 159, year: '2026', src: 'galeria_img/2026/DSC_0706 (Duży).JPG' },
+            { id: 160, year: '2026', src: 'galeria_img/2026/DSC_0710 (Duży).JPG' },
+            { id: 161, year: '2026', src: 'galeria_img/2026/DSC_0711 (Duży).JPG' },
+            { id: 162, year: '2026', src: 'galeria_img/2026/DSC_0712 (Duży).JPG' },
+            { id: 163, year: '2026', src: 'galeria_img/2026/DSC_0713 (Duży).JPG' },
+            { id: 164, year: '2026', src: 'galeria_img/2026/DSC_0714 (Duży).JPG' },
+            
+            // 2025 (Nowe zdjęcia)
+            { id: 53, year: '2025', src: 'galeria_img/2025/IMG_20250515_174351494 (Duży).jpg' },
+            { id: 54, year: '2025', src: 'galeria_img/2025/IMG_20250515_175007861 (Duży).jpg' },
+            { id: 55, year: '2025', src: 'galeria_img/2025/IMG_20250515_175114712 (Duży).jpg' },
+            { id: 56, year: '2025', src: 'galeria_img/2025/IMG_20250515_180014471 (Duży).jpg' },
+            { id: 57, year: '2025', src: 'galeria_img/2025/IMG_20250515_180136327 (Duży).jpg' },
+            { id: 58, year: '2025', src: 'galeria_img/2025/IMG_20250515_181928341 (Duży).jpg' },
+            { id: 59, year: '2025', src: 'galeria_img/2025/IMG_20250515_182539711 (Duży).jpg' },
+            { id: 60, year: '2025', src: 'galeria_img/2025/IMG_20250515_184817195 (Duży).jpg' },
+            { id: 61, year: '2025', src: 'galeria_img/2025/IMG_20250522_190037244 (Duży).jpg' },
+            { id: 62, year: '2025', src: 'galeria_img/2025/IMG_20250522_190108751 (Duży).jpg' },
+            { id: 63, year: '2025', src: 'galeria_img/2025/IMG_20250522_190157763 (Duży).jpg' },
+            { id: 64, year: '2025', src: 'galeria_img/2025/IMG_20250522_190245666 (Duży).jpg' },
+            { id: 65, year: '2025', src: 'galeria_img/2025/IMG_20250522_190506178 (Duży).jpg' },
+            { id: 66, year: '2025', src: 'galeria_img/2025/IMG_20250522_201841433 (Duży).jpg' },
+            { id: 67, year: '2025', src: 'galeria_img/2025/IMG_20250522_201909947 (Duży).jpg' },
+            { id: 68, year: '2025', src: 'galeria_img/2025/IMG_20250522_201924450 (Duży).jpg' },
+            { id: 69, year: '2025', src: 'galeria_img/2025/IMG_20250522_213911567 (Duży).jpg' },
+            { id: 70, year: '2025', src: 'galeria_img/2025/IMG_20250522_213939669 (Duży).jpg' },
+            { id: 71, year: '2025', src: 'galeria_img/2025/IMG_20250522_213947946 (Duży).jpg' },
+
+            // 2024 (20 przesłanych zdjęć)
+            { id: 1, year: '2024', src: 'galeria_img/2024/DSC_0011 (Duży).jpg' },
+            { id: 2, year: '2024', src: 'galeria_img/2024/DSC_0020 (Duży).jpg' },
+            { id: 3, year: '2024', src: 'galeria_img/2024/DSC_0024 (Duży).jpg' },
+            { id: 4, year: '2024', src: 'galeria_img/2024/DSC_0031 (Duży).jpg' },
+            { id: 18, year: '2024', src: 'galeria_img/2024/DSC_0037 (Duży).jpg' },
+            { id: 19, year: '2024', src: 'galeria_img/2024/DSC_0041 (Duży).jpg' },
+            { id: 20, year: '2024', src: 'galeria_img/2024/DSC_0047 (Duży).jpg' },
+            { id: 21, year: '2024', src: 'galeria_img/2024/DSC_0051 (Duży).jpg' },
+            { id: 22, year: '2024', src: 'galeria_img/2024/DSC_0062 (Duży).jpg' },
+            { id: 23, year: '2024', src: 'galeria_img/2024/DSC_0063 (Duży).jpg' },
+            { id: 24, year: '2024', src: 'galeria_img/2024/DSC_0069 (Duży).jpg' },
+            { id: 25, year: '2024', src: 'galeria_img/2024/DSC_0077 (Duży).jpg' },
+            { id: 26, year: '2024', src: 'galeria_img/2024/DSC_0079 (Duży).jpg' },
+            { id: 27, year: '2024', src: 'galeria_img/2024/DSC_0081 (Duży).jpg' },
+            { id: 28, year: '2024', src: 'galeria_img/2024/DSC_0084 (Duży).jpg' },
+            { id: 29, year: '2024', src: 'galeria_img/2024/DSC_0086 (Duży).jpg' },
+            { id: 30, year: '2024', src: 'galeria_img/2024/DSC_0095 (Duży).jpg' },
+            { id: 31, year: '2024', src: 'galeria_img/2024/DSC_0099 (Duży).jpg' },
+            { id: 32, year: '2024', src: 'galeria_img/2024/DSC_0106 (Duży).jpg' },
+            { id: 33, year: '2024', src: 'galeria_img/2024/DSC_0111 (Duży).jpg' },
+            { id: 34, year: '2024', src: 'galeria_img/2024/DSC_0112 (Duży).jpg' },
+            { id: 35, year: '2024', src: 'galeria_img/2024/DSC_0120 (Duży).jpg' },
+            { id: 36, year: '2024', src: 'galeria_img/2024/DSC_0122 (Duży).jpg' },
+            { id: 37, year: '2024', src: 'galeria_img/2024/DSC_0123 (Duży).jpg' },
+            { id: 38, year: '2024', src: 'galeria_img/2024/DSC_0129 (Duży).jpg' },
+            { id: 39, year: '2024', src: 'galeria_img/2024/DSC_0133 (Duży).jpg' },
+            { id: 40, year: '2024', src: 'galeria_img/2024/DSC_0141 (Duży).jpg' },
+            { id: 41, year: '2024', src: 'galeria_img/2024/DSC_0147 (Duży).jpg' },
+            { id: 42, year: '2024', src: 'galeria_img/2024/DSC_0156 (Duży).jpg' },
+            { id: 43, year: '2024', src: 'galeria_img/2024/DSC_0159 (Duży).jpg' },
+            { id: 44, year: '2024', src: 'galeria_img/2024/DSC_0161 (Duży).jpg' },
+            { id: 45, year: '2024', src: 'galeria_img/2024/DSC_0163 (Duży).jpg' },
+            { id: 46, year: '2024', src: 'galeria_img/2024/DSC_0168 (Duży).jpg' },
+            { id: 47, year: '2024', src: 'galeria_img/2024/DSC_0171 (Duży).jpg' },
+            { id: 48, year: '2024', src: 'galeria_img/2024/DSC_0187 (Duży).jpg' },
+            { id: 49, year: '2024', src: 'galeria_img/2024/DSC_0208 (Duży).jpg' },
+            { id: 50, year: '2024', src: 'galeria_img/2024/DSC_0211 (Duży).jpg' },
+            { id: 51, year: '2024', src: 'galeria_img/2024/DSC_0219 (Duży).jpg' },
+            { id: 52, year: '2024', src: 'galeria_img/2024/DSC_0221 (Duży).jpg' },
+            
+            // 2023
+            { id: 165, year: '2023', src: 'galeria_img/2023/406043259_650323467299339_1923240471488591028_n.jpg' }
+        ];
+
+        let allImagesSorted = [];
+        let currentLightboxIndex = 0;
+
+        document.addEventListener('DOMContentLoaded', () => {
+            lucide.createIcons();
+            
+            // Obsługa pojawiania się banera cookies przy wejściu na stronę
+            const consent = localStorage.getItem('cookieConsent');
+            if (consent === 'granted') {
+                enableServices(); 
+            } else if (consent === null) {
+                setTimeout(() => {
+                    const banner = document.getElementById('cookie-banner');
+                    if (banner) banner.classList.remove('translate-y-full');
+                }, 800);
+            }
+
+            // Sortowanie zdjęć od najnowszych
+            allImagesSorted = [...galleryData].sort((a, b) => parseInt(b.year) - parseInt(a.year));
+            
+            generateNavButtons();
+            renderGallery();
+            setupZoomAndPan(); // Inicjalizacja zoomowania i przesuwania
+        });
+
+        // --- OBSŁUGA MENU MOBILNEGO ---
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        // --- Navbar Scroll Effect ---
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) { 
+                navbar.classList.add('bg-slate-900/90', 'shadow-lg'); 
+            } else { 
+                navbar.classList.remove('bg-slate-900/90', 'shadow-lg'); 
+            }
+        });
+
+        // Generowanie nawigacji (skoków) na podstawie dostępnych lat
+        function generateNavButtons() {
+            const navContainer = document.getElementById('nav-buttons');
+            const years = [...new Set(allImagesSorted.map(item => item.year))]; 
+            
+            years.forEach(year => {
+                const btn = document.createElement('button');
+                btn.className = `px-6 py-2 rounded-full font-bold text-sm transition-all duration-300 border bg-slate-800 text-gray-400 border-slate-700 hover:border-radio-neon hover:text-white`;
+                btn.innerText = year;
+                btn.onclick = () => {
+                    const section = document.getElementById(`year-${year}`);
+                    if(section) {
+                        section.scrollIntoView({ behavior: 'smooth' });
+                    }
+                };
+                navContainer.appendChild(btn);
+            });
+        }
+
+        function renderGallery() {
+            const container = document.getElementById('gallery-container');
+            container.innerHTML = '';
+            
+            if (allImagesSorted.length === 0) {
+                document.getElementById('empty-state').classList.remove('hidden');
+                return;
+            } else {
+                document.getElementById('empty-state').classList.add('hidden');
+            }
+
+            // Grupowanie zdjęć po latach
+            const groupedByYear = {};
+            allImagesSorted.forEach((img, index) => {
+                if(!groupedByYear[img.year]) groupedByYear[img.year] = [];
+                // Zapamiętujemy globalny index dla lightboxa
+                groupedByYear[img.year].push({ ...img, globalIndex: index }); 
+            });
+
+            // Gwarancja sortowania malejącego (od najnowszego) 
+            // - JS domyślnie sortuje klucze numeryczne rosnąco, więc to naprawiamy
+            const sortedYears = Object.keys(groupedByYear).sort((a, b) => b - a);
+
+            // Tworzenie sekcji dla każdego roku z układem Masonry
+            for (const year of sortedYears) {
+                const images = groupedByYear[year];
+                const yearSection = document.createElement('div');
+                yearSection.id = `year-${year}`;
+                yearSection.className = 'scroll-mt-48 mb-20'; // scroll-mt by navbar i sticky-menu nie zasłaniało tytułu
+
+                yearSection.innerHTML = `
+                    <div class="flex items-center gap-4 mb-8">
+                        <h2 class="text-4xl font-black text-radio-neon">${year} <span class="text-lg text-gray-500 font-normal ml-2">(${images.length} zdjęć)</span></h2>
+                        <div class="h-px flex-1 bg-gradient-to-r from-radio-neon/50 to-transparent"></div>
+                    </div>
+                    <div class="columns-2 md:columns-3 lg:columns-4 gap-4 md:gap-6 space-y-4 md:space-y-6">
+                        ${images.map(img => `
+                            <div class="gallery-item break-inside-avoid relative group cursor-pointer rounded-2xl overflow-hidden bg-slate-800 min-h-[200px] flex items-center justify-center" onclick="openLightbox(${img.globalIndex})">
+                                <img src="${encodePath(img.src)}" alt="${img.src}" loading="lazy" 
+                                     onerror="this.onerror=null; this.src='https://placehold.co/600x600/1e293b/white?text=Brak+pliku:+${encodeURIComponent(img.src)}'"
+                                     class="w-full h-auto block group-hover:scale-105 transition duration-700">
+                                
+                                <div class="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-4">
+                                    <div class="flex justify-end transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+                                        <div class="bg-radio-accent text-white p-3 rounded-full shadow-lg">
+                                            <i data-lucide="maximize-2" class="w-5 h-5"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+                container.appendChild(yearSection);
+            }
+            
+            lucide.createIcons();
+        }
+
+        // --- LIGHTBOX & ZOOM LOGIC ---
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightbox-img');
+        const lightboxYear = document.getElementById('lightbox-year');
+        
+        // Zmienne do obsługi powiększenia i przesuwania
+        let currentScale = 1;
+        let currentTranslateX = 0;
+        let currentTranslateY = 0;
+        let isDragging = false;
+        let startX = 0, startY = 0;
+        let initialPinchDistance = null;
+        let lastScale = 1;
+
+        function resetZoom() {
+            currentScale = 1;
+            currentTranslateX = 0;
+            currentTranslateY = 0;
+            applyTransform();
+        }
+
+        function applyTransform() {
+            lightboxImg.style.transform = `translate(${currentTranslateX}px, ${currentTranslateY}px) scale(${currentScale})`;
+            if(currentScale > 1) {
+                lightboxImg.style.cursor = isDragging ? 'grabbing' : 'grab';
+            } else {
+                lightboxImg.style.cursor = 'default';
+            }
+        }
+
+        function getDistance(touch1, touch2) {
+            return Math.hypot(touch2.clientX - touch1.clientX, touch2.clientY - touch1.clientY);
+        }
+
+        function setupZoomAndPan() {
+            // Zoom kółkiem myszy na desktopie - celujący w pozycję kursora
+            lightboxImg.addEventListener('wheel', (e) => {
+                e.preventDefault();
+                const zoomSensitivity = 0.25; 
+                const delta = e.deltaY < 0 ? 1 : -1;
+                
+                const prevScale = currentScale;
+                currentScale += delta * zoomSensitivity;
+                currentScale = Math.min(Math.max(1, currentScale), 10); // Ograniczenie powiększenia (1x - 10x)
+                
+                if (currentScale !== prevScale) {
+                    const scaleRatio = currentScale / prevScale;
+                    
+                    // Pozycja myszy względem środka ekranu (początku układu współrzędnych transform)
+                    const centerX = window.innerWidth / 2;
+                    const centerY = window.innerHeight / 2;
+                    const mouseX = e.clientX - centerX;
+                    const mouseY = e.clientY - centerY;
+                    
+                    // Matematyczna korekta przesunięcia, aby punkt pod kursorem pozostał nieruchomy w oknie podczas skalowania
+                    currentTranslateX = currentTranslateX - (mouseX - currentTranslateX) * (scaleRatio - 1);
+                    currentTranslateY = currentTranslateY - (mouseY - currentTranslateY) * (scaleRatio - 1);
+                }
+                
+                if (currentScale === 1) {
+                    currentTranslateX = 0;
+                    currentTranslateY = 0;
+                }
+                applyTransform();
+            });
+
+            // Obsługa dotyku (Pinch-to-zoom & Przesuwanie na mobilkach)
+            lightboxImg.addEventListener('touchstart', (e) => {
+                if (e.touches.length === 2) {
+                    // Start szczypnięcia (zoom)
+                    initialPinchDistance = getDistance(e.touches[0], e.touches[1]);
+                    lastScale = currentScale;
+                    lightboxImg.classList.add('no-transition'); // Wyłączenie animacji dla gładkiego przybliżania
+                } else if (e.touches.length === 1 && currentScale > 1) {
+                    // Start przeciągania
+                    isDragging = true;
+                    startX = e.touches[0].clientX - currentTranslateX;
+                    startY = e.touches[0].clientY - currentTranslateY;
+                    lightboxImg.classList.add('no-transition');
+                }
+            });
+
+            lightboxImg.addEventListener('touchmove', (e) => {
+                if (e.touches.length === 2) {
+                    e.preventDefault(); // Blokada scrolla strony
+                    const currentDistance = getDistance(e.touches[0], e.touches[1]);
+                    const scaleModifier = currentDistance / initialPinchDistance;
+                    
+                    currentScale = Math.min(Math.max(1, lastScale * scaleModifier), 10); // Ograniczenie powiększenia (1x - 10x)
+                    if (currentScale === 1) {
+                        currentTranslateX = 0;
+                        currentTranslateY = 0;
+                    }
+                    applyTransform();
+                } else if (e.touches.length === 1 && isDragging) {
+                    e.preventDefault();
+                    currentTranslateX = e.touches[0].clientX - startX;
+                    currentTranslateY = e.touches[0].clientY - startY;
+                    applyTransform();
+                }
+            });
+
+            lightboxImg.addEventListener('touchend', (e) => {
+                if (e.touches.length < 2) {
+                    initialPinchDistance = null;
+                }
+                if (e.touches.length === 0) {
+                    isDragging = false;
+                    lightboxImg.classList.remove('no-transition'); // Przywrócenie animacji przejść
+                }
+            });
+
+            // Przeciąganie myszką na desktopie
+            lightboxImg.addEventListener('mousedown', (e) => {
+                e.preventDefault(); // Zablokowanie domyślnego przeciągania (powstawania poświaty zdjęcia)
+                if (currentScale > 1) {
+                    isDragging = true;
+                    startX = e.clientX - currentTranslateX;
+                    startY = e.clientY - currentTranslateY;
+                    lightboxImg.classList.add('no-transition');
+                    applyTransform();
+                }
+            });
+
+            window.addEventListener('mousemove', (e) => {
+                if (isDragging && currentScale > 1 && !lightbox.classList.contains('hidden')) {
+                    currentTranslateX = e.clientX - startX;
+                    currentTranslateY = e.clientY - startY;
+                    applyTransform();
+                }
+            });
+
+            window.addEventListener('mouseup', () => {
+                if (isDragging) {
+                    isDragging = false;
+                    lightboxImg.classList.remove('no-transition');
+                    applyTransform();
+                }
+            });
+        }
+
+        function openLightbox(index) {
+            currentLightboxIndex = index;
+            updateLightboxContent();
+            
+            lightbox.classList.remove('hidden');
+            setTimeout(() => {
+                lightbox.classList.remove('opacity-0');
+                lightbox.classList.add('opacity-100');
+            }, 10);
+            
+            document.body.style.overflow = 'hidden'; // Zablokuj scrollowanie tła
+        }
+
+        function closeLightbox(event) {
+            if (event && event.target !== event.currentTarget) return;
+
+            lightbox.classList.remove('opacity-100');
+            lightbox.classList.add('opacity-0');
+            
+            setTimeout(() => {
+                lightbox.classList.add('hidden');
+                document.body.style.overflow = ''; 
+                resetZoom(); // Reset powiększenia po zamknięciu
+            }, 300);
+        }
+
+        function updateLightboxContent() {
+            resetZoom(); // Reset powiększenia przy zmianie zdjęcia
+            const imgData = allImagesSorted[currentLightboxIndex];
+            
+            lightboxImg.style.opacity = '0';
+            setTimeout(() => {
+                lightboxImg.src = encodePath(imgData.src); // Podobnie aktualizujemy ścieżkę w lightboxie
+                lightboxYear.innerText = imgData.year;
+                lightboxImg.style.opacity = '1';
+            }, 150);
+        }
+
+        function nextImage(event) {
+            if(event) event.stopPropagation();
+            currentLightboxIndex = (currentLightboxIndex + 1) % allImagesSorted.length;
+            updateLightboxContent();
+        }
+
+        function prevImage(event) {
+            if(event) event.stopPropagation();
+            currentLightboxIndex = (currentLightboxIndex - 1 + allImagesSorted.length) % allImagesSorted.length;
+            updateLightboxContent();
+        }
+
+        // Obsługa klawiatury dla Lightboxa
+        document.addEventListener('keydown', (e) => {
+            if (lightbox.classList.contains('hidden')) return;
+            
+            if (e.key === 'Escape') closeLightbox();
+            if (e.key === 'ArrowRight') nextImage();
+            if (e.key === 'ArrowLeft') prevImage();
+        });
+
+    </script>
+</body>
+</html>

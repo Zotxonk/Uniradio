@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI a sztuka - jak to jest? | Hikari 2026 - Uniradio</title>
+    <!-- Wymuszenie ikony -->
+    <link rel="icon" type="image/png" sizes="32x32" href="logogradientbeztekstu.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="logogradientbeztekstu.png">
+    <link rel="shortcut icon" type="image/png" href="logogradientbeztekstu.png">
+    <link rel="apple-touch-icon" href="logogradientbeztekstu.png">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Ikony -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Fonty: DM Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['DM Sans', 'sans-serif'],
+                    },
+                    colors: {
+                        'radio-dark': '#0f172a',
+                        'radio-accent': '#8b5cf6', 
+                        'radio-neon': '#38bdf8',   
+                        'radio-pink': '#f472b6',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #1e293b; }
+        ::-webkit-scrollbar-thumb { background: #475569; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #64748b; }
+        
+        html { scroll-behavior: smooth; }
+        
+        .glass-panel {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Progress Bar */
+        #reading-progress {
+            width: 0%;
+            height: 4px;
+            background: linear-gradient(90deg, #8b5cf6, #38bdf8);
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 100;
+            transition: width 0.1s;
+        }
+
+        /* Typography overrides */
+        .article-content p { margin-bottom: 1.5rem; line-height: 1.8; font-size: 1.125rem; }
+        .article-content h2 { font-size: 1.875rem; font-weight: 700; margin-top: 3rem; margin-bottom: 1.5rem; color: white; }
+        .article-content blockquote { 
+            border-left: 4px solid #8b5cf6; 
+            margin: 2rem 0; 
+            font-style: italic; 
+            font-size: 1.25rem;
+            color: #cbd5e1;
+            background: rgba(139, 92, 246, 0.1);
+            padding: 1.5rem;
+            border-radius: 0 1rem 1rem 0;
+        }
+        .drop-cap::first-letter {
+            float: left;
+            font-size: 4rem;
+            line-height: 0.8;
+            font-weight: bold;
+            color: #38bdf8;
+            padding-right: 0.5rem;
+            padding-top: 0.2rem;
+        }
+    </style>
+</head>
+<body class="bg-radio-dark text-white font-sans antialiased overflow-x-hidden pb-24">
+
+    <!-- Pasek postępu czytania -->
+    <div id="reading-progress"></div>
+
+    <!-- Navbar -->
+    <nav class="fixed w-full z-50 transition-all duration-300" id="navbar">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center glass-panel rounded-b-2xl mt-0 relative z-50">
+            <!-- Logo -->
+            <a href="/" class="flex items-center gap-3 hover:opacity-90 transition group">
+                <img src="logogradientztekstem.png" 
+                     alt="UniRadio Logo" 
+                     class="h-12 w-auto object-contain"
+                     onerror="this.style.display='none'; document.getElementById('fallback-logo').classList.remove('hidden'); document.getElementById('fallback-logo').classList.add('flex');">
+                
+                <div id="fallback-logo" class="hidden items-center gap-3">
+                    <div class="relative w-10 h-10 flex items-center justify-center">
+                        <svg viewBox="0 0 100 100" class="absolute inset-0 w-full h-full text-radio-accent group-hover:scale-110 transition duration-300">
+                            <circle cx="50" cy="50" r="7" fill="#38bdf8" />
+                            <path d="M38 38 A 18 18 0 0 0 38 62" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" />
+                            <path d="M28 28 A 32 32 0 0 0 28 72" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" />
+                            <path d="M62 38 A 18 18 0 0 1 62 62" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" />
+                            <path d="M72 28 A 32 32 0 0 1 72 72" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" />
+                        </svg>
+                    </div>
+                    <div class="flex flex-col leading-none">
+                        <span class="text-2xl font-black tracking-tighter uppercase">Uni<span class="text-radio-accent">Radio</span></span>
+                        <span class="text-[8px] uppercase tracking-[0.2em] font-bold text-gray-400">Uniwersytet Wrocławski</span>
+                    </div>
+                </div>
+            </a>
+            
+            <div class="hidden md:flex items-center space-x-8 font-medium">
+                <a href="/" class="hover:text-radio-accent transition">Start</a>
+                <div class="h-6 w-px bg-white/20"></div>
+                <a href="podcasty" class="hover:text-radio-accent transition">Podcasty</a>
+                <a href="artykuly" class="text-radio-accent hover:text-radio-accent transition font-bold">Artykuły</a>
+            </div>
+
+            <div class="flex items-center gap-4">
+                <a href="artykuly" class="hidden md:flex items-center gap-2 text-gray-400 hover:text-white transition text-sm font-bold uppercase tracking-wider mr-2">
+                    <i data-lucide="arrow-left" class="w-4 h-4"></i> Powrót
+                </a>
+
+                <!-- Nowa Ikonka IG SVG -->
+                <a href="https://www.instagram.com/uniradio.projekt" target="_blank" aria-label="Odwiedź nasz profil na Instagramie"
+                   class="flex items-center gap-2 bg-gradient-to-tr from-radio-accent/20 to-radio-pink/20 hover:from-radio-accent hover:to-radio-pink text-white px-4 py-2 rounded-full transition-all duration-300 border border-white/10 group shadow-lg shadow-radio-accent/10">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5 group-hover:scale-110 transition"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
+                    <span class="text-xs font-bold hidden lg:inline">Instagram</span>
+                </a>
+
+                <button class="md:hidden text-gray-300 hover:text-white transition" onclick="toggleMobileMenu()">
+                    <i data-lucide="menu" class="w-8 h-8"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden absolute top-full left-0 w-full px-4 -mt-2 pb-4">
+            <div class="glass-panel rounded-2xl p-6 flex flex-col space-y-4 shadow-2xl animate-in slide-in-from-top-4 duration-200">
+                <a href="/" class="text-lg font-medium hover:text-radio-accent transition border-b border-white/5 pb-2" onclick="toggleMobileMenu()">Start</a>
+                <a href="podcasty" class="text-lg font-bold text-radio-neon hover:text-white transition flex items-center gap-2" onclick="toggleMobileMenu()">
+                    <i data-lucide="headphones" class="w-4 h-4"></i> Podcasty
+                </a>
+                <a href="artykuly" class="text-lg font-bold text-radio-pink hover:text-white transition flex items-center gap-2" onclick="toggleMobileMenu()">
+                    <i data-lucide="file-text" class="w-4 h-4"></i> Artykuły
+                </a>
+                <a href="artykuly" class="text-lg font-bold text-gray-400 hover:text-white transition flex items-center gap-2 border-t border-white/5 pt-2" onclick="toggleMobileMenu()">
+                    <i data-lucide="arrow-left" class="w-4 h-4"></i> Powrót do artykułów
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ARTICLE HERO -->
+    <header class="relative pt-32 pb-20 overflow-hidden">
+        <!-- Tło Hero -->
+        <div class="absolute inset-0 z-0">
+            <img src="DSC_0028.jpg" class="w-full h-full object-cover opacity-20 blur-sm">
+            <div class="absolute inset-0 bg-gradient-to-t from-radio-dark via-radio-dark/80 to-radio-dark/50"></div>
+        </div>
+
+        <div class="container mx-auto px-6 relative z-10 max-w-4xl text-center">
+            <span class="text-radio-neon font-bold text-xs uppercase tracking-widest mb-4 block">Technologia / Wydarzenia</span>
+            <h1 class="text-4xl md:text-6xl font-black leading-tight mb-6 tracking-tight">
+                AI a sztuka - jak to jest? | Hikari 2026
+            </h1>
+            
+            <p class="text-xl text-gray-300 leading-relaxed mb-8 max-w-2xl mx-auto">
+                Od momentu premiery ChatGPT w 2022 roku, konwersacja o szkodliwości generatywnych modeli sztucznej inteligencji nieustannie ewoluuje.
+            </p>
+
+            <div class="flex items-center justify-center gap-6 text-sm text-gray-400">
+                <div class="flex items-center gap-3">
+                    <img src="Kopia dawid-gruszka1 (Niestandardowe).jpg" alt="Dawid Gruszka" class="w-12 h-12 rounded-full border border-slate-600 object-cover shadow-lg">
+                    <div class="text-left">
+                        <span class="block text-white font-bold text-base">Dawid Gruszka</span>
+                        <span class="text-xs text-radio-pink uppercase font-bold tracking-wider">Wrzesień 2026</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT -->
+    <article class="container mx-auto px-6 relative z-10">
+        <div class="flex flex-col lg:flex-row gap-12 justify-center">
+            
+            <!-- Tekst artykułu -->
+            <div class="w-full lg:max-w-3xl article-content text-gray-300">
+                
+                <p class="drop-cap mt-4">
+                    Od momentu premiery “ChatGPT” w 2022 roku, konwersacja o szkodliwości generatywnych modeli sztucznej inteligencji nieustannie ewoluuje.
+                </p>
+
+                <p>
+                    Faktem jest, że prężnie postępujący rozwój GenAI przyczyni się do masowych zwolnień w przeciągu kilku następnych lat. Jak podaje dziennik Gazeta Prawna - w perspektywie od pięciu do dziesięciu lat nawet ponad 5,5 miliona osób w Polsce może stracić pracę na rzecz sztucznej inteligencji. Sektorem, który wydaje się być wyjątkowo narażonym jest szeroko pojmowany sektor kreatywny.
+                </p>
+
+                <p>
+                    Coraz więcej przedsiębiorstw rezygnuje z opłacenia usług profesjonalnych grafików na rzecz krótkiej konwersacji z ChatemGPT. Oczywiście nie jest to proces jednostronny. Wielu autorów np. prozy pisanej bywa oskarżanych o używanie sztucznej inteligencji jako substytutu manualnej korekty tekstu, czy nawet własnej wyobraźni.
+                </p>
+
+                <p>
+                    Przy okazji Festiwalu Kultury Azjatyckiej Hikari 2026 w Poznaniu, miałem przyjemność porozmawiać z wieloma artystami, specjalistami z wieloletnim doświadczeniem w swoich dziedzinach. W rozmowach zahaczyliśmy także to temat GenAI. Częścią wspólną wszystkich tych dyskusji był jeden konkretny aspekt – przekonanie o tym, że artyści nie mają się czego obawiać.
+                </p>
+
+                <h2>Sztuka okiem specjalistów - rozmowy w trakcie Hikari 2026</h2>
+
+                <!-- ZDJĘCIE 1: Paweł Dybała -->
+                <figure class="my-10 group relative overflow-hidden rounded-3xl border border-slate-700 shadow-2xl max-w-lg mx-auto">
+                    <img src="hikari paweł dybała.png" alt="Paweł Dybała podczas Hikari 2026" class="w-full transform transition duration-700 group-hover:scale-105">
+                </figure>
+
+                <p>
+                    Paweł Dybała - adiunkt w Instytucie Bliskiego i Dalekiego Wschodu UJ, japonista, tłumacz wielu rozpoznawalnych na całym świecie tytułów mang, w wywiadzie zdradził, że nie należy się obawiać sztucznej inteligencji w aktualnej formie.
+                </p>
+
+                <blockquote>
+                    “Tłumaczenie wykonane przez modele językowe nie jest i myślę, że długo nie będzie na poziomie tłumaczenia zrobionego przez profesjonalistę. Reszta jest de facto w rękach nawet nie w rękach dystrybutorów [korzystających z AI], a odbiorców, którzy za to płacą. Jeżeli nie będą chcieli płacić za tłumaczenia zrobione AI, które często wychodzą niesprawdzone, z błędami - wtedy dystrybutorzy stwierdzą, że PR’owo im się to nie opłaca.”
+                </blockquote>
+
+                <p>
+                    Jak można zauważyć, kluczem jest odbiorca. Jednak czy jest on już wystarczająco świadomy? Nadal słyszy się o przykrych konsekwencjach, w tym społecznych, których doświadczają użytkownicy generatywnej sztucznej inteligencji. Szczególnie często pojawiają się wątki użycia AI do wprowadzenia zmian w istniejącym już projekcie, w taki sposób by posądzenia o plagiat stało się niemożliwe. 
+                </p>
+
+                <!-- ZDJĘCIE 2: Liska Livest -->
+                <figure class="my-10 group relative overflow-hidden rounded-3xl border border-slate-700 shadow-2xl max-w-lg mx-auto">
+                    <img src="hikari liska.png" alt="Liska Livest awatar" class="w-full transform transition duration-700 group-hover:scale-105">
+                </figure>
+
+                <p>
+                    Liska Livest - v-tuberka, riggerka i artystka wspomina sytuację, która rozgrywała się niedawno w mediach społecznościowych dookoła kradzieży, której ofiarą miała paść inna v-tuberka.
+                </p>
+
+                <blockquote>
+                    “Większość dram v-tuberkowych, w Polsce jak i za granicą, dotyczy właśnie AI. Mamy taką polską v-tuberkę, która tworzy swój design od 2023 roku. Jej design został skradziony i przepuszczony przez AI. Osoba, która to zrobiła pisze oczywiście po angielsku. Od dwóch dni na Twitterze dzieje się przepychanka między oryginalnym twórcą designu oraz tym, który go ukradł i przepuścił przez AI.”
+                </blockquote>
+
+                <blockquote>
+                    “Bardzo często ktoś, kto nie interesuje się sztuką, ilustracjami czy samym fanbase’m v-tuberek, po prostu nie wie jak odróżnić czy coś jest AI, czy coś nie jest AI. Jeżeli taki ktoś zaczyna w tym rynku, nie chce inwestować dziesiątek tysięcy złotych w kupno modelu tylko szuka sobie gotowych rozwiązań w internecie - wtedy wyskakują mu opcje kosztujące 10-20 złotych. Po fakcie okazuje się jednak, że jest to obrazek wygenerowany przez AI, jest pocięty byle jak, ale w teorii nadaje się on do streamowania. Taka osoba może nawet nie mieć świadomości, że jest to AI, a nawet jeżeli ma taką świadomość, to wybiera taką opcję nie posiadając większych funduszy.”
+                </blockquote>
+
+                <p>
+                    Twórcy zapytani o potencjalne przeciwdziałanie sztucznej inteligencji na rynku kreatywnym często zgadzają się co do jednego: trzeba uświadamiać. Liska Livest zapytana o to, co możemy robić, gdy zauważamy, że ktoś korzysta ze sztucznej inteligencji mówi:
+                </p>
+
+                <blockquote>
+                    “Czy cancelowanie takich osób jest dobre? Absolutnie nie, przede wszystkim powinniśmy poznać tło takiej osoby, bo taka osoba może nawet nie być świadoma, że korzysta z czegoś stworzonego przez AI. Trzeba do tego podchodzić powoli, przede wszystkim uświadamiać, może zaoferować pomoc.”
+                </blockquote>
+
+                <!-- ZDJĘCIE 3: Makowe Arty -->
+                <figure class="my-10 group relative overflow-hidden rounded-3xl border border-slate-700 shadow-2xl max-w-lg mx-auto">
+                    <img src="hikari maka.png" alt="Makowe Arty awatar" class="w-full transform transition duration-700 group-hover:scale-105">
+                </figure>
+
+                <p>
+                    Makowe Arty - artystka, ilustratorka, wystawczyni zapytana o receptę mówi:
+                </p>
+
+                <blockquote>
+                    “Trzeba rysować, tworzyć, pokazywać, że jesteśmy lepsi od prac odtwórczych.”
+                </blockquote>
+
+                <div class="mt-12 bg-slate-800/40 p-6 rounded-2xl border border-slate-700 shadow-lg">
+                    <h3 class="text-xl font-bold mb-4 text-white">Posłuchaj pełnych wywiadów na Spotify</h3>
+                    <p class="text-sm text-gray-400 mb-6">Całość rozmów z dr. Pawłem Dybałą, Liską Livest, Makowe Arty oraz innymi gośćmi festiwalu Hikari dostępna jest poniżej:</p>
+                    
+                    <ul class="space-y-4">
+                        <li>
+                            <a href="https://open.spotify.com/episode/5Uldl8woPId5Phzv0exL3x?si=7258235a037944c8" target="_blank" class="flex items-center gap-3 bg-[#1DB954]/10 hover:bg-[#1DB954]/20 border border-[#1DB954]/30 text-[#1DB954] hover:text-white px-5 py-3 rounded-xl transition font-medium shadow-md group">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 group-hover:scale-110 transition"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.24 1.021zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.84.24 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.6.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
+                                Rozmowa z dr. Pawłem Dybałą
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://open.spotify.com/episode/5HIp1RloYt4utNt4ME0viW?si=f54744582bd44054" target="_blank" class="flex items-center gap-3 bg-[#1DB954]/10 hover:bg-[#1DB954]/20 border border-[#1DB954]/30 text-[#1DB954] hover:text-white px-5 py-3 rounded-xl transition font-medium shadow-md group">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 group-hover:scale-110 transition"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.24 1.021zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.84.24 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.6.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
+                                Rozmowa z Liską Livest
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://open.spotify.com/episode/3bJLJfKOKnNOVnnDO96aHC?si=975ac09ab21a49a9" target="_blank" class="flex items-center gap-3 bg-[#1DB954]/10 hover:bg-[#1DB954]/20 border border-[#1DB954]/30 text-[#1DB954] hover:text-white px-5 py-3 rounded-xl transition font-medium shadow-md group">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 group-hover:scale-110 transition"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.24 1.021zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.84.24 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.6.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
+                                Rozmowa z Makowe Arty
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Stopka autorska -->
+                <div class="mt-12 pt-6 border-t border-slate-800 text-sm text-slate-500">
+                    <p><strong class="text-slate-400">Tekst i wywiady:</strong> Dawid Gruszka</p>
+                </div>
+
+            </div>
+        </div>
+    </article>
+
+    <!-- Footer -->
+    <footer class="bg-slate-950 pt-12 pb-12 border-t border-slate-800 mt-12">
+        <div class="container mx-auto px-6 flex flex-col items-center text-center">
+            <div class="flex items-center gap-2 mb-2">
+                <i data-lucide="radio" class="text-radio-accent w-5 h-5"></i>
+                <span class="text-lg font-bold">Uniradio</span>
+            </div>
+            <p class="text-gray-600 text-[10px] uppercase tracking-widest">Gramy słowem</p>
+        </div>
+    </footer>
+
+    <!-- Skrypty -->
+    <script>
+        lucide.createIcons();
+        
+        window.onscroll = function() {
+            let winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            let height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            let scrolled = (winScroll / height) * 100;
+            document.getElementById("reading-progress").style.width = scrolled + "%";
+            
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) { 
+                navbar.classList.add('bg-slate-900/90', 'shadow-lg'); 
+            } else { 
+                navbar.classList.remove('bg-slate-900/90', 'shadow-lg'); 
+            }
+        };
+
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+    </script>
+</body>
+</html>
