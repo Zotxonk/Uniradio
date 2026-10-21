@@ -288,12 +288,12 @@
                     </h3>
                     <div class="grid grid-cols-2 gap-4">
                         <div class="glass-panel p-4 rounded-xl text-center hover:bg-white/5 transition">
-                            <img src="galeria_img/Kopia szymon-surowiec10 (Niestandardowe).jpg" alt="Szymon Surowiec" class="w-16 h-16 mx-auto rounded-full object-cover border border-emerald-500/30 mb-2">
-                            <h4 class="font-bold text-sm">Szymon Surowiec</h4>
-                        </div>
-                        <div class="glass-panel p-4 rounded-xl text-center hover:bg-white/5 transition">
                             <img src="galeria_img/Kopia oliwia-leszczyńska1 (Niestandardowe).jpg" alt="Oliwia Leszczyńska" class="w-16 h-16 mx-auto rounded-full object-cover border border-blue-500/30 mb-2">
                             <h4 class="font-bold text-sm">Oliwia Leszczyńska</h4>
+                        </div>
+                        <div class="glass-panel p-4 rounded-xl text-center hover:bg-white/5 transition">
+                            <img src="galeria_img/Kopia szymon-surowiec10 (Niestandardowe).jpg" alt="Szymon Surowiec" class="w-16 h-16 mx-auto rounded-full object-cover border border-emerald-500/30 mb-2">
+                            <h4 class="font-bold text-sm">Szymon Surowiec</h4>
                         </div>
                         <div class="glass-panel p-4 rounded-xl text-center hover:bg-white/5 transition">
                             <img src="galeria_img/Kopia jagoda-lipska (Niestandardowe).jpg" alt="Jagoda Lipska" class="w-16 h-16 mx-auto rounded-full object-cover border border-pink-500/30 mb-2">
@@ -394,7 +394,7 @@
                             </div>
                             <div class="glass-panel p-3 flex gap-4 rounded-xl items-center hover:bg-slate-800/50 transition">
                                 <img src="galeria_img/Kopia maria-buczyńska (Niestandardowe).jpg" alt="Maria Buczyńska" class="w-12 h-12 shrink-0 rounded-lg object-cover border border-rose-500/30">
-                                <div class="min-w-0 flex-1"><h4 class="font-bold truncate">Maria Buczyńska</h4><p class="text-xs text-radio-neon truncate">"Bez spojlerów", "Po seansie"</p></div>
+                                <div class="min-w-0 flex-1"><h4 class="font-bold truncate">Maria Buczyńska</h4><p class="text-xs text-radio-neon truncate">"Bez spojlerów"</p></div>
                             </div>
                             <div class="glass-panel p-3 flex gap-4 rounded-xl items-center hover:bg-slate-800/50 transition">
                                 <img src="galeria_img/Kopia oliwia-mik2 (Niestandardowe).jpg" alt="Oliwia Mik" class="w-12 h-12 shrink-0 rounded-lg object-cover border border-amber-500/30">
@@ -411,14 +411,6 @@
                             <div class="glass-panel p-3 flex gap-4 rounded-xl items-center hover:bg-slate-800/50 transition">
                                 <div class="w-12 h-12 shrink-0 rounded-lg bg-teal-500/20 flex items-center justify-center text-teal-300 font-bold text-xl border border-teal-500/30">N</div>
                                 <div class="min-w-0 flex-1"><h4 class="font-bold truncate">Natalia Barczak</h4><p class="text-xs text-radio-neon truncate">"Europejski Banger"</p></div>
-                            </div>
-                            <div class="glass-panel p-3 flex gap-4 rounded-xl items-center hover:bg-slate-800/50 transition">
-                                <div class="w-12 h-12 shrink-0 rounded-lg bg-purple-500/20 flex items-center justify-center text-purple-300 font-bold text-xl border border-purple-500/30">N</div>
-                                <div class="min-w-0 flex-1"><h4 class="font-bold truncate">NK</h4><p class="text-xs text-radio-neon truncate">"LARUM"</p></div>
-                            </div>
-                            <div class="glass-panel p-3 flex gap-4 rounded-xl items-center hover:bg-slate-800/50 transition">
-                                <div class="w-12 h-12 shrink-0 rounded-lg bg-pink-500/20 flex items-center justify-center text-pink-300 font-bold text-xl border border-pink-500/30">M</div>
-                                <div class="min-w-0 flex-1"><h4 class="font-bold truncate">Monika Werbicka</h4><p class="text-xs text-radio-neon truncate">"Dźwięki Subiektywne"</p></div>
                             </div>
                         </div>
 
@@ -520,10 +512,10 @@
             </div>
 
             <div class="flex items-center justify-center shrink-0 px-2">
-                <a href="https://uniradioprojekt.radio12345.com/" target="_blank" rel="noopener noreferrer" aria-label="Odtwarzaj radio na żywo" class="w-12 h-12 rounded-full bg-white text-radio-dark flex items-center justify-center hover:scale-105 transition" id="bottom-play-btn">
+                <button onclick="toggleBottomPlayer()" aria-label="Odtwarzaj radio na żywo" class="w-12 h-12 rounded-full bg-white text-radio-dark flex items-center justify-center hover:scale-105 transition" id="bottom-play-btn">
                     <span id="icon-play-wrapper" class="flex items-center justify-center"><i data-lucide="play" class="w-6 h-6 fill-current translate-x-[1px]"></i></span>
                     <span id="icon-pause-wrapper" class="flex items-center justify-center hidden"><i data-lucide="pause" class="w-6 h-6 fill-current"></i></span>
-                </a>
+                </button>
             </div>
 
             <div class="flex-1 flex justify-end items-center gap-2 sm:gap-3 pr-2 md:pr-4">
@@ -648,7 +640,7 @@
             }
         };
 
-        // --- STARA BAZA DANYCH RAMÓWKI (od 4 maja 2026) ---
+        // --- NOWA BAZA DANYCH RAMÓWKI (od 4 maja 2026) ---
         const newScheduleData = {
             wariantA: {
                 poniedzialek: [
@@ -712,38 +704,52 @@
             }
         };
 
-        // --- NOWA BAZA DANYCH RAMÓWKI (jesień 2026 - start 12.10.2026) ---
-        const autumn2026ScheduleData = {
-            poniedzialek: [
-                { time: "17:55", title: "Wejście na Antenę - Wykonawca Tygodnia", presenter: "" },
-                { time: "18:00", title: "Kakofonia", presenter: "Kacper Augustyniak" },
-                { time: "18:45", title: "Blaszak", presenter: "Lauri Potocki" },
-                { time: "20:15", title: "Po seansie", presenter: "Maria Buczyńska" },
-                { time: "21:00", title: "Zejście z Anteny", presenter: "" }
-            ],
-            sroda: [
-                { time: "16:55", title: "Wejście na Antenę - Wykonawca Tygodnia", presenter: "" },
-                { time: "17:00", title: "(nie)dobre, bo polskie", presenter: "Lauri Potocki i Dawid Gruszka" },
-                { time: "18:00", title: "LARUM", presenter: "NK" },
-                { time: "19:30", title: "Europejski Banger", presenter: "Natalia Barczak" },
-                { time: "20:15", title: "Zejście z Anteny", presenter: "" }
-            ],
-            piatek: [
-                { time: "18:25", title: "Wejście na Antenę - Wykonawca Tygodnia", presenter: "" },
-                { time: "18:30", title: "Podium", presenter: "Agnieszka" },
-                { time: "19:15", title: "ŻETO", presenter: "Max" },
-                { time: "20:00", title: "Dźwięki Subiektywne", presenter: "Monika Werbicka" },
-                { time: "21:00", title: "Zejście z Anteny", presenter: "" }
-            ]
+        // --- BAZA DANYCH RAMÓWKI (od 21 października 2026) ---
+        const autumnScheduleData = {
+            wariantA: {
+                poniedzialek: [
+                    { time: "17:55", title: "Wejście na Antenę", presenter: "" },
+                    { time: "18:00", title: "Kakofonia", presenter: "Kacper Augustyniak" },
+                    { time: "18:45", title: "Blaszak", presenter: "Lauri Potocki" },
+                    { time: "20:15", title: "Po seansie", presenter: "Maria Buczyńska" },
+                    { time: "21:00", title: "Zejście z Anteny", presenter: "" }
+                ],
+                sroda: [
+                    { time: "17:55", title: "Wejście na Antenę", presenter: "" },
+                    { time: "18:00", title: "(Nie)dobre, bo polskie", presenter: "Lauri Potocki i Dawid Gruszka" },
+                    { time: "19:30", title: "Co z tym filmem?", presenter: "Natalia Barczak" },
+                    { time: "20:15", title: "Zejście z Anteny", presenter: "" }
+                ],
+                piatek: [
+                    { time: "18:25", title: "Wejście na Antenę", presenter: "" },
+                    { time: "18:30", title: "Podium", presenter: "Agnieszka" },
+                    { time: "19:15", title: "ŻETO", presenter: "Max" },
+                    { time: "20:00", title: "Dźwięki subiektywne", presenter: "Monika Werbicka" },
+                    { time: "21:00", title: "Zejście z Anteny", presenter: "" }
+                ]
+            },
+            wariantB: {
+                sroda: [
+                    { time: "17:55", title: "Wejście na Antenę", presenter: "" },
+                    { time: "18:00", title: "Europejski Banger", presenter: "Natalia Barczak" },
+                    { time: "18:45", title: "W co dzisiaj pogramy?", presenter: "Remek Sitnik" },
+                    { time: "19:45", title: "Zejście z Anteny", presenter: "" }
+                ],
+                czwartek: [
+                    { time: "15:55", title: "Wejście na Antenę", presenter: "" },
+                    { time: "16:00", title: "Głos Azji", presenter: "Weronika Kosobudzka" },
+                    { time: "17:00", title: "My Name is Bond", presenter: "Isia Bond" },
+                    { time: "17:45", title: "Dziewczyna Pop", presenter: "Oliwia Mik" },
+                    { time: "18:30", title: "Blaszak", presenter: "Lauri Potocki" },
+                    { time: "20:00", title: "Zejście z Anteny", presenter: "" }
+                ]
+            }
         };
 
-        // --- ZMIENNE KONTROLNE DAT ---
         const minAllowedDate = new Date(2026, 1, 25);
         const endOfScheduleDate = new Date(2026, 5, 15); // Zmienna ucinająca ramówkę po 14 czerwca 2026
-        const summerFridayStart = new Date(2026, 6, 24);
-        const autumn2026Start = new Date(2026, 9, 12); // Start nowej ramówki 12.10.2026
-        const spring2027Start = new Date(2027, 2, 1);  // Koniec jesiennej ramówki i ewentualny start nowej 01.03.2027
-
+        const autumnScheduleStart = new Date(2026, 9, 21); // Start nowej ramówki od 21 października 2026
+        const autumnScheduleEnd = new Date(2027, 3, 1); // Koniec ramówki z końcem marca 2027
         const cancelledDates = [
             '2026-02-27', '2026-03-04', '2026-03-25', '2026-04-02', '2026-04-03', '2026-05-01'
         ];
@@ -802,20 +808,36 @@
 
             const checkDate = new Date(dateObj);
             checkDate.setHours(0,0,0,0);
-            const dayIdMap = { 1: 'poniedzialek', 3: 'sroda', 4: 'czwartek', 5: 'piatek' };
-            const dayId = dayIdMap[dateObj.getDay()];
 
-            if (!dayId) return null;
+            if (checkDate >= autumnScheduleStart) {
+                if (checkDate >= autumnScheduleEnd) return null;
 
-            // --- NOWA RAMÓWKA JESIEŃ 2026 ---
-            if (checkDate >= autumn2026Start && checkDate < spring2027Start) {
-                const baseData = autumn2026ScheduleData[dayId];
+                const day = dateObj.getDay();
+                let dayId = '';
+                if (day === 1) dayId = 'poniedzialek';
+                else if (day === 3) dayId = 'sroda';
+                else if (day === 4) dayId = 'czwartek';
+                else if (day === 5) dayId = 'piatek';
+                else return null;
+
+                const startMonday = new Date(2026, 9, 19);
+                const targetMonday = new Date(checkDate);
+                const dayNr = (targetMonday.getDay() + 6) % 7;
+                targetMonday.setDate(targetMonday.getDate() - dayNr);
+
+                const diffWeeks = Math.round((targetMonday.getTime() - startMonday.getTime()) / (1000 * 60 * 60 * 24 * 7));
+                const variantKey = (diffWeeks % 2 === 0) ? 'wariantB' : 'wariantA';
+
+                const baseData = autumnScheduleData[variantKey][dayId];
                 if (!baseData) return null;
+
                 return JSON.parse(JSON.stringify(baseData));
             }
 
-            // Blokada renderowania wiosennych zaplanowanych audycji od 15 Czerwca 2026 do startu jesiennej ramówki
-            if (checkDate >= endOfScheduleDate && checkDate < autumn2026Start) {
+            // Blokada renderowania wiosennych zaplanowanych audycji od 15 Czerwca 2026 włącznie.
+            // Z wyjątkiem nowej letniej ramówki od 24 lipca 2026
+            const summerFridayStart = new Date(2026, 6, 24);
+            if (checkDate >= endOfScheduleDate) {
                 if (checkDate >= summerFridayStart && dateObj.getDay() === 5) {
                     const diffDays = Math.round((checkDate.getTime() - summerFridayStart.getTime()) / (1000 * 60 * 60 * 24));
                     if (diffDays % 14 === 0) {
@@ -832,6 +854,14 @@
                 }
                 return null;
             }
+
+            const day = dateObj.getDay();
+            let dayId = '';
+            if (day === 1) dayId = 'poniedzialek';
+            else if (day === 3) dayId = 'sroda';
+            else if (day === 4) dayId = 'czwartek';
+            else if (day === 5) dayId = 'piatek';
+            else return null;
 
             const newScheduleStart = new Date(2026, 4, 4); // 4 maja 2026
 
@@ -1065,7 +1095,7 @@
                     ];
                 }
 
-                // --- LOGIKA WARIANTOWA (OD 4 MAJA DO CZERWCA 2026) ---
+                // --- NOWA LOGIKA (OD 4 MAJA 2026) ---
                 const startMonday = new Date(2026, 4, 4);
                 const targetMonday = new Date(checkDate);
                 const dayNr = (targetMonday.getDay() + 6) % 7;
@@ -1169,9 +1199,9 @@
             let currentDate = getNow();
             currentDate.setDate(1);
 
-            // Przesunięcie wizyty po zakończeniu wiosennej ramówki
-            if (getNow() >= endOfScheduleDate && getNow() < summerFridayStart) {
-                currentDate = new Date(2026, 6, 1);
+            // Jeśli wizyta następuje po zakończeniu wiosennej ramówki, przesuń na odpowiedni miesiąc
+            if (getNow() >= endOfScheduleDate && getNow() < new Date(2026, 6, 24)) {
+                currentDate = new Date(2026, 6, 1); // Pokaż lipiec, bo tam startuje letnia ramówka
             }
 
             let selectedDate = getClosestBroadcastDate(getNow());
@@ -1190,36 +1220,37 @@
                     current.setHours(0,0,0,0);
                 }
 
-                if (current >= spring2027Start) return new Date(2027, 1, 26);
+                const summerFridayStart = new Date(2026, 6, 24);
 
+                // Jeśli jesteśmy w wakacyjnej przerwie, skocz od razu do pierwszej letniej audycji
                 if (current >= endOfScheduleDate && current < summerFridayStart) {
                     return new Date(summerFridayStart);
                 }
 
-                if (current >= summerFridayStart && current < autumn2026Start) {
+                // Szukanie w trakcie letniej ramówki
+                if (current >= summerFridayStart && current < autumnScheduleStart) {
                     let testDate = new Date(current);
-                    for(let i = 0; i < 14; i++) {
+                    for(let i = 0; i < 14; i++) { // Szukaj do 2 tygodni do przodu
                         if (testDate.getDay() === 5) {
                             const diffDays = Math.round((testDate - summerFridayStart) / 86400000);
-                            if (diffDays >= 0 && diffDays % 14 === 0 && testDate < autumn2026Start) {
+                            if (diffDays >= 0 && diffDays % 14 === 0) {
                                 return new Date(testDate);
                             }
                         }
                         testDate.setDate(testDate.getDate() + 1);
                     }
-                    return new Date(autumn2026Start);
                 }
 
-                if (current >= autumn2026Start && current < spring2027Start) {
+                // Szukanie w trakcie jesienno-zimowej ramówki
+                if (current >= autumnScheduleStart) {
                     let testDate = new Date(current);
-                    for(let i = 0; i < 7; i++) {
-                        const day = testDate.getDay();
-                        const dateStr = formatDateStr(testDate);
-                        if ((day === 1 || day === 3 || day === 5) && !cancelledDates.includes(dateStr)) {
+                    for (let i = 0; i < 14; i++) {
+                        if (testDate < autumnScheduleEnd && getScheduleForDate(testDate)) {
                             return new Date(testDate);
                         }
                         testDate.setDate(testDate.getDate() + 1);
                     }
+                    return current < autumnScheduleEnd ? current : new Date(2027, 2, 26);
                 }
 
                 for(let i = 0; i < 7; i++) {
@@ -1275,27 +1306,35 @@
                     const dateObj = new Date(year, month, i);
                     const dayOfWeek = dateObj.getDay();
                     const dateStr = formatDateStr(dateObj);
+
                     const isHistoricalMonday = (dayOfWeek === 1 && dateObj < new Date(2026, 3, 27));
-
-                    let isBroadcastDay = false;
-
-                    if (dateObj >= autumn2026Start && dateObj < spring2027Start) {
-                        isBroadcastDay = (dayOfWeek === 1 || dayOfWeek === 3 || dayOfWeek === 5);
-                        weekHasAllowedDays = true;
-                    } else if (dateObj >= summerFridayStart && dateObj < autumn2026Start) {
-                        if (dayOfWeek === 5) {
-                            const diffDays = Math.round((dateObj - summerFridayStart) / 86400000);
-                            if (diffDays % 14 === 0) {
-                                isBroadcastDay = true;
-                                weekHasAllowedDays = true;
-                            }
-                        }
-                    } else if (dateObj >= minAllowedDate && dateObj < endOfScheduleDate) {
-                        isBroadcastDay = ((dayOfWeek >= 3 && dayOfWeek <= 5) || (dayOfWeek === 1 && !isHistoricalMonday));
-                        weekHasAllowedDays = true;
-                    }
+                    let isBroadcastDay = ((dayOfWeek >= 3 && dayOfWeek <= 5) || (dayOfWeek === 1 && !isHistoricalMonday));
 
                     if (cancelledDates.includes(dateStr)) {
+                        isBroadcastDay = false;
+                    }
+
+                    const summerFridayStart = new Date(2026, 6, 24);
+
+                    // Zablokuj renderowanie ramówki od daty końcowej, uwzględniając letnie piątki oraz nową ramówkę od 21.10.2026
+                    if (dateObj >= minAllowedDate && dateObj < endOfScheduleDate) {
+                        weekHasAllowedDays = true;
+                    } else if (dateObj >= summerFridayStart && dateObj < autumnScheduleStart && dayOfWeek === 5) {
+                        const diffDays = Math.round((dateObj - summerFridayStart) / 86400000);
+                        if (diffDays % 14 === 0) {
+                            weekHasAllowedDays = true;
+                        } else {
+                            isBroadcastDay = false;
+                        }
+                    } else if (dateObj >= autumnScheduleStart && dateObj < autumnScheduleEnd) {
+                        const daySchedule = getScheduleForDate(dateObj);
+                        if (daySchedule && daySchedule.length > 0) {
+                            isBroadcastDay = true;
+                            weekHasAllowedDays = true;
+                        } else {
+                            isBroadcastDay = false;
+                        }
+                    } else {
                         isBroadcastDay = false;
                     }
 
@@ -1493,7 +1532,6 @@
         let previousVolume = 0.5;
         radioAudioPlayer.volume = previousVolume;
 
-        // Funkcja pozostała bez zmian dla pewności braku konfliktów, jednak teraz wyzwalana nie z przycisku dolnego.
         function toggleBottomPlayer() {
             const playWrapper = document.getElementById('icon-play-wrapper');
             const pauseWrapper = document.getElementById('icon-pause-wrapper');
