@@ -839,7 +839,30 @@
                 const baseData = autumnScheduleData[variantKey][dayId];
                 if (!baseData) return null;
 
-                return JSON.parse(JSON.stringify(baseData));
+                let renderedData = JSON.parse(JSON.stringify(baseData));
+
+                if (dateStr > '2026-11-17') {
+                    if (variantKey === 'wariantA' && dayId === 'poniedzialek') {
+                        renderedData = [
+                            { time: "17:10", title: "Wejście na Antenę", presenter: "" },
+                            { time: "17:15", title: "Replay", presenter: "Szymon Majka" },
+                            { time: "18:00", title: "Kakofonia", presenter: "Kacper Augustyniak" },
+                            { time: "18:45", title: "Po seansie", presenter: "Maria Buczyńska" },
+                            { time: "19:30", title: "Zejście z Anteny", presenter: "" }
+                        ];
+                    }
+                    if (variantKey === 'wariantB' && dayId === 'czwartek') {
+                        renderedData = [
+                            { time: "15:55", title: "Wejście na Antenę", presenter: "" },
+                            { time: "16:00", title: "Głos Azji", presenter: "Weronika Kosobudzka" },
+                            { time: "17:00", title: "My Name is Bond", presenter: "Isia Bond" },
+                            { time: "17:45", title: "Dziewczyna Pop", presenter: "Oliwia Mik" },
+                            { time: "18:30", title: "Zejście z Anteny", presenter: "" }
+                        ];
+                    }
+                }
+
+                return renderedData;
             }
 
             // Blokada renderowania wiosennych zaplanowanych audycji od 15 Czerwca 2026 włącznie.
